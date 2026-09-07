@@ -211,6 +211,6 @@ npm run export:web
 
 ## License
 
-MIT © 2026 Abhi Kumar
+MIT © 2026 AMIT KUMAR GUPTA
 
 
