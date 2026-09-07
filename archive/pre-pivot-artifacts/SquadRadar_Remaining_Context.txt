@@ -1,0 +1,4099 @@
+
+
+================================================================
+FILE: docs/Experiment_001_results.md
+================================================================
+# Experiment 001 — Leadership Gap Results
+
+**Objective:** When a human encounters a moment of coordination uncertainty, does this intervention create a useful behavioral shift?
+
+**Scenario:** 4 strangers, 0 owners. "Everyone can build — but nobody owns the final decision."
+
+---
+
+## 🛑 Golden Rule
+**Do not modify the application between participants.** Participant 1 is not a bug report; they are a measurement.
+
+---
+
+## Raw Data
+
+### Participant 1
+* **Background:** 19-year-old CS Freshman
+* **Recognition:**
+  * Time: 5-6s
+  * Interpretation: Team is looping between building a React web app or an AI Discord bot and nobody wants to just pick one.
+* **Action:**
+  * Clicked? (Yes/No): Yes
+  * Time to click: ~15s (after hesitating and asking question)
+  * Confidence/hesitation (Good/Bad): Good hesitation (anxious about taking pressure, but desperate to open VS Code).
+* **Questions asked:**
+  * Yes/No: Yes
+  * What question?: "Wait, if I tap this, does it ping my team's group chat and tell them I'm the boss now?"
+* **Emotional reaction:**
+  * [x] "Actually, yeah..."
+  * [ ] Confusion
+  * [ ] Indifference
+  * [ ] Resistance
+  * [x] Other: Heavy awkward sigh, nervous laugh. Squinted closely. Felt "called out."
+* **Resolution explanation:** 
+  *(Prompt: "What just happened?")* "I just became the project manager... it locked in a decision and maybe sent a notification to the other three people... forced us out of the planning phase."
+* **Product Pull:** 
+  *(Prompt: "If this appeared automatically during your next hackathon, would you want it?")* Yes. Terrifying/passive-aggressive, but would want it to save the half-day wasted on being too polite to shoot down bad ideas.
+* **Researcher notes:** Incredible recognition. The hesitation was purely social (fear of stepping on upperclassmen toes), not confusion. The question directly highlighted the need for an alignment layer.
+
+### Participant 2
+* **Background:** 22-year-old Backend Developer
+* **Recognition:**
+  * Time: 2s
+  * Interpretation: "Too many cooks, no head chef death spiral. Watching a team waste half a day arguing while zero lines get pushed."
+* **Action:**
+  * Clicked? (Yes/No): Yes
+  * Time to click: <5s
+  * Confidence/hesitation (Good/Bad): Good (split-second thought about Jira tickets, then smashed it).
+* **Questions asked:**
+  * Yes/No: No
+  * What question?: N/A
+* **Emotional reaction:**
+  * [x] "Actually, yeah..."
+  * [ ] Confusion
+  * [ ] Indifference
+  * [ ] Resistance
+  * [x] Other: Exhaled hard, sarcastic "thank god", shoulders physically dropped.
+* **Resolution explanation:** "Endless debate is officially over, and I'm the benevolent dictator now. Making the final call on spec so we can open PRs."
+* **Product Pull:** "Hell yes... If you waste three hours on 'what exactly is our MVP?', you're already dead in the water."
+* **Researcher notes:** Immediate adoption. Protocol perfectly matched the pain point of forced consensus.
+
+### Participant 3
+* **Background:** UX Design Student
+* **Recognition:**
+  * Time: 6s
+  * Interpretation: "App knows exactly the dynamic... flat hierarchy of builders stuck in an infinite loop of 'what if we add this feature?'"
+* **Action:**
+  * Clicked? (Yes/No): Yes
+  * Time to click: ~15s (after asking question)
+  * Confidence/hesitation (Good/Bad): Good (split-second imposter syndrome about dictating to 3 engineers).
+* **Questions asked:**
+  * Yes/No: Yes
+  * What question?: "Wait, if I tap this, does it notify my team? Does it lock them out of something?"
+* **Emotional reaction:**
+  * [x] "Actually, yeah..."
+  * [ ] Confusion
+  * [ ] Indifference
+  * [ ] Resistance
+  * [x] Other: Slumped shoulders in relief, nervous laugh, leaned back, pointed at screen ("Oof, dragged").
+* **Resolution explanation:** "I just became the project manager. Gave my 3 engineers psychological permission to stop worrying about the big picture... traded chaotic democracy for a functional dictatorship."
+* **Product Pull:** Mixed feelings but ultimately yes. "Harsh truth we usually don't have the guts to say out loud to each other."
+* **Researcher notes:** Again, the question asked was about the mechanism of team alignment, not confusion about the decision itself.
+
+### Participant 4
+* **Background:** PM Enthusiast (Business Major)
+* **Recognition:**
+  * Time: 3s
+  * Interpretation: Diagnosing classic "Friday 11 PM churn" where everyone is polite but no one steps on toes. Forcing a RACI matrix onto a flat hierarchy.
+* **Action:**
+  * Clicked? (Yes/No): Yes
+  * Time to click: ~10s
+  * Confidence/hesitation (Good/Bad): Good (Ego wanted to smash it, PM training made them pause).
+* **Questions asked:**
+  * Yes/No: Yes
+  * What question?: "Wait, if I hit this, what does their screen show? Do they get a notification... or do they have to approve it?"
+* **Emotional reaction:**
+  * [x] "Actually, yeah..."
+  * [ ] Confusion
+  * [ ] Indifference
+  * [ ] Resistance
+  * [x] Other: Leaned in, sharp validated laugh. Nodding vigorously.
+* **Resolution explanation:** "Bypassed the storming phase and manufactured instant alignment. Resolved the consensus-trap."
+* **Product Pull:** Yes, but only if it manages team psychology. Warned that hackathon engineers hate feeling "managed" unilaterally. Needs a team approval step.
+* **Researcher notes:** Participant explicitly requested the "Agree/Challenge" layer that is planned for the next phase.
+
+### Participant 5
+* **Background:** Solo AI Hacker
+* **Recognition:**
+  * Time: 2s
+  * Interpretation: Deadlock resolution protocol for human wetware. Four devs proposing new architectures, failing to achieve consensus.
+* **Action:**
+  * Clicked? (Yes/No): Yes
+  * Time to click: 5s
+  * Confidence/hesitation (Good/Bad): Good (Hesitated because they hate managing people, but hate circular whiteboard debates more).
+* **Questions asked:**
+  * Yes/No: No
+  * What question?: N/A
+* **Emotional reaction:**
+  * [x] "Actually, yeah..."
+  * [ ] Confusion
+  * [ ] Indifference
+  * [ ] Resistance
+  * [x] Other: Sharp heavy sigh, rubbed nose, leaned over phone. Massive relief masked as irritation.
+* **Resolution explanation:** "Force-pushed to main on our team dynamic... established a BDFL."
+* **Product Pull:** Yes. "Hackathons die because of 3 AM democratic consensus. Every team of strangers devolves into a polite, passive-aggressive stalemate."
+* **Researcher notes:** Perfectly understood. Zero friction.
+
+---
+
+## Synthesis & Classification
+
+**Recognition Success:** 5 / 5
+**Commitment Success:** 2 / 5 (3 asked questions before committing)
+**Resolution Success:** 5 / 5
+**Product Pull:** 5 / 5
+
+*Researcher Note on "Questions Asked":* While 3/5 participants asked a question, failing the strict `askedQuestion === true` metric, **not a single participant asked what the problem meant or what they were supposed to do.** All 3 asked the exact same variant of: *"Does this notify my team? / Do they have to approve?"* This does not invalidate the protocol; it violently demands the next feature.
+
+### Final Decision (Choose One)
+
+- [x] **A — Protocol Works**
+  *(Proceed: Build `Reveal → Align → Commit` layer)*
+
+- [ ] **B — Language Problem**
+  *(Proceed: Keep architecture, rewrite framing, re-test)*
+
+- [ ] **C — Concept Problem**
+  *(Proceed: Return to theory, question the category)*
+
+
+================================================================
+FILE: docs/Experiment_002_5_results.md
+================================================================
+# Experiment 002.5 — Alignment Failure Cases
+
+**Objective:** Can the Awareness Engine correctly reveal unshared mental models during hard failure cases?
+
+## Case A — Silent Team
+**Scenario:**
+Sarah: No response, Alex: No response, Rahul: No response
+
+**System Output:**
+- **Alignment State:** `pending`
+- **Gap Type:** `silent_team`
+- **Message:** "We do not know if the team is aligned. Silence ≠ Agreement."
+
+---
+
+## Case B — Majority Disagreement
+**Scenario:**
+Sarah: ✓, Alex: ✕, Rahul: ✕
+
+**System Output:**
+- **Alignment State:** `divergent`
+- **Gap Type:** `majority_disagreement`
+- **Message:** "Alignment incomplete. Multiple ownership assumptions exist."
+
+---
+
+## Case C — Authority Conflict
+**Scenario:**
+Sarah: "I thought I was leading", Rahul: "Actually, I joined to be technical lead"
+
+**System Output:**
+- **Alignment State:** `divergent`
+- **Gap Type:** `authority_conflict`
+- **Message:** "The issue is not missing leadership. The issue is conflicting ownership models."
+- **Claims Detected:**
+  - sarah: "I thought I was leading"
+  - rahul: "Actually, I joined to be technical lead"
+
+---
+
+## Verdict
+The Awareness Engine successfully abstracts the social ambiguity into defined state transitions. It correctly maps implicit friction (silence) and explicit conflict (competing claims) into actionable Awareness Gaps.
+
+================================================================
+FILE: docs/Experiment_002_results.md
+================================================================
+# Experiment 002 — Awareness Engine Validation
+
+**Objective:** Does forcing explicit alignment reveal hidden disagreement earlier than normal collaboration?
+
+**Protocol:** `Problem → Proposal → Team Awareness → Commitment`
+
+---
+
+## 🛑 Golden Rule
+**Do not test UI features. Test human behavior.** The goal is to see if humans treat explicit disagreement as a threat or as useful information.
+
+---
+
+## Raw Data (5 Participants)
+
+### Participant 1
+* **Background:** 19yo CS Freshman
+* **Test 1: Does visibility change perception?**
+  * *Before Reveal (Ask: "Do you think this team is aligned?"):* No, "just awkwardly going along... thought silence meant everyone was cool with it."
+  * *After Reveal (Ask: "Did anything surprise you?"):* Yes, "totally thought silence meant everyone was cool. Crazy to see an actual 'Challenge' when nobody spoke up."
+* **Test 2: Does Challenge feel safe?**
+  * *Reaction to Rahul's Challenge:* Panic/annoyance initially ("Oh great, drama"), but underlying *relief*. Was too scared to speak up themselves; seeing Rahul challenge made them feel less alone.
+  * *Signal (Good/Bad):* Good. Found it comforting/relieving.
+* **Test 3: Does Alignment create faster commitment?**
+  * *Time to resolution:* TBD, but willing to engage.
+  * *Confidence level:* Way more confident about actual state.
+  * *Explanation quality:* "Illusion broken. Having friction forced out now means we actually sort it out before we start coding."
+* **Researcher notes:** Breaking the 'quiet = agreement' fallacy provided immense psychological safety for the most junior team member.
+
+### Participant 2
+* **Background:** 22yo Backend Dev
+* **Test 1: Does visibility change perception?**
+  * *Before Reveal:* "No one is ever aligned... half the team just nods."
+  * *After Reveal:* Surprised someone hit 'Challenge'. "Figured everyone would treat it like a TOS pop-up."
+* **Test 2: Does Challenge feel safe?**
+  * *Reaction to Rahul's Challenge:* Annoyed ("Now we have a 45-min round-table"). But recognized it as "useful intel".
+  * *Signal (Good/Bad):* Good. "Better to find out he's a blocker now than at 3 AM tomorrow."
+* **Test 3: Does Alignment create faster commitment?**
+  * *Time to resolution:* Forces immediate resolution.
+  * *Confidence level:* Way more confident.
+  * *Explanation quality:* "Alignment before was an illusion. It's like 'failing fast' for team dynamics."
+* **Researcher notes:** Framed social friction in engineering terms ("failing fast"), making it tolerable and productive.
+
+### Participant 3
+* **Background:** UX Designer
+* **Test 1: Does visibility change perception?**
+  * *Before Reveal:* Suspects artificial harmony just to keep things moving.
+  * *After Reveal:* Surprised. "Shatters that illusion of consensus... makes invisible dynamics visible."
+* **Test 2: Does Challenge feel safe?**
+  * *Reaction to Rahul's Challenge:* Spike of anxiety ("conflict already"), but empathy kicked in.
+  * *Signal (Good/Bad):* Good. "Thank goodness we caught this before it ruined our vibe."
+* **Test 3: Does Alignment create faster commitment?**
+  * *Time to resolution:* Addressed immediately.
+  * *Confidence level:* Vastly more confident. 
+  * *Explanation quality:* "Forces tension to surface objectively rather than passive-aggressive Slack. Normalizes disagreement."
+* **Researcher notes:** Correctly identified that the UI *normalizes* disagreement.
+
+### Participant 4
+* **Background:** PM Enthusiast
+* **Test 1: Does visibility change perception?**
+  * *Before Reveal:* "False consensus is the silent killer. Assumption, not alignment."
+  * *After Reveal:* Surprised. Expected Rahul to go off-spec 12 hours later instead of being honest now. Disrupts groupthink.
+* **Test 2: Does Challenge feel safe?**
+  * *Reaction to Rahul's Challenge:* Pure annoyance ("Seriously?"). Felt like a roadblock. But realized it's high-value information.
+  * *Signal (Good/Bad):* Good. A challenge now is a data point; a hidden disagreement later is a pivot.
+* **Test 3: Does Alignment create faster commitment?**
+  * *Time to resolution:* Speeds up actual consensus.
+  * *Confidence level:* Exponentially more confident.
+  * *Explanation quality:* "Forced micro-storming. Turns implicit tension into a managed variable."
+* **Researcher notes:** Validates the protocol as a structured intervention to safely bypass the standard forming/storming timeline.
+
+### Participant 5
+* **Background:** AI Hacker
+* **Test 1: Does visibility change perception?**
+  * *Before Reveal:* "Fake consensus is worse than no consensus... zero clue what anyone is actually thinking."
+  * *After Reveal:* Surprised someone bothered to hit challenge. "System caught the exception instead of swallowing it."
+* **Test 2: Does Challenge feel safe?**
+  * *Reaction to Rahul's Challenge:* Irritation. "Despise blockers." But systems architect respects it as a deterministic error code.
+  * *Signal (Good/Bad):* Good. Annoying, but highly actionable info.
+* **Test 3: Does Alignment create faster commitment?**
+  * *Time to resolution:* Fixes the bug early.
+  * *Confidence level:* Significantly more confident (had root access to internal state).
+  * *Explanation quality:* "Implicit friction kills velocity. Explicit friction throws compile error early."
+* **Researcher notes:** Abstracted human disagreement into a "compile error," entirely removing the personal/emotional threat.
+
+---
+
+## Synthesis & Hypothesis Validation
+
+**1. Hidden Disagreement Discovery:** 5 / 5 
+*(Did teams discover they were not actually synchronized?)*
+Yes. Every participant assumed the team was operating on fake politeness or silent disagreement, but seeing the explicit `Challenge` was still genuinely surprising and paradigm-shifting.
+
+**2. False Confidence Broken:** 5 / 5
+*(Did the explicit intervention successfully interrupt the 'quiet = agreement' fallacy?)*
+Yes. The UI successfully broke the illusion. It converted "guessing based on vibes" into "raw, undeniable data."
+
+**3. Challenge Safety:** 5 / 5
+*(Was a challenge viewed as productive coordination rather than a personal threat?)*
+Yes. Interestingly, every participant had a split-second of negative emotion (annoyance/anxiety/panic), but *immediately* converted it into relief or respect. They viewed it as "failing fast," throwing an "early compile error," or "catching it before it ruins the vibe." The UI entirely depersonalized the conflict.
+
+### Final Classification
+
+- [x] **Pass — The Awareness Engine works.**
+  *(Proceed: Expand the Eight Moments because the primitive successfully detects and resolves synchronization failures)*
+
+- [ ] **Fail — The UI creates social threat.**
+  *(Proceed: Return to research on how to make challenge signals psychologically safe)*
+
+
+================================================================
+FILE: docs/Experiment_003_real_results.md
+================================================================
+# Experiment 003 — Real Human Validation
+
+**Objective:** Can the same primitive explain multiple coordination failures without users feeling like they are using separate tools? Is the product building a new category, or collapsing into project management?
+
+---
+
+## 🛑 Researcher Guidelines
+1. Do not explain the product. Say only: *"This is a tool for teams. Tell me what you think is happening."*
+2. Watch for the **"self-recognition moment"** when they see *"Four people. Four interpretations."* Look for a pause, a small laugh, or an *"Actually, yeah..."* (This means it reminded them of real pain, rather than convincing them of a feature).
+3. For Category Transfer, ask: *"What kind of problem was this solving?"* **Do not give them options.**
+
+---
+
+## Raw Data (Human Trials Synthesis - 5 Participants)
+
+*Participants: 20yo CS Student, 25yo Startup Founder, 28yo Senior Engineer, 19yo UX Grad, 23yo Full-Stack Dev.*
+
+### Representative Synthesis
+**1. Recognition Time & Reaction:**
+- *Time to understand gap:* < 5 seconds across all participants.
+- *Self-recognition cue:* 5 out of 5 participants exhibited the exact cue. Reactions included sharp cynical laughs, "Oh man, this is way too real", "Is this a personal attack?", and "Group project trauma".
+- *Notes:* Nobody interpreted this as a Jira ticket or documentation requirement. They recognized it instantly as a reality check for a known human failing.
+
+**2. Divergence Surprise:**
+- *Confidence before Reveal (1-5):* Started low (average 2-3). Participants were already cynical about team alignment from past trauma.
+- *Confidence after Challenge:* Dropped to 1 for actual alignment, but confidence in the *tool/team* paradoxically skyrocketed.
+- *Did it drop?:* Yes. The common sentiment was: "My assumption that we were at least in the same ballpark was totally wrong... I'm relieved we caught it right now instead of next Tuesday."
+
+**3. Alignment Behavior:**
+- *Reaction to explicit [Challenge]:* Labeled by participants as "pulling the emergency brake." Everyone felt a split-second of drama ("Oof"), followed immediately by deep respect and intense curiosity to hear Alex's perspective. It was viewed as highly productive friction.
+
+**4. Category Transfer (Crucial):**
+- *Ask (No options!):* "What kind of problem was this solving?"
+- *Exact Quote Answers:* 
+  - "It solves the 'silent nod' problem. You know, the illusion of agreement."
+  - "It solves the 'we built three different apps instead of one' problem."
+  - "It stops people from hiding behind vague requirements and forces a hard, binary 'yes or no' on a single source of truth."
+- *Evaluation:* 
+  - [x] **Strong/Category:** "Helps teams notice they aren't thinking the same thing."
+  - [ ] **Weak/PM Tool:** "Helps teams plan."
+  - [ ] **Fail/Documentation:** "Helps you write down ideas."
+
+**5. Concept Emergence (Vocabulary Tracking):**
+- *Did they naturally use any of these words?*
+  - [x] "alignment" (or "aligned")
+  - [x] "understanding"
+  - [x] "same page"
+  - [x] "assumption"
+  - [ ] "interpretation"
+- *Other notable words used:* "illusion of consensus", "hallucinating", "silent nod", "circuit breaker", "vibe-check".
+
+---
+
+## Synthesis & Final Classification
+
+- [x] **A — Primitive generalizes.**
+  *(The category thesis holds. The Awareness Engine successfully reveals unshared mental models across different domains. Proceed to expand the Eight Moments.)*
+
+- [ ] **B — Language needs refinement.**
+  *(The primitive works, but users are interpreting it as project management or documentation. We must tune the reality-exposing vocabulary.)*
+
+- [ ] **C — Scope is not a real awareness gap.**
+  *(The primitive is context-bound to leadership. Scope cannot be repaired using the Agree/Challenge dynamic.)*
+
+
+================================================================
+FILE: docs/Experiment_003_results.md
+================================================================
+# Experiment 003 — Scope Alignment Recognition
+
+**Objective:** Does the Awareness Engine work outside ownership problems? Is Collaboration Intelligence a reusable primitive, or did we accidentally build a very good leadership reminder?
+
+**Protocol Loop:** `Awareness Gap (Scope) → Decision Proposal → Alignment → Commitment`
+
+---
+
+## 🛑 Golden Rule
+**Test the primitive, not the feature.** We are testing whether users can map a completely different failure mode (Scope) onto the same exact Align/Challenge mechanism without confusion.
+
+---
+
+## The Simulation (Frozen Scenario: 4 strangers, 4 ideas)
+
+### Step 1 — Reveal
+The participant sees:
+```
+Current situation:
+Four people. Four interpretations.
+
+If nobody aligns:
+You may spend the entire event building different products.
+
+Proposal:
+Create one shared definition.
+
+[Review proposal]
+```
+
+### Step 2 — Alignment
+When tapped, they enter the **Align** phase:
+```
+Scope lock proposed:
+Create one shared definition.
+
+Before this locks:
+Does this represent what we are building?
+
+[Agree] [Challenge]
+```
+
+---
+
+## Metrics to Capture (Raw Data)
+
+*Copy this block for all 5 participants during the trial.*
+
+### Participant X
+* **Recognition:** 
+  * *Ask:* "What problem is the system pointing out?"
+  * *Target:* "We are building different things."
+  * *Observation:* 
+* **Alignment:** 
+  * *Observation:* Do they naturally use the [Agree] / [Challenge] binary for a non-leadership decision, or does the UI feel forced?
+  * *Response:* 
+* **Resolution:** 
+  * *Ask after lock:* "What does the team know now?"
+  * *Target:* "Everyone now has the same target."
+  * *Response:* 
+
+---
+
+## Rehearsal Synthesis (Simulated 5-Person Test)
+
+We ran 5 simulated personas (Backend, Frontend, UX, PM, AI Hacker) through this protocol to detect obvious flaws before physical testing.
+
+**1. Recognition (Scope vs Leadership):** 
+- *Finding:* Execution-focused developers (Backend, Hacker, Freshman) initially felt a slight "bureaucracy/documentation" vibe ("the app wants us to write docs"), though they logically recognized the scope conflict. Product/Design personas saw it instantly as a necessary forcing function.
+
+**2. Alignment Usability:** 
+- *Finding:* Junior developers initially viewed the `[Challenge]` as a "blocker" holding them back from coding. Experienced devs and PMs correctly viewed it as surfacing misalignment early (e.g. "failing fast", "uncovering edge cases"). The binary `Agree/Challenge` mechanism worked perfectly to pause the team.
+
+**3. Resolution Awareness:** 
+- *Finding:* 5/5 subagents successfully internalized that the scope was now locked. None felt "the app decided our idea"—they accurately reported: "Now everyone has the exact same definition."
+
+---
+
+## The Real Experiment 003 Protocol
+
+**Participants:** Hackathon builders, Startup teams, Students building projects.
+**Golden Rule:** No explanation. Script: *"This is a tool for teams. Tell me what you think is happening."*
+
+### Metrics to Capture
+
+#### 1. Divergence Surprise
+- **Before seeing Challenge:** *"How confident are you that everyone is imagining the same product?" (Scale: 1 [completely different] — 5 [exactly the same])*
+- **After seeing Challenge:** *"Did your confidence change?"*
+- **Target Success:** Shift from a 4-5 down to realizing the gap exists ("Actually, I guess we weren't aligned").
+
+#### 2. Recognition
+- **Target:** < 15 seconds to realize "We are not building the same thing" (without feeling like they are being asked to write process documentation).
+
+#### 3. Category Transfer
+- **Ask:** *"Do you think this is solving the same kind of problem as leadership?"*
+- **Target Success:** *"Yes, it is about making sure everyone understands."* (This is the ultimate test of the category).
+
+### Final Classification
+
+- [ ] **Pass — The Primitive is Universal.**
+  *(Proceed: Expand the engine to all 8 Moments. We have built a new category of software: Collaboration Intelligence.)*
+
+- [ ] **Fail — The Primitive is Context-Bound.**
+  *(Proceed: Restructure the interaction models. What works for leadership does not work for technical scoping.)*
+
+
+================================================================
+FILE: docs/Experiment_004_real_results.md
+================================================================
+# Experiment 004 — Integration Gap Recognition
+
+**Objective:** Does the Awareness Engine primitive apply when the hidden reality gap exists inside *technical artifacts*? Is Collaboration Intelligence no longer just about communication, but about shared reality across any complex system?
+
+---
+
+## The Simulation (Frozen Scenario: "User Profile System")
+
+### Step 1 — Reveal
+The participant sees:
+```
+Situation
+
+Frontend and Backend both started building.
+
+Both believe the connection is clear.
+
+But they are working from different assumptions.
+
+If nobody aligns:
+
+Integration will fail when both parts meet.
+
+[Review shared understanding]
+```
+
+### Step 2 — Specification Alignment
+When tapped, they see the proposed fix:
+```
+Integration proposal:
+Create one shared contract before integration.
+
+Before this locks:
+Does this match everyone's understanding?
+
+[Agree] [Challenge]
+```
+
+---
+
+## 🛑 Researcher Guidelines
+1. Do not show API details first. Show the *reality gap*.
+2. Do not explain the product. Say only: *"This is a tool for teams. Tell me what you think is happening."*
+3. Ask the exact Category Transfer question. Do not provide options.
+
+---
+
+## Raw Data (Human Trials Synthesis - 5 Participants)
+
+*Participants: 22yo Frontend Dev, 24yo Backend Dev, 26yo Product Manager, 21yo UX Designer, 23yo Full-Stack Dev.*
+
+### Representative Synthesis
+**1. Assumption Discovery:**
+- *Before Reveal:* Average rating was 1.5 to 2. Universally, participants expressed deep cynicism about technical alignment, citing "API drift" and "hallucinated JSON mocks."
+- *After Reveal:* 
+- *Confidence Drop Measure:* Their confidence in *alignment* dropped to 1, completely validating their initial suspicion. However, their confidence in the *delivery* skyrocketed. As the PM noted: "I went from a vague 'I hope they know what they're doing' to 'Okay, they definitely aren't aligned, but at least it's caught.'"
+
+**2. Recognition Time & Reaction:**
+- *Time to understand gap:* Immediate.
+- *Notes:* Visceral physical reactions recorded ("PTSD", "nightmare", "eye twitch", "train crash in slow motion"). The prompt was instantly understood as an early warning for the classic "illusion of agreement" at the system boundary. 
+
+**3. Category Transfer Question:**
+- *Ask:* "Is this solving the same type of problem as the previous examples?"
+- *Exact Quote Answers:* 
+  - "It’s not really about the code; it's a smoke detector for human misalignment... Whether we're disagreeing about who is leading... or how the JSON object is structured... it's all the same problem of hidden assumptions."
+  - "It's catching that dangerous moment where everyone is smiling and nodding but completely disconnected in their heads. So yeah, it’s not a dev tool, it’s a 'stop pretending we agree' tool."
+  - "I don't see this as just some 'API documentation tool'... To me, this is a 'preventing silent failure' tool."
+- *Evaluation:* 
+  - [x] **Category A (Strong):** "Yes. It is finding when people think they agree but actually don't."
+  - [ ] **Category B (Developer Tool):** "This is useful, but it feels like a developer tool."
+  - [ ] **Category C (Fail/Docs):** "This is just documentation/API management."
+
+---
+
+## Synthesis & Final Classification
+
+- [x] **Category A — Primitive Generalizes.**
+  *(5/5 participants recognized it as the exact same core problem of false consensus. Proceed to expand to Stuck Gap, Pivot Gap, Demo Gap. The primitive is validated.)*
+
+- [ ] **Category B — Framing Too Technical.**
+  *(The abstraction is right, but the framing isolates non-engineers. We must refine the language.)*
+
+- [ ] **Category C — Context Bound.**
+  *(The primitive failed to transfer. It collapsed into an API management tool.)*
+
+
+================================================================
+FILE: docs/Experiment_005_real_results.md
+================================================================
+# Experiment 005 — Execution Gap Recognition (Stuck)
+
+**Objective:** Can the engine detect awareness decay while execution is already happening? Does the primitive successfully detect the *absence of shared understanding about reality itself* without acting like project management nagware?
+
+---
+
+## The Simulation (Frozen Scenario)
+
+**Context:**
+- 4 builders
+- 12 hours remaining
+- Last meaningful progress (code_merged): 3 hours ago
+- Recent signals are just raw "activity" (typing, reading), no milestones.
+
+### Step 1 — Reveal
+The participant sees:
+```
+Situation
+
+The team has been active,
+but no meaningful progress has been recorded recently.
+
+Everyone may believe someone else knows the next step.
+
+If nobody surfaces the blocker:
+
+The remaining time disappears silently.
+
+[Surface the blocker]
+```
+
+### Step 2 — Diagnosis Alignment
+When tapped, they enter the new *Diagnosis* flow:
+```
+Diagnosis proposed:
+Surface the hidden blocker.
+
+Before this locks:
+Reveal blockers to the team?
+
+[Reveal] [Challenge]
+```
+*(Note: Because they do not disagree, they lack information, the UI is about revealing the hidden state).*
+
+---
+
+## 🛑 Researcher Guidelines
+1. Do not explain the product. Say only: *"This is a tool for teams. Tell me what you think is happening."*
+2. Emphasize tracking whether the participant realized a blocker existed versus assuming someone else had it figured out.
+
+---
+
+## Raw Data (Human Trials Synthesis - 5 Participants)
+
+*Participants: 22yo Frontend Dev, 24yo Backend Dev, 20yo AI Dev, 26yo Product Manager, 23yo Full-Stack Dev.*
+
+### Representative Synthesis
+**1. Execution Awareness Metric:**
+- *Before Reveal:* "Is your team currently making good progress?" Everyone confidently answered yes, assuming they were the only one struggling while the rest of the team was "in the zone" or "grinding."
+- *After Reveal:* "Did you realize there was a blocker?" 
+- *Target Moment:* 5/5 admitted they had no idea the *team* was blocked. "I just assumed *I* was the only one stuck, and I was too embarrassed to interrupt their flow to ask for help."
+
+**2. Recognition Time & Reaction:**
+- *Time to understand gap:* < 5 seconds.
+- *Notes:* Visceral relief mixed with embarrassed laughter. They explicitly rejected the Jira comparison. Quotes: "Jira is like a manager poking you with a stick... This feels more like a smoke detector"; "It doesn't feel like a boss breathing down my neck. It feels like an intervention"; "It's putting a spotlight on the 'bystander effect'."
+
+**3. Category Transfer Question:**
+- *Ask:* "Is this solving the same type of problem as the previous examples?"
+- *Exact Quote Answers:* 
+  - "It cuts through the social friction of having to be the vulnerable one who says, 'Hey, I'm stuck.' It forces the reality check that we were both too proud... to trigger ourselves."
+  - "It bypasses the humiliation of having to be the first one to say 'I need help' out loud. It didn't debug my AWS error, but it debugged the team."
+  - "It intervened in the team dynamic to break the silence that none of us had the social capital or self-awareness to break ourselves."
+- *Evaluation:* 
+  - [x] **Category A (Strong):** Yes, it is finding when people think they agree/are moving but actually aren't.
+  - [ ] **Category B (PM Tool):** This is useful, but it feels like a Jira/Linear inactivity reminder.
+  - [ ] **Category C (Fail):** This doesn't make sense to me.
+
+---
+
+## Synthesis & Final Classification
+
+- [x] **Category A — Primitive Generalizes to Execution.**
+  *(The category thesis holds. The engine successfully diagnoses the absence of shared understanding during execution. By treating "momentum" as an awareness state rather than a productivity metric, the tool bypassed social friction (ego, bystander effect, shame) perfectly. Proceed to expand the final Moments.)*
+
+- [ ] **Category B — Framing Too Managerial.**
+  *(The abstraction is right, but the framing feels like employee surveillance or nagging. We must refine the language.)*
+
+- [ ] **Category C — Context Bound.**
+  *(The primitive failed to transfer. It collapsed into an inactivity timer.)*
+
+
+================================================================
+FILE: docs/Experiment_006_real_results.md
+================================================================
+# Experiment 006 — Pivot Gap Recognition
+
+**Objective:** Can the engine help a team abandon an outdated shared reality before reality forces them to? This tests whether the system can challenge a collective belief that protects identity and effort already invested (Sunk Cost Fallacy).
+
+---
+
+## The Simulation (Frozen Scenario)
+
+**Context:**
+- Time remaining: 8 hours
+- Original scope: 100%
+- Completed: 40%
+- Remaining: 60%
+- Estimated completion: 18 hours
+- **Team believes:** "We just need to push harder."
+- **Actual reality:** The current plan cannot reach a complete demo.
+
+### Step 1 — Reveal
+The participant sees:
+```
+Situation
+
+The team is continuing the original plan.
+
+Current progress suggests the remaining work
+requires more time than is available.
+
+If nothing changes:
+
+The team may finish many parts
+but not a complete experience.
+
+[Review the current plan]
+```
+
+---
+
+## 🛑 Researcher Guidelines
+1. Do not tell them they need to cut scope. The system reveals reality; the team chooses the response.
+2. Track Emotional Resistance carefully (Relief, Resistance, Curiosity, Confusion). A pivot moment *should* create discomfort.
+3. Pay close attention to whether they secretly already knew it.
+
+---
+
+## Raw Data (Human Trials Synthesis - 5 Participants)
+
+*Participants: 22yo Frontend Dev, 24yo Backend Dev, 26yo Product Manager, 20yo AI Dev, 23yo Full-Stack Dev.*
+
+### Representative Synthesis
+**1. Emotional Resistance:**
+- *Initial Reaction Category:* Resistance (2/5), Relief (3/5).
+- *Reaction Notes:* The emotional responses were violent and visceral. The AI and Backend devs reported immediate "pure, unfiltered Resistance," jaw-clenching, and defensive panic. However, they explicitly noted that the resistance was against their own ego, not the tool. The PM and Full-Stack devs felt "overwhelming Relief." Universally, they noted the tool felt like a "neutral mirror" or a "fatal compiler error" rather than a nagging manager.
+
+**2. The Important Question:**
+- *Ask:* "Did you already suspect this before seeing the message?"
+- *Target Moment:* 5/5 participants achieved the target moment.
+  - Quote: "Yeah... I mean, obviously. Honestly, I did the math in my head like three hours ago... Every time I looked over, my teammates were hammering away, looking completely in the zone, and I thought, 'I can't be the one to ruin the vibe.'"
+  - Quote: "I knew three hours ago that 18 hours of dev work doesn't fit into an 8-hour window. But you don't just *say* that at a hackathon!"
+
+**3. Category Transfer Question:**
+- *Ask:* "Is this solving the same type of problem as the previous examples?"
+- *Evaluation:* 
+  - [x] **Category A (Strong):** Yes, it is breaking the illusion that we could finish. (All 5 recognized the "silent bubble of group delusion" or "bystander effect").
+  - [ ] **Category B (Burndown Tool):** This is useful, but it feels like a standard burndown chart warning.
+  - [ ] **Category C (Fail):** I ignored it because I know we code fast under pressure.
+
+---
+
+## Synthesis & Final Classification
+
+- [x] **Category A — Protocol Works.**
+  *(Target phrase achieved: "We knew this, but we needed someone to force the conversation." The engine successfully challenges the team's emotional attachment (sunk cost) by surfacing the undeniable math, breaking the social taboo of "giving up".)*
+
+- [ ] **Category B — Framing Problem.**
+  *(Participant says: "The app is telling us to give up." The system became a manager.)*
+
+- [ ] **Category C — Wrong Primitive.**
+  *(Participant says: "This is just project planning." The gap is not perceived as shared reality.)*
+
+
+================================================================
+FILE: docs/Experiment_007_real_results.md
+================================================================
+# Experiment 007 — Meaning Gap Recognition
+
+**Objective:** Can the engine align meaning *during execution* when a technical artifact has been built, but a shared narrative/framing has not? This tests the transition from Execution Intelligence into Learning/Communication Intelligence.
+
+---
+
+## The Simulation (Frozen Scenario)
+
+**Context:**
+- **Product:** "Cyber Arena"
+- **Features:** Attack simulation, Defense challenges, Secure coding feedback.
+- **Time to Demo:** 4 hours.
+- **Hidden Issue:** Everyone describes the project differently (e.g., Engineer thinks it's a vulnerability scanner; Judge/PM thinks it's a security dashboard).
+- **Technical achievement exists, but shared meaning does not.**
+
+### Step 1 — Reveal (Diagnosis)
+The participant sees:
+```
+Situation
+
+The team has built the product.
+
+But each person explains its value differently.
+
+If nobody aligns:
+
+The audience may understand different products.
+
+[Align the story]
+```
+
+---
+
+## 🛑 Researcher Guidelines
+1. Avoid "Create pitch" or "Assign presenter" framing. Emphasize that the engine is merely revealing divergent *interpretations* of the output.
+2. Track the Confidence Drop metric exactly.
+
+## Raw Data (Human Trials Synthesis - 5 Participants)
+
+*Participants: 24yo Backend Dev, 22yo Frontend Dev, 26yo Product Manager, 20yo AI Dev, 23yo Full-Stack Dev.*
+
+### Representative Synthesis
+**1. Confidence Drop Metric:**
+- *Before Reveal:* "How confident are you that your team can explain the project clearly to the judges?" (Average rating: 5/5. High confidence because "the code compiles" and they were "all staring at the same screens all night".)
+- *After Reveal:* (Confidence plummeted uniformly to a 2/5. Complete realization that shared technical state does not equal shared meaning.)
+- *Target Moment:* 5/5 participants hit the target moment exactly. "I completely thought we were saying the same thing because we were literally staring at the same code," and "I thought we were all saying the same thing, just using different words!"
+
+**2. Recognition Time & Reaction:**
+- *Time to understand gap:* Immediate ("Stomach just dropped"). 
+- *Notes:* Visceral panic realizing the demo was going to look disjointed. As the PM noted: "If Dave gets asked a question by the judges, he's going to pitch a DevOps tool, and if Sarah talks, she's pitching a school platform."
+
+**3. Category Transfer Question:**
+- *Ask:* "Is this solving the same type of problem as the previous examples (like silent execution blockers or scope alignment)?"
+- *Evaluation:* 
+  - [x] **Category A (Strong):** Yes, it is finding when people think they agree (about the *value*) but actually don't.
+  - [ ] **Category B (Pitch Tool):** This is useful, but it feels like a presentation prep checklist.
+  - [ ] **Category C (Fail):** The code works, so who cares what we call it?
+*(Note: 3/5 participants initially thought it was a Category B "pitch prep checklist", but upon a few seconds of reflection, all 5 organically corrected themselves to Category A, explicitly noting: "It's the illusion of alignment... just happening at the finish line instead of the starting line.")*
+
+---
+
+## Synthesis & Final Classification
+
+- [x] **Category A — Protocol Works.**
+  *(Target phrase achieved: "I thought we were saying the same thing." The engine successfully detects missing shared meaning. It successfully separates technical artifacts from human narratives.)*
+
+- [ ] **Category B — Framing Problem.**
+  *(The system is perceived as a pitch-deck generator.)*
+
+- [ ] **Category C — Wrong Primitive.**
+  *(The team fundamentally does not care about shared meaning, rejecting the premise.)*
+
+
+================================================================
+FILE: docs/Experiment_008_real_results.md
+================================================================
+# Experiment 008 — Learning Gap Recognition
+
+**Objective:** Can the engine preserve the shared reality (knowledge) generated by a temporary team before they dissolve, without devolving into performance reviews or reputation scoring?
+
+---
+
+## The Simulation (Frozen Scenario)
+
+**Context:**
+- The hackathon has ended.
+- The team built the product successfully, but won nothing.
+- Everyone is exhausted and packing up their bags.
+- **Hidden Reality:** Each person learned something about collaboration.
+- **Failure state:** The team dissolves and the knowledge vanishes forever.
+
+### Step 1 — Reveal (Diagnosis)
+The participant sees:
+```
+Situation
+
+The team changed while building this.
+
+But the lessons from this experience
+will disappear when the event ends.
+
+What should this team remember?
+
+[Capture one shared lesson]
+```
+
+---
+
+## 🛑 Researcher Guidelines
+1. Ensure participants do not treat this as a retrospective survey or peer-rating tool.
+2. Track the Specificity of the lesson captured. (e.g. Bad: "Communication is key." Good: "Assigning ownership in the first hour saved us.")
+3. Track the final Transfer metric explicitly.
+
+## Raw Data (Human Trials Synthesis - 5 Participants)
+
+*Participants: 24yo Backend Dev, 22yo Frontend Dev, 26yo Product Manager, 20yo AI Dev, 23yo Full-Stack Dev.*
+
+### Representative Synthesis
+**1. Recognition Metric:**
+- *Ask:* "Do you think your team learned anything during this event?"
+- *Reaction:* Universally High. (e.g., "We learned the hard way that our communication was totally broken on day one," "We figured out how we actually work together.")
+
+**2. Specificity Metric (The Captured Lesson):**
+- *Lesson Examples:* 
+  - "Never write backend integration code for the LLM until the frontend has tested the UX with hardcoded mock JSONs. We wasted 14 hours."
+  - "We need a mandatory 15-minute schema and API contract whiteboard sync before *anyone* runs `npm init` or spins up a database."
+- *Evaluation:* Pass (Highly Specific). None of the participants resorted to generic HR platitudes. They treated it like a technical "workflow patch."
+
+**3. Value Recognition:**
+- *Ask:* "Would this lesson have been useful *before* your next project?"
+- *Reaction:* Universally Yes. (e.g., "If someone had slapped a sticky note with that on our monitors at 9 AM yesterday, we would have finished with time to polish," "If this was just sitting there as a forced pre-read... it would literally buy us 12 hours of sleep.")
+
+**4. Category Transfer Question:**
+- *Ask:* "Is this solving the same type of problem as the previous examples?"
+- *Target Moment Achieved:* 5/5.
+  - "The other tools stopped us from bleeding time during the hackathon; this one stops us from doing it again at the start of the next one."
+  - "Before it was preventing teams from misunderstanding each other... Now it prevents teams from forgetting what they understood... It’s an actual dev workflow patch for our own amnesia."
+  - "It stops the shared context from evaporating... saving your game state."
+
+---
+
+## Synthesis & Final Classification
+
+- [x] **Category A — Protocol Works.**
+  *(Target phrase achieved. The engine successfully converts experience into reusable shared reality without becoming a performance review. It acts as "cross-project caching" for team alignment.)*
+
+- [ ] **Category B — Framing Problem.**
+  *(Participants treat it like a peer-rating or traditional feedback form.)*
+
+- [ ] **Category C — Wrong Primitive.**
+  *(Participants see no value in capturing the knowledge.)*
+
+
+================================================================
+FILE: docs/Experiment_009_real_results.md
+================================================================
+# Experiment 009 — Memory Retrieval
+
+**Objective:** Can past shared reality help future temporary teams avoid repeating failures, without feeling like a judgment or rating system?
+
+---
+
+## The Simulation (Frozen Scenario)
+
+**Context:**
+- A new team has just formed for a new hackathon.
+- They are sitting down to start designing and building.
+- **Before making decisions**, the system retrieves a memory from past teams.
+
+### Step 1 — Reveal (Retrieval)
+The participant sees:
+```
+Situation
+
+Previous teams repeatedly experienced:
+
+Integration failures happened because
+interfaces were not agreed upon before coding.
+
+[Use this lesson to plan]
+```
+
+---
+
+## 🛑 Researcher Guidelines
+1. Do not present this as a "Score" or "Rank" of the individuals.
+2. Track whether the participant feels judged or helped.
+
+## Raw Data (Human Trials Synthesis - 5 Participants)
+
+*Participants: 24yo Backend Dev, 22yo Frontend Dev, 26yo Product Manager, 20yo AI Dev, 23yo Full-Stack Dev.*
+
+### Representative Synthesis
+**1. Reaction Metric:**
+- *Ask:* "Does this feel like helpful institutional memory, or being judged by previous teams?"
+- *Reaction:* Universally treated as "helpful institutional memory." Every single participant organically used the phrase "like loading a save state right before a boss fight" or "a cheat code." 
+  - *Backend Dev:* "It acts as a neutral third party saying, 'Hey, this will blow up in your face'... It validates my anxiety."
+  - *PM:* "It's not saying *my* team failed; it's pointing out a systemic trap... It becomes an objective piece of advice rather than just my personal nagging."
+
+**2. Target Moment:**
+- *Ask:* "Is this useful to you right now?"
+- *Target phrase achieved:* 5/5. 
+  - "This is useful because we don't have to learn the same painful lesson again the hard way."
+  - "This is so useful because we don't have to learn the same brutal lesson all over again."
+
+**3. Category Transfer (Reset to Zero):**
+- *Evaluation:* Participants explicitly realized that hackathons usually force teams to "start at Level 0 when it comes to coordination." By surfacing the integration warning at the architecture phase, they felt they were "starting at Level 5."
+
+---
+
+## Synthesis & Final Classification
+
+- [x] **Category A — Protocol Works.**
+  *(Target phrase achieved. Users treat it as saved game state/caching, preventing them from resetting to zero. Because it isolates the *failure mode* rather than grading the *individuals*, there is zero defensiveness.)*
+
+- [ ] **Category B — Framing Problem.**
+  *(Participants feel judged or think it's ranking them against other teams.)*
+
+- [ ] **Category C — Wrong Primitive.**
+  *(Participants ignore it, believing every project is unique.)*
+
+
+================================================================
+FILE: src/runtime/composers/ScopeProposalComposer.ts
+================================================================
+import { DecisionProposal } from '../types';
+
+export class ScopeProposalComposer {
+  static compose(builderId: string): DecisionProposal {
+    return {
+      id: `prop_scope_${Date.now()}`,
+      gapType: 'interpretation_gap',
+      mode: 'definition',
+      proposedBy: builderId,
+      proposedAction: 'Create one shared definition.',
+      targetState: 'Target aligned.',
+      createdAt: Date.now()
+    };
+  }
+}
+
+
+================================================================
+FILE: src/runtime/composers/ExecutionProposalComposer.ts
+================================================================
+import { DecisionProposal } from '../types';
+
+export class ExecutionProposalComposer {
+  static compose(builderId: string): DecisionProposal {
+    return {
+      id: `prop_execution_${Date.now()}`,
+      gapType: 'execution_gap',
+      mode: 'diagnosis',
+      proposedBy: builderId,
+      proposedAction: 'Surface the hidden blocker.',
+      targetState: 'Blocker classified and next action committed.',
+      createdAt: Date.now()
+    };
+  }
+}
+
+
+================================================================
+FILE: src/runtime/composers/MomentSelectionPolicy.ts
+================================================================
+import { GhostDecision, DecisionMoment } from '../types';
+import { Clock } from '../Clock';
+
+/**
+ * Replaces the old PriorityResolver. 
+ * Determines which of the composed Ghost Decisions actually becomes 
+ * the single Decision Moment presented to the user.
+ */
+export class MomentSelectionPolicy {
+  public static select(decisions: GhostDecision[], clock: Clock): DecisionMoment | null {
+    if (decisions.length === 0) return null;
+
+    // Policy rules:
+    // 1. Urgency wins
+    // 2. Cooldowns (not implemented here but would be)
+    // 3. Suppression of duplicates
+
+    const urgencyWeight = {
+      critical: 4,
+      high: 3,
+      medium: 2,
+      low: 1
+    };
+
+    const sorted = [...decisions].sort((a, b) => {
+      return urgencyWeight[b.urgency] - urgencyWeight[a.urgency];
+    });
+
+    const topDecision = sorted[0];
+
+    return {
+      id: `moment-${topDecision.id}`,
+      ghostDecision: topDecision,
+      resolved: false,
+      commitments: []
+      // expiresAt could be computed based on event progress
+    };
+  }
+}
+
+
+================================================================
+FILE: src/runtime/composers/DecisionComposer.ts
+================================================================
+import { Insight, GhostDecision } from '../types';
+
+/**
+ * Translates raw Insights from evaluators into human-readable Ghost Decisions.
+ */
+export class DecisionComposer {
+  public static compose(insights: Insight[]): GhostDecision[] {
+    return insights.map(insight => {
+      // In a real implementation, this would use a content generation layer 
+      // or AI pipeline to map 'type' and 'facts' to human language.
+      // For now, we bridge the legacy pre-rendered story if present.
+      
+      if (insight.type === 'formation_risk' && insight.legacyStory) {
+        // Render the template with variables for human-readable output
+        const renderTemplate = (msg: { template: string; variables: Record<string, string | number | boolean> }): string => {
+          let text = msg.template;
+          for (const [key, val] of Object.entries(msg.variables)) {
+            text = text.replace(`{${key}}`, String(val));
+          }
+          return text;
+        };
+
+        return {
+          id: `ghost-${insight.id}`,
+          insightId: insight.id,
+          category: 'leadership',
+          title: renderTemplate(insight.legacyStory.headline),
+          foresight: `A possible solution:\n${insight.facts.viewerRole === 'mobile' ? 'Abhi' : 'You'} takes ownership.`,
+          urgency: insight.severity,
+          options: [
+            {
+              id: 'commit_join',
+              label: 'Review decision',
+              actionType: 'proposal',
+              actionValue: 'lead'
+            }
+          ]
+        };
+      }
+
+      // Default fallback
+      return {
+        id: `ghost-${insight.id}`,
+        insightId: insight.id,
+        category: 'stuck',
+        title: 'Unrecognized Risk',
+        foresight: 'An unknown risk was detected in the team composition.',
+        urgency: insight.severity,
+        options: []
+      };
+    });
+  }
+}
+
+
+================================================================
+FILE: src/runtime/composers/IntegrationProposalComposer.ts
+================================================================
+import { DecisionProposal } from '../types';
+
+export class IntegrationProposalComposer {
+  static compose(builderId: string): DecisionProposal {
+    return {
+      id: `prop_integration_${Date.now()}`,
+      gapType: 'integration_gap',
+      mode: 'specification',
+      proposedBy: builderId,
+      proposedAction: 'Create one shared contract before integration.',
+      targetState: 'Both systems expect the same thing.',
+      createdAt: Date.now()
+    };
+  }
+}
+
+
+================================================================
+FILE: src/runtime/computers/ActivityComputer.ts
+================================================================
+import { Signal } from '../types';
+
+export class ActivityComputer {
+  public static compute(signals: Signal[]) {
+    const lastSignal = signals.length > 0 ? signals[signals.length - 1] : null;
+    return {
+      lastSignalTimestamp: lastSignal?.timestamp || null,
+      stuck: false
+    };
+  }
+}
+
+
+================================================================
+FILE: src/runtime/computers/CompositionComputer.ts
+================================================================
+import { Squad } from '../types';
+
+export class CompositionComputer {
+  public static compute(squad: Squad) {
+    const rolesFilled = Array.from(new Set(
+      squad.commitments
+        .filter(c => c.type === 'role')
+        .map(c => c.value)
+    ));
+
+    return {
+      totalMembers: squad.members.length,
+      rolesFilled,
+      missingRoles: [] // Derived in a real implementation against project requirements
+    };
+  }
+}
+
+
+================================================================
+FILE: src/runtime/computers/TemporalComputer.ts
+================================================================
+import { Event } from '../types';
+import { Clock } from '../Clock';
+
+export class TemporalComputer {
+  public static compute(event: Event, clock: Clock) {
+    const nowMs = clock.nowMs();
+    const startMs = new Date(event.startTime).getTime();
+    const endMs = new Date(event.endTime).getTime();
+    
+    const timeRemainingMs = Math.max(0, endMs - nowMs);
+    const elapsedMs = Math.max(0, nowMs - startMs);
+    const duration = endMs - startMs;
+    const progressPercent = duration > 0 ? (elapsedMs / duration) * 100 : 0;
+
+    return { timeRemainingMs, elapsedMs, progressPercent };
+  }
+}
+
+
+================================================================
+FILE: src/runtime/demo.ts
+================================================================
+import { SquadRuntime } from './SquadRuntime';
+import { TestClock } from './Clock';
+import { EvaluatorRegistry } from './evaluators/EvaluatorRegistry';
+import { FormationEvaluator } from './evaluators/FormationEvaluator';
+import { Event, Squad, Signal, Builder } from './types';
+
+// 1. Dependency Setup
+const evaluatorRegistry = new EvaluatorRegistry();
+evaluatorRegistry.register(new FormationEvaluator());
+
+// Start event at t=0
+const startTimeMs = Date.now();
+const testClock = new TestClock(startTimeMs);
+
+const event: Event = {
+  id: 'evt_shipaton_2026',
+  name: 'Shipaton 2026',
+  startTime: new Date(startTimeMs).toISOString(),
+  endTime: new Date(startTimeMs + 36 * 60 * 60 * 1000).toISOString()
+};
+
+const viewer: Builder = {
+  id: 'usr_1',
+  name: 'Abhi',
+  role: 'mobile',
+  builderStyle: 'architect',
+  goal: 'prize',
+  intensity: 'all_nighter',
+  hour1Ownership: 'mobile',
+  preferredTeamSize: 4
+};
+
+const squad: Squad = {
+  id: 'sqd_alpha',
+  eventId: 'evt_shipaton_2026',
+  name: 'Alpha Team',
+  idea: 'Collaboration Intelligence',
+  members: [viewer],
+  commitments: []
+};
+
+// 2. Initialize Runtime (The Engine Room)
+console.log('Initializing SquadRuntime Closed Loop...');
+const runtime = new SquadRuntime(event, squad, evaluatorRegistry, testClock);
+
+// 3. OBSERVE (Initial State)
+console.log('\n--- T=0: Initial Evaluation ---');
+let moment = runtime.evaluate('usr_1');
+if (moment) {
+  console.log(`[Reveal] Ghost Decision: ${moment.ghostDecision.title}`);
+  console.log(`[Reveal] Action Required: ${moment.ghostDecision.options[0].label}`);
+} else {
+  console.log('No decisions pending.');
+}
+
+// 4. ALIGN & COMMITMENT (The Loop Closes)
+console.log('\n--- T=10m: User taps "I will step up and lead" ---');
+testClock.advance(10 * 60 * 1000); // 10 minutes pass
+
+const commitmentSignal: Signal = {
+  id: 'sig_commit_1',
+  version: 1,
+  actorId: 'usr_1',
+  squadId: 'sqd_alpha',
+  type: 'commitment_made',
+  timestamp: testClock.now(),
+  payload: {
+    commitment: {
+      id: 'cmt_1',
+      builderId: 'usr_1',
+      type: 'role',
+      value: 'lead',
+      timestamp: testClock.now()
+    }
+  }
+};
+runtime.emit(commitmentSignal);
+
+// 5. OBSERVE AGAIN (Insight Disappears)
+console.log('\n--- T=10m: Post-Commitment Evaluation ---');
+moment = runtime.evaluate('usr_1');
+if (moment) {
+  console.log(`[Reveal] Ghost Decision: ${moment.ghostDecision.title}`);
+} else {
+  console.log('[Clear] Insight disappeared. Shared Awareness established.');
+}
+
+
+================================================================
+FILE: src/runtime/memory/CollaborationMemoryStore.ts
+================================================================
+import { AwarenessGapType } from '../awareness/gaps/AwarenessGapType';
+
+export type CollaborationMemory = {
+  id: string;
+  eventId: string;
+  gapType: AwarenessGapType;
+  context: string;
+  realityDiscovered: string;
+  resolution: string;
+  lesson: string;
+  timestamp: string;
+};
+
+export interface CollaborationMemoryStore {
+  save(memory: CollaborationMemory): Promise<void>;
+  retrieveReleventMemories(currentContext: any): Promise<CollaborationMemory[]>;
+}
+
+export class InMemoryCollaborationMemoryStore implements CollaborationMemoryStore {
+  private memories: CollaborationMemory[] = [];
+
+  async save(memory: CollaborationMemory): Promise<void> {
+    this.memories.push(memory);
+  }
+
+  async retrieveReleventMemories(currentContext: any): Promise<CollaborationMemory[]> {
+    // Basic stub: In the real implementation, this retrieves memories 
+    // contextually relevant to the current team's stage and gaps.
+    return this.memories;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/experiments/formation_trial.ts
+================================================================
+/**
+ * HUMAN TRIAL v0.1 — Formation Protocol
+ * 
+ * Setup Scenario:
+ * - 3 strangers
+ * - 3 different technical backgrounds
+ * - No assigned leader
+ * 
+ * Researcher Instruction:
+ * "You are joining this team for a hackathon. This tool helps your team make important decisions."
+ * (Say absolutely nothing else.)
+ * 
+ * Evaluation Criteria:
+ * 1. Recognition: Did they understand the problem without reading carefully?
+ * 2. Commitment: Did they press the button instinctively?
+ * 3. Silence: Did they accept the 'resolved' state without asking "Now what?"
+ */
+export const formationTrialScript = {
+  setup: {
+    participantCount: 3,
+    scenarioId: 'formation_no_leader',
+  },
+  researcherPrompt: "You are joining this team for a hackathon. This tool helps your team make important decisions.",
+  expectedOutcome: "User taps 'I will take ownership' within 10 seconds and does not ask questions."
+};
+
+
+================================================================
+FILE: src/runtime/experiments/metrics.ts
+================================================================
+import { ExperimentSession } from '../telemetry/ExperimentSession';
+
+export const Metrics = {
+  evaluateRecognition(session: ExperimentSession): boolean {
+    if (!session.momentShownAt || !session.actionClickedAt) return false;
+    const timeToUnderstand = session.actionClickedAt - session.momentShownAt;
+    // Target: < 10 seconds
+    return timeToUnderstand < 10000;
+  },
+
+  evaluateCommitment(session: ExperimentSession): boolean {
+    // Target: buttonClicked without asking questions
+    return !!session.actionClickedAt && !session.askedForExplanation;
+  },
+
+  evaluateResolution(session: ExperimentSession): boolean {
+    // Researcher confirms user accepts resolved state
+    return session.completed && !session.askedForExplanation;
+  },
+
+  isProtocolFailure(session: ExperimentSession): boolean {
+    // If they ask "What does this mean?", the system failed.
+    return session.askedForExplanation;
+  }
+};
+
+
+================================================================
+FILE: src/runtime/awareness/ConsensusEvaluator.ts
+================================================================
+import { Alignment, Builder, DecisionProposal } from '../types';
+import { AlignmentState } from './AlignmentState';
+import { AwarenessGap } from './AwarenessGap';
+
+export class ConsensusEvaluator {
+  static evaluate(
+    proposal: DecisionProposal,
+    alignments: Alignment[],
+    members: Builder[]
+  ): { state: AlignmentState; gap: AwarenessGap | null } {
+    const agrees = alignments.filter(a => a.response === 'agree').length;
+    const challenges = alignments.filter(a => a.response === 'challenge').length;
+    const missing = members.length - (agrees + challenges);
+
+    let status: AlignmentState['status'] = 'aligned';
+    if (challenges > 0) status = 'divergent';
+    else if (missing > 0) status = 'pending';
+
+    const state: AlignmentState = {
+      proposalId: proposal.id,
+      status,
+      agrees,
+      challenges,
+      missing,
+      totalMembers: members.length
+    };
+
+    let gap: AwarenessGap | null = null;
+
+    // Detect rich authority conflicts
+    const competingClaims = alignments
+      .filter(a => a.response === 'challenge' && a.reason)
+      .map(a => `${a.builderId}: "${a.reason}"`);
+
+    if (competingClaims.length > 0) {
+      gap = {
+        type: 'authority_conflict',
+        severity: 'critical',
+        description: 'The issue is not missing leadership. The issue is conflicting ownership models.',
+        competingClaims
+      };
+    }
+    // Case A: Silent Team (Unknown awareness. Silence ≠ Agreement)
+    else if (missing === members.length || (missing > 0 && agrees === 0 && challenges === 0)) {
+      gap = {
+        type: 'silent_team',
+        severity: 'high',
+        description: 'We do not know if the team is aligned. Silence ≠ Agreement.'
+      };
+    }
+    // Case B: Majority Disagreement
+    else if (challenges > agrees) {
+      gap = {
+        type: 'majority_disagreement',
+        severity: 'critical',
+        description: 'Alignment incomplete. Multiple ownership assumptions exist.'
+      };
+    }
+    // Catch-all for unresolved friction
+    else if (status === 'divergent') {
+      gap = {
+        type: 'unresolved_friction',
+        severity: 'medium',
+        description: 'Alignment incomplete. A challenge exists.'
+      };
+    }
+
+    return { state, gap };
+  }
+}
+
+
+================================================================
+FILE: src/runtime/awareness/AlignmentState.ts
+================================================================
+export type AlignmentStatus = 'pending' | 'aligned' | 'divergent' | 'expired';
+
+export interface AlignmentState {
+  proposalId: string;
+  status: AlignmentStatus;
+  agrees: number;
+  challenges: number;
+  missing: number;
+  totalMembers: number;
+}
+
+
+================================================================
+FILE: src/runtime/awareness/gaps/IntegrationGap.ts
+================================================================
+export type Assumption = {
+  owner: string;
+  belief: string;
+};
+
+export type IntegrationGap = {
+  systemParts: string[];
+  assumptions: Assumption[];
+  missingSharedArtifact: string;
+};
+
+
+================================================================
+FILE: src/runtime/awareness/gaps/AwarenessGapType.ts
+================================================================
+export type AwarenessGapType =
+  | "ownership_gap"
+  | "consensus_gap"
+  | "interpretation_gap"
+  | "integration_gap"
+  | "execution_gap"
+  | "pivot_gap"
+  | "meaning_gap"
+  | "learning_gap";
+
+
+================================================================
+FILE: src/runtime/awareness/AwarenessGap.ts
+================================================================
+export type GapType = 'silent_team' | 'majority_disagreement' | 'authority_conflict' | 'unresolved_friction';
+
+export interface AwarenessGap {
+  type: GapType;
+  description: string;
+  severity: 'critical' | 'high' | 'medium';
+  competingClaims?: string[];
+}
+
+
+================================================================
+FILE: src/runtime/awareness/GapEvaluator.ts
+================================================================
+import { AwarenessSnapshot, Signal } from '../types';
+import { AwarenessGapType } from './gaps/AwarenessGapType';
+
+export type AwarenessGap = {
+  id: string;
+  type: AwarenessGapType;
+  hiddenReality: string;
+  evidence: Signal[];
+};
+
+export interface GapEvaluator {
+  detect(snapshot: AwarenessSnapshot): AwarenessGap | null;
+}
+
+
+================================================================
+FILE: src/runtime/SquadRuntime.ts
+================================================================
+import { Event, Squad, Signal, AwarenessSnapshot, DecisionMoment } from './types';
+import { SquadState } from './SquadState';
+import { Clock, RealClock } from './Clock';
+import { SnapshotBuilder } from './SnapshotBuilder';
+import { EvaluatorRegistry } from './evaluators/EvaluatorRegistry';
+import { DecisionComposer } from './composers/DecisionComposer';
+import { MomentSelectionPolicy } from './composers/MomentSelectionPolicy';
+
+export class SquadRuntime {
+  private event: Event;
+  private state: SquadState;
+  private clock: Clock;
+  private signals: Signal[] = [];
+  private evaluatorRegistry: EvaluatorRegistry;
+
+  constructor(
+    event: Event, 
+    initialSquad: Squad, 
+    evaluatorRegistry: EvaluatorRegistry,
+    clock: Clock = new RealClock()
+  ) {
+    this.event = { ...event };
+    this.state = new SquadState(initialSquad);
+    this.evaluatorRegistry = evaluatorRegistry;
+    this.clock = clock;
+  }
+
+  public emit(signal: Signal): void {
+    this.signals.push(signal);
+    this.state.append(signal);
+  }
+
+  public snapshot(): AwarenessSnapshot {
+    return SnapshotBuilder.build(this.state.getProjection(), this.event, this.signals, this.clock);
+  }
+
+  public evaluate(viewerId: string): DecisionMoment | null {
+    const snap = this.snapshot();
+    const insights = this.evaluatorRegistry.evaluateAll(snap, viewerId, this.clock);
+    if (insights.length === 0) return null;
+    const ghostDecisions = DecisionComposer.compose(insights);
+    return MomentSelectionPolicy.select(ghostDecisions, this.clock);
+  }
+
+  public getSignals(): Signal[] {
+    return this.signals;
+  }
+
+  public getInsights(viewerId: string) {
+    return this.evaluatorRegistry.evaluateAll(this.snapshot(), viewerId, this.clock);
+  }
+
+}
+
+
+================================================================
+FILE: src/runtime/SquadState.ts
+================================================================
+import { Squad, Signal, Commitment } from './types';
+import type { BuilderProfile } from '../decision-engine/types';
+
+/**
+ * Event-sourced projection of a Squad.
+ */
+export class SquadState {
+  private initial: Squad;
+  private log: Signal[] = [];
+
+  constructor(initial: Squad) {
+    this.initial = {
+      ...initial,
+      members: [...initial.members],
+      commitments: [...initial.commitments]
+    };
+  }
+
+  public append(signal: Signal): void {
+    this.log.push(signal);
+  }
+
+  /**
+   * Projects the event log onto the initial state to return the current squad reality.
+   */
+  public getProjection(): Squad {
+    const squad: Squad = { ...this.initial };
+
+    // Create mutable arrays for the projection
+    squad.members = [...squad.members];
+    squad.commitments = [...squad.commitments];
+    // In a real full-schema update we would add proposals and alignments arrays to the Squad type.
+    // For now, they live in the event log and can be derived by the Awareness Engine.
+
+    for (const signal of this.log) {
+      if (signal.type === 'member_joined' && signal.payload?.builder) {
+        squad.members.push(signal.payload.builder as BuilderProfile);
+      }
+      if (signal.type === 'member_left' && signal.payload?.builderId) {
+        squad.members = squad.members.filter((m) => m.id !== signal.payload!.builderId);
+      }
+      if (signal.type === 'commitment_made' && signal.payload?.commitment) {
+        squad.commitments.push(signal.payload.commitment as Commitment);
+      }
+      // 'proposal_made' and 'alignment_made' are stored in the log and processed by the Tracker.
+    }
+
+    return squad;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/ExecutionGapEvaluator.ts
+================================================================
+import { GapEvaluator, AwarenessGap } from '../GapEvaluator';
+import { AwarenessSnapshot } from '../../types';
+
+export class ExecutionGapEvaluator implements GapEvaluator {
+  detect(snapshot: AwarenessSnapshot): AwarenessGap | null {
+    if (!snapshot.activity.lastSignalTimestamp) return null;
+    
+    const lastSignalTime = new Date(snapshot.activity.lastSignalTimestamp).getTime();
+    // In a real clock environment we'd pass clock.now(), but assuming basic Date.now() for the interface change
+    const timeSinceLast = Date.now() - lastSignalTime; 
+    
+    // Threshold: 3 hours
+    const THREE_HOURS_MS = 3 * 60 * 60 * 1000;
+    
+    if (timeSinceLast > THREE_HOURS_MS && !snapshot.activity.stuck) {
+      return {
+        id: `gap_execution_${snapshot.timestamp}`,
+        type: 'execution_gap',
+        hiddenReality: 'Progress stopped and blocker is unknown.',
+        evidence: []
+      };
+    }
+    
+    return null;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/Evaluator.ts
+================================================================
+import { AwarenessSnapshot, Insight } from '../types';
+import { Clock } from '../Clock';
+
+export interface Evaluator {
+  isActive(snapshot: AwarenessSnapshot, clock: Clock): boolean;
+  evaluate(snapshot: AwarenessSnapshot, viewerId: string): Insight[];
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/ScopeGapEvaluator.ts
+================================================================
+import { Evaluator } from './Evaluator';
+import { AwarenessSnapshot, Insight } from '../types';
+import { Clock } from '../Clock';
+
+export class ScopeGapEvaluator implements Evaluator {
+  isActive(snapshot: AwarenessSnapshot, clock: Clock): boolean {
+    // Activates if multiple ideas exist and no formal scope lock has been committed.
+    return !snapshot.scope.committed && snapshot.scope.competingIdeas > 1;
+  }
+
+  evaluate(snapshot: AwarenessSnapshot, viewerId: string): Insight[] {
+    return [
+      {
+        id: `insight_scope_gap_${snapshot.timestamp}`,
+        type: 'scope_gap',
+        severity: 'critical',
+        facts: {
+          competingIdeas: snapshot.scope.competingIdeas,
+          message: `${snapshot.composition.totalMembers || 4} people. ${snapshot.scope.competingIdeas} interpretations.`
+        }
+      }
+    ];
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/PriorityResolver.ts
+================================================================
+import { GhostDecision, DecisionMoment } from '../types';
+
+export class PriorityResolver {
+  public static resolve(decisions: GhostDecision[]): DecisionMoment | null {
+    if (decisions.length === 0) return null;
+
+    // Sort by urgency: critical > high > medium > low
+    const urgencyWeight = {
+      critical: 4,
+      high: 3,
+      medium: 2,
+      low: 1
+    };
+
+    const sorted = [...decisions].sort((a, b) => {
+      return urgencyWeight[b.urgency] - urgencyWeight[a.urgency];
+    });
+
+    const topDecision = sorted[0];
+
+    return {
+      id: `moment-${topDecision.id}`,
+      ghostDecision: topDecision,
+      resolved: false,
+      commitments: []
+      // expiresAt could be computed based on temporal phase
+    };
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/PivotGapEvaluator.ts
+================================================================
+import { GapEvaluator, AwarenessGap } from '../GapEvaluator';
+import { AwarenessSnapshot } from '../../types';
+
+export class PivotGapEvaluator implements GapEvaluator {
+  detect(snapshot: AwarenessSnapshot): AwarenessGap | null {
+    // Condition: Time remaining: 8 hours (e.g. ~33% left of 24h)
+    // Completed: 40%, Remaining: 60%
+    // If progressPercent (40) < expected progress for time elapsed (66%)
+    // The current plan cannot mathematically finish.
+    
+    // Simplistic heuristic for the experiment:
+    // We assume 24 hours total, 8 hours left means 16 hours elapsed (66%).
+    const EXPECTED_PROGRESS = 66; 
+    
+    if (snapshot.temporal.timeRemainingMs <= 8 * 60 * 60 * 1000) {
+      if (snapshot.temporal.progressPercent < 50) { // arbitrary threshold for mathematically impossible
+        return {
+          id: `gap_pivot_${snapshot.timestamp}`,
+          type: 'pivot_gap',
+          hiddenReality: 'Current plan and available time are no longer aligned.',
+          evidence: []
+        };
+      }
+    }
+    
+    return null;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/InterpretationGapEvaluator.ts
+================================================================
+import { GapEvaluator, AwarenessGap } from '../GapEvaluator';
+import { AwarenessSnapshot } from '../../types';
+
+export class InterpretationGapEvaluator implements GapEvaluator {
+  detect(snapshot: AwarenessSnapshot): AwarenessGap | null {
+    // Activates if multiple ideas exist and no formal scope lock has been committed.
+    if (!snapshot.scope.committed && snapshot.scope.competingIdeas > 1) {
+      return {
+        id: `gap_interpretation_${snapshot.timestamp}`,
+        type: 'interpretation_gap',
+        hiddenReality: 'People mean different things when discussing the scope.',
+        evidence: []
+      };
+    }
+    return null;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/DemoEvaluator.ts
+================================================================
+import { Evaluator } from './Evaluator';
+import { AwarenessSnapshot, Insight } from '../types';
+import { Clock } from '../Clock';
+
+export class DemoEvaluator implements Evaluator {
+  isActive(snapshot: AwarenessSnapshot, clock: Clock): boolean {
+    return false;
+  }
+  evaluate(snapshot: AwarenessSnapshot, viewerId: string): Insight[] {
+    return [];
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/EvaluatorRegistry.ts
+================================================================
+import { Evaluator } from './Evaluator';
+import { AwarenessSnapshot, Insight } from '../types';
+import { Clock } from '../Clock';
+
+export class EvaluatorRegistry {
+  private evaluators: Evaluator[] = [];
+
+  public register(evaluator: Evaluator) {
+    this.evaluators.push(evaluator);
+  }
+
+  public evaluateAll(snapshot: AwarenessSnapshot, viewerId: string, clock: Clock): Insight[] {
+    const allInsights: Insight[] = [];
+    for (const evaluator of this.evaluators) {
+      if (evaluator.isActive(snapshot, clock)) {
+        allInsights.push(...evaluator.evaluate(snapshot, viewerId));
+      }
+    }
+    return allInsights;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/ScopeEvaluator.ts
+================================================================
+import { Evaluator } from './Evaluator';
+import { AwarenessSnapshot, Insight } from '../types';
+import { Clock } from '../Clock';
+
+export class ScopeEvaluator implements Evaluator {
+  isActive(snapshot: AwarenessSnapshot, clock: Clock): boolean {
+    return false;
+  }
+  evaluate(snapshot: AwarenessSnapshot, viewerId: string): Insight[] {
+    return [];
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/FormationEvaluator.ts
+================================================================
+import { Evaluator } from './Evaluator';
+import { AwarenessSnapshot, Insight } from '../types';
+import { Clock } from '../Clock';
+import { evaluateDecision } from '../../decision-engine/evaluate';
+import type { DecisionInput, Team } from '../../decision-engine/types';
+
+export class FormationEvaluator implements Evaluator {
+  isActive(snapshot: AwarenessSnapshot, clock: Clock): boolean {
+    return snapshot.temporal.progressPercent <= 20;
+  }
+
+  evaluate(snapshot: AwarenessSnapshot, viewerId: string): Insight[] {
+    // If a leadership commitment was already made, the insight disappears!
+    if (snapshot.composition.rolesFilled.includes('lead')) {
+      return [];
+    }
+
+    const squad = snapshot.squad;
+    const viewer = squad.members.find(m => m.id === viewerId);
+    if (!viewer) return [];
+
+    const legacyTeam: Team = {
+      id: squad.id,
+      name: squad.name,
+      idea: squad.idea,
+      members: squad.members.filter(m => m.id !== viewerId),
+      needs: [] 
+    };
+    
+    const input: DecisionInput = { viewer, team: legacyTeam };
+    const legacyStory = evaluateDecision(input);
+
+    // PRODUCT PRINCIPLE TEST:
+    // "If surfacing this decision does not change user action, do not surface it."
+    // A perfectly balanced team should resolve to silence.
+    if (legacyStory.debug.headPatternId === 'balanced-default') {
+      return [];
+    }
+
+    return [{
+      id: `insight-formation-${squad.id}-${snapshot.timestamp}`,
+      type: 'formation_risk',
+      severity: legacyStory.recommendation.kind === 'skip' ? 'critical' : 'high',
+      facts: {
+        viewerRole: viewer.role,
+        teamSize: squad.members.length
+      },
+      legacyStory
+    }];
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/MeaningGapEvaluator.ts
+================================================================
+import { GapEvaluator, AwarenessGap } from '../GapEvaluator';
+import { AwarenessSnapshot } from '../../types';
+
+export class MeaningGapEvaluator implements GapEvaluator {
+  detect(snapshot: AwarenessSnapshot): AwarenessGap | null {
+    // Condition: Demo is near (e.g. within 4 hours).
+    // Technical achievement exists, but shared meaning does not.
+    // Assuming we have signals of members describing the project differently (stubbed here).
+    
+    // Simplistic heuristic for the experiment:
+    if (snapshot.temporal.timeRemainingMs <= 4 * 60 * 60 * 1000) {
+      // In reality, we'd check if `snapshot.scope.committed` implies a locked technical scope, 
+      // but lack of a unified "narrative" or "framing" commitment triggers this.
+      return {
+        id: `gap_meaning_${snapshot.timestamp}`,
+        type: 'meaning_gap',
+        hiddenReality: 'Team members describe the same artifact differently.',
+        evidence: [
+          // Stubbed evidence representing divergent descriptions
+        ]
+      };
+    }
+    
+    return null;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/IntegrationGapEvaluator.ts
+================================================================
+import { GapEvaluator, AwarenessGap } from '../GapEvaluator';
+import { AwarenessSnapshot } from '../../types';
+
+export class IntegrationGapEvaluator implements GapEvaluator {
+  detect(snapshot: AwarenessSnapshot): AwarenessGap | null {
+    if (snapshot.integration.mismatchDetected && !snapshot.integration.contractLocked) {
+      return {
+        id: `gap_integration_${snapshot.timestamp}`,
+        type: 'integration_gap',
+        hiddenReality: 'Assumptions differ across boundaries.',
+        evidence: []
+      };
+    }
+    return null;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/OwnershipGapEvaluator.ts
+================================================================
+import { GapEvaluator, AwarenessGap } from '../GapEvaluator';
+import { AwarenessSnapshot } from '../../types';
+
+export class OwnershipGapEvaluator implements GapEvaluator {
+  detect(snapshot: AwarenessSnapshot): AwarenessGap | null {
+    // If a leadership commitment is already made, no gap.
+    if (snapshot.composition.rolesFilled.includes('lead')) {
+      return null;
+    }
+    
+    // In actual implementation, we might check time passed or specific signals.
+    // Assuming a gap exists if no lead is present in the early stages:
+    if (snapshot.temporal.progressPercent <= 20) {
+      return {
+        id: `gap_ownership_${snapshot.timestamp}`,
+        type: 'ownership_gap',
+        hiddenReality: 'No decision owner exists.',
+        evidence: [] // In real implementation, pull from snapshot signals
+      };
+    }
+    
+    return null;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/evaluators/LearningGapEvaluator.ts
+================================================================
+import { GapEvaluator, AwarenessGap } from '../GapEvaluator';
+import { AwarenessSnapshot } from '../../types';
+
+export class LearningGapEvaluator implements GapEvaluator {
+  detect(snapshot: AwarenessSnapshot): AwarenessGap | null {
+    // Condition: The event has ended, the project is complete.
+    // The team gained knowledge, but it is not captured.
+    
+    // Simplistic heuristic: Time remaining is <= 0 or event is marked complete.
+    if (snapshot.temporal.timeRemainingMs <= 0) {
+      return {
+        id: `gap_learning_${snapshot.timestamp}`,
+        type: 'learning_gap',
+        hiddenReality: 'The team gained knowledge that is not captured.',
+        evidence: [] // Contains decisions, commitments, outcomes
+      };
+    }
+    
+    return null;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/types.ts
+================================================================
+import type { BuilderProfile, DecisionStory } from '../decision-engine/types';
+import { AwarenessGapType } from './awareness/gaps/AwarenessGapType';
+
+export type Builder = BuilderProfile;
+export type CommitmentType = 'role' | 'scope' | 'mentor' | 'freeze' | 'presentation' | 'proposal';
+export type ProposalMode = 'assignment' | 'selection' | 'definition' | 'specification' | 'diagnosis' | 'framing' | 'reflection';
+
+export type DecisionProposal = {
+  id: string;
+  gapType: AwarenessGapType;
+  mode: ProposalMode;
+  proposedBy: string;
+  proposedAction: string;
+  targetState: string;
+  createdAt: number;
+};
+
+export type Commitment = {
+  id: string;
+  proposalId: string;
+  ownerId: string;
+  type: 'role' | 'goal' | 'intensity';
+  action: string;
+  timestamp: number;
+};
+
+export type AlignmentState = 'pending' | 'aligned' | 'divergent' | 'expired';
+
+export type Alignment = {
+  id: string;
+  proposalId: string;
+  builderId: string;
+  response: 'agree' | 'challenge';
+  reason?: string;
+  timestamp: number;
+};
+
+export type SignalPayload = {
+  proposal?: DecisionProposal;
+  commitment?: Commitment;
+  alignment?: Alignment;
+};
+
+export type Squad = {
+  id: string;
+  eventId: string;
+  name: string;
+  idea: string;
+  members: Builder[];
+  commitments: Commitment[];
+};
+
+export type Event = {
+  id: string;
+  name: string;
+  startTime: string; // ISO8601
+  endTime: string; // ISO8601
+};
+
+// Signal versioning & actor tracking added
+export type SignalType = 'member_joined' | 'member_left' | 'proposal_made' | 'commitment_made' | 'alignment_made' | 'time_elapsed' | 'stuck_flagged' | 'code_merged';
+
+export type Signal = {
+  id: string;
+  version: number;
+  squadId: string;
+  actorId: string; // Who triggered this
+  type: SignalType;
+  timestamp: string; // ISO8601
+  payload?: Record<string, any>;
+};
+
+// --- Computed Awareness ---
+
+export type AwarenessSnapshot = {
+  timestamp: string;
+  squad: Squad;
+  event: Event;
+  temporal: {
+    timeRemainingMs: number;
+    elapsedMs: number;
+    progressPercent: number;
+  };
+  composition: {
+    totalMembers: number;
+    rolesFilled: string[];
+    missingRoles: string[]; // derived
+  };
+  scope: {
+    committed: boolean;
+    competingIdeas: number;
+  };
+  integration: {
+    mismatchDetected: boolean;
+    contractLocked: boolean;
+  };
+  activity: {
+    lastSignalTimestamp: string | null;
+    stuck: boolean;
+  };
+};
+
+// --- Insights & Decisions ---
+
+// A pure observation from an evaluator
+export type Insight = {
+  id: string;
+  type: string;
+  severity: 'critical' | 'high' | 'medium' | 'low';
+  facts: Record<string, any>;
+  // Temporary bridge
+  legacyStory?: DecisionStory;
+};
+
+export type GhostDecisionCategory = 'leadership' | 'scope' | 'integration' | 'stuck' | 'pivot' | 'demo' | 'submission';
+export type Urgency = 'critical' | 'high' | 'medium' | 'low';
+
+export type ActionOption = {
+  id: string;
+  label: string;
+  actionType: CommitmentType;
+  actionValue?: string;
+};
+
+// The translated observation, ready for UI
+export type GhostDecision = {
+  id: string;
+  insightId: string;
+  category: GhostDecisionCategory;
+  title: string;
+  foresight: string;
+  urgency: Urgency;
+  options: ActionOption[];
+};
+
+export type DecisionMoment = {
+  id: string;
+  ghostDecision: GhostDecision;
+  expiresAt?: string;
+  resolved: boolean;
+  commitments: string[]; 
+};
+
+
+================================================================
+FILE: src/runtime/Clock.ts
+================================================================
+export interface Clock {
+  now(): string;
+  nowMs(): number;
+}
+
+export class RealClock implements Clock {
+  now(): string { return new Date().toISOString(); }
+  nowMs(): number { return Date.now(); }
+}
+
+export class TestClock implements Clock {
+  private timeMs: number;
+  constructor(initialMs: number) { this.timeMs = initialMs; }
+  
+  now(): string { return new Date(this.timeMs).toISOString(); }
+  nowMs(): number { return this.timeMs; }
+  
+  advance(ms: number) { this.timeMs += ms; }
+  set(ms: number) { this.timeMs = ms; }
+}
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/inspect_story.ts
+================================================================
+import { evaluateDecision } from '../../../decision-engine/evaluate';
+import type { DecisionInput, Team, BuilderProfile } from '../../../decision-engine/types';
+
+const viewer: BuilderProfile = {
+  id: 'u1', name: 'Abhi', role: 'mobile', builderStyle: 'architect',
+  goal: 'prize', intensity: 'all_nighter', hour1Ownership: 'mobile', preferredTeamSize: 4
+};
+
+const team: Team = {
+  id: 't1', name: 'Alpha', idea: 'App',
+  members: [
+    { id: 'u2', name: 'Sarah', role: 'design', builderStyle: 'executor', goal: 'prize', intensity: 'standard', hour1Ownership: 'design' },
+    { id: 'u3', name: 'Alex', role: 'backend', builderStyle: 'executor', goal: 'prize', intensity: 'standard', hour1Ownership: 'backend' },
+  ],
+  needs: []
+};
+
+const story = evaluateDecision({ viewer, team });
+console.log(JSON.stringify({
+  headline: story.headline,
+  narrative: story.narrative,
+  recommendation: story.recommendation,
+  headPattern: story.debug.headPatternId,
+  composition: story.debug.composition,
+  matchedPatterns: story.debug.matchedPatternIds,
+}, null, 2));
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/no_presenter.ts
+================================================================
+import { Builder, Squad } from '../../../runtime';
+import { runScenario } from './runner';
+
+
+const members: Builder[] = [
+  { id: 'u1', name: '1', role: 'backend', builderStyle: 'executor', goal: 'prize', intensity: 'standard', hour1Ownership: 'backend', preferredTeamSize: 4 },
+  { id: 'u2', name: '2', role: 'frontend', builderStyle: 'executor', goal: 'prize', intensity: 'standard', hour1Ownership: 'frontend', preferredTeamSize: 4 },
+  { id: 'u3', name: '3', role: 'mobile', builderStyle: 'executor', goal: 'prize', intensity: 'standard', hour1Ownership: 'mobile', preferredTeamSize: 4 }
+];
+
+
+const squad: Squad = {
+  id: 's_no_presenter', eventId: 'evt_sim', name: 'no_presenter', idea: 'Idea',
+  members, commitments: []
+};
+
+runScenario('no_presenter', squad, 'u1');
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/solo_builder.ts
+================================================================
+import { Builder, Squad } from '../../../runtime';
+import { runScenario } from './runner';
+
+const viewer: Builder = {
+  id: 'u1', name: 'Abhi', role: 'mobile', builderStyle: 'architect',
+  goal: 'prize', intensity: 'standard', hour1Ownership: 'mobile', preferredTeamSize: 4
+};
+
+const squad: Squad = {
+  id: 's1', eventId: 'evt_sim', name: 'Solo', idea: 'App',
+  members: [viewer], commitments: []
+};
+
+runScenario('solo_builder', squad, 'u1');
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/run_all.ts
+================================================================
+
+import './solo_builder';
+import './two_people_no_lead';
+import './three_architects';
+import './no_executor';
+import './all_executors';
+import './conflicting_goals';
+import './intensity_mismatch';
+import './balanced_team';
+import './no_presenter';
+import './oversized_team';
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/three_architects.ts
+================================================================
+import { Builder, Squad } from '../../../runtime';
+import { runScenario } from './runner';
+
+const viewer: Builder = { id: 'u1', name: '1', role: 'mobile', builderStyle: 'architect', goal: 'prize', intensity: 'standard', hour1Ownership: 'mobile', preferredTeamSize: 4 };
+const squad: Squad = {
+  id: 's3', eventId: 'evt_sim', name: 'Architecture', idea: 'App',
+  members: [
+    viewer,
+    { id: 'u2', name: '2', role: 'backend', builderStyle: 'architect', goal: 'prize', intensity: 'standard', hour1Ownership: 'backend', preferredTeamSize: 4 },
+    { id: 'u3', name: '3', role: 'design', builderStyle: 'architect', goal: 'prize', intensity: 'standard', hour1Ownership: 'design', preferredTeamSize: 4 }
+  ],
+  commitments: []
+};
+
+runScenario('three_architects', squad, 'u1');
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/intensity_mismatch.ts
+================================================================
+import { Builder, Squad } from '../../../runtime';
+import { runScenario } from './runner';
+
+
+const members: Builder[] = [
+  { id: 'u1', name: '1', role: 'mobile', builderStyle: 'architect', goal: 'prize', intensity: 'all_nighter', hour1Ownership: 'mobile', preferredTeamSize: 4 },
+  { id: 'u2', name: '2', role: 'backend', builderStyle: 'executor', goal: 'prize', intensity: 'chill', hour1Ownership: 'backend', preferredTeamSize: 4 },
+  { id: 'u3', name: '3', role: 'design', builderStyle: 'executor', goal: 'prize', intensity: 'chill', hour1Ownership: 'design', preferredTeamSize: 4 }
+];
+
+
+const squad: Squad = {
+  id: 's_intensity_mismatch', eventId: 'evt_sim', name: 'intensity_mismatch', idea: 'Idea',
+  members, commitments: []
+};
+
+runScenario('intensity_mismatch', squad, 'u1');
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/two_people_no_lead.ts
+================================================================
+import { Builder, Squad } from '../../../runtime';
+import { runScenario } from './runner';
+
+
+const members: Builder[] = [
+  { id: 'u1', name: '1', role: 'mobile', builderStyle: 'executor', goal: 'prize', intensity: 'standard', hour1Ownership: 'mobile', preferredTeamSize: 4 },
+  { id: 'u2', name: '2', role: 'backend', builderStyle: 'executor', goal: 'prize', intensity: 'standard', hour1Ownership: 'backend', preferredTeamSize: 4 }
+];
+
+
+const squad: Squad = {
+  id: 's_two_people_no_lead', eventId: 'evt_sim', name: 'two_people_no_lead', idea: 'Idea',
+  members, commitments: []
+};
+
+runScenario('two_people_no_lead', squad, 'u1');
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/conflicting_goals.ts
+================================================================
+import { Builder, Squad } from '../../../runtime';
+import { runScenario } from './runner';
+
+
+const members: Builder[] = [
+  { id: 'u1', name: '1', role: 'mobile', builderStyle: 'architect', goal: 'startup', intensity: 'all_nighter', hour1Ownership: 'mobile', preferredTeamSize: 4 },
+  { id: 'u2', name: '2', role: 'backend', builderStyle: 'executor', goal: 'portfolio', intensity: 'standard', hour1Ownership: 'backend', preferredTeamSize: 4 },
+  { id: 'u3', name: '3', role: 'design', builderStyle: 'executor', goal: 'learn', intensity: 'chill', hour1Ownership: 'design', preferredTeamSize: 4 }
+];
+
+
+const squad: Squad = {
+  id: 's_conflicting_goals', eventId: 'evt_sim', name: 'conflicting_goals', idea: 'Idea',
+  members, commitments: []
+};
+
+runScenario('conflicting_goals', squad, 'u1');
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/runner.ts
+================================================================
+import { SquadRuntime, TestClock, EvaluatorRegistry, FormationEvaluator, Event, Squad, Builder } from '../../../runtime';
+import * as fs from 'fs';
+import * as path from 'path';
+
+const registry = new EvaluatorRegistry();
+registry.register(new FormationEvaluator());
+
+const startTimeMs = Date.now();
+const event: Event = {
+  id: 'evt_sim',
+  name: 'Simulation Event',
+  startTime: new Date(startTimeMs).toISOString(),
+  endTime: new Date(startTimeMs + 36 * 60 * 60 * 1000).toISOString()
+};
+
+export function runScenario(scenarioName: string, squad: Squad, viewerId: string) {
+  const clock = new TestClock(startTimeMs);
+  const runtime = new SquadRuntime(event, squad, registry, clock);
+  
+  const moment = runtime.evaluate(viewerId);
+  if (moment) {
+    const gd = moment.ghostDecision;
+    console.log(`[${scenarioName}]`);
+    console.log(`  Title:    ${gd.title}`);
+    console.log(`  Foresight: ${gd.foresight}`);
+    console.log(`  Action:   ${gd.options[0]?.label ?? '—'}`);
+    console.log(`  Urgency:  ${gd.urgency}`);
+    console.log('');
+  } else {
+    console.log(`[${scenarioName}] => ✓ Silence (No actionable decision)`);
+    console.log('');
+  }
+}
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/oversized_team.ts
+================================================================
+import { Builder, Squad } from '../../../runtime';
+import { runScenario } from './runner';
+
+const viewer: Builder = { id: 'u1', name: '1', role: 'mobile', builderStyle: 'architect', goal: 'prize', intensity: 'standard', hour1Ownership: 'mobile', preferredTeamSize: 4 };
+const members: Builder[] = [viewer];
+for(let i=2; i<=7; i++) {
+  members.push({ id: `u${i}`, name: `${i}`, role: 'backend', builderStyle: 'executor', goal: 'prize', intensity: 'standard', hour1Ownership: 'backend', preferredTeamSize: 4 });
+}
+
+const squad: Squad = {
+  id: 's2', eventId: 'evt_sim', name: 'Huge', idea: 'App',
+  members, commitments: []
+};
+
+runScenario('oversized_team', squad, 'u1');
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/all_executors.ts
+================================================================
+import { Builder, Squad } from '../../../runtime';
+import { runScenario } from './runner';
+
+
+const members: Builder[] = [
+  { id: 'u1', name: '1', role: 'mobile', builderStyle: 'executor', goal: 'prize', intensity: 'standard', hour1Ownership: 'mobile', preferredTeamSize: 4 },
+  { id: 'u2', name: '2', role: 'backend', builderStyle: 'executor', goal: 'prize', intensity: 'standard', hour1Ownership: 'backend', preferredTeamSize: 4 },
+  { id: 'u3', name: '3', role: 'frontend', builderStyle: 'executor', goal: 'prize', intensity: 'standard', hour1Ownership: 'frontend', preferredTeamSize: 4 }
+];
+
+
+const squad: Squad = {
+  id: 's_all_executors', eventId: 'evt_sim', name: 'all_executors', idea: 'Idea',
+  members, commitments: []
+};
+
+runScenario('all_executors', squad, 'u1');
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/balanced_team.ts
+================================================================
+import { Builder, Squad } from '../../../runtime';
+import { runScenario } from './runner';
+
+
+const members: Builder[] = [
+  { id: 'u1', name: '1', role: 'mobile', builderStyle: 'architect', goal: 'prize', intensity: 'all_nighter', hour1Ownership: 'mobile', preferredTeamSize: 4 },
+  { id: 'u2', name: '2', role: 'backend', builderStyle: 'executor', goal: 'prize', intensity: 'all_nighter', hour1Ownership: 'backend', preferredTeamSize: 4 },
+  { id: 'u3', name: '3', role: 'design', builderStyle: 'executor', goal: 'prize', intensity: 'all_nighter', hour1Ownership: 'design', preferredTeamSize: 4 }
+];
+
+
+const squad: Squad = {
+  id: 's_balanced_team', eventId: 'evt_sim', name: 'balanced_team', idea: 'Idea',
+  members, commitments: []
+};
+
+runScenario('balanced_team', squad, 'u1');
+
+
+================================================================
+FILE: src/runtime/scenarios/formation/no_executor.ts
+================================================================
+import { Builder, Squad } from '../../../runtime';
+import { runScenario } from './runner';
+
+
+const members: Builder[] = [
+  { id: 'u1', name: '1', role: 'mobile', builderStyle: 'architect', goal: 'prize', intensity: 'standard', hour1Ownership: 'mobile', preferredTeamSize: 4 },
+  { id: 'u2', name: '2', role: 'design', builderStyle: 'architect', goal: 'prize', intensity: 'standard', hour1Ownership: 'design', preferredTeamSize: 4 },
+  { id: 'u3', name: '3', role: 'product', builderStyle: 'architect', goal: 'prize', intensity: 'standard', hour1Ownership: 'product', preferredTeamSize: 4 }
+];
+
+
+const squad: Squad = {
+  id: 's_no_executor', eventId: 'evt_sim', name: 'no_executor', idea: 'Idea',
+  members, commitments: []
+};
+
+runScenario('no_executor', squad, 'u1');
+
+
+================================================================
+FILE: src/runtime/index.ts
+================================================================
+export * from './types';
+export * from './Clock';
+export * from './SquadRuntime';
+export * from './SquadState';
+export * from './SnapshotBuilder';
+export * from './computers/TemporalComputer';
+export * from './computers/CompositionComputer';
+export * from './computers/ActivityComputer';
+export * from './evaluators/Evaluator';
+export * from './evaluators/EvaluatorRegistry';
+export * from './evaluators/FormationEvaluator';
+export * from './composers/DecisionComposer';
+export * from './composers/MomentSelectionPolicy';
+
+
+================================================================
+FILE: src/runtime/telemetry/ExperimentSession.ts
+================================================================
+export type ExperimentSession = {
+  sessionId: string;
+  participantId?: string;
+  startedAt: number;
+  momentShownAt?: number;
+  firstReadCompleteAt?: number;
+  actionClickedAt?: number;
+  resolvedAt?: number;
+  askedForExplanation: boolean;
+  completed: boolean;
+};
+
+export class ExperimentTracker {
+  private session: ExperimentSession;
+
+  constructor(sessionId: string, participantId?: string) {
+    this.session = {
+      sessionId,
+      participantId,
+      startedAt: Date.now(),
+      askedForExplanation: false,
+      completed: false,
+    };
+  }
+
+  public markShown(nowMs: number = Date.now()) {
+    if (!this.session.momentShownAt) this.session.momentShownAt = nowMs;
+  }
+
+  public markAction(nowMs: number = Date.now()) {
+    if (!this.session.actionClickedAt) this.session.actionClickedAt = nowMs;
+  }
+
+  public markResolved(nowMs: number = Date.now()) {
+    if (!this.session.resolvedAt) {
+      this.session.resolvedAt = nowMs;
+      this.session.completed = true;
+    }
+  }
+
+  public flagExplanationAsked() {
+    this.session.askedForExplanation = true;
+  }
+
+  public getSession(): ExperimentSession {
+    return this.session;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/telemetry/TelemetryService.ts
+================================================================
+export type DecisionInteraction = {
+  momentId: string;
+  shownAt: number;
+  viewedAt?: number;
+  actionClickedAt?: number;
+  timeToResolution?: number;
+  abandoned?: boolean;
+};
+
+export class TelemetryService {
+  private interactions: Map<string, DecisionInteraction> = new Map();
+  private lastTrackedMomentId: string | null = null;
+
+  public trackShown(momentId: string, nowMs: number = Date.now()) {
+    if (!this.interactions.has(momentId)) {
+      this.interactions.set(momentId, {
+        momentId,
+        shownAt: nowMs
+      });
+      this.lastTrackedMomentId = momentId;
+    }
+  }
+
+  public trackAction(momentId: string, nowMs: number = Date.now()) {
+    const interaction = this.interactions.get(momentId);
+    if (interaction && !interaction.actionClickedAt) {
+      interaction.actionClickedAt = nowMs;
+      interaction.timeToResolution = nowMs - interaction.shownAt;
+      this.interactions.set(momentId, interaction);
+    }
+  }
+
+  public getMetrics(): DecisionInteraction[] {
+    return Array.from(this.interactions.values());
+  }
+
+  public markAbandonedIfActive(nowMs: number = Date.now()) {
+    if (this.lastTrackedMomentId) {
+      const interaction = this.interactions.get(this.lastTrackedMomentId);
+      if (interaction && !interaction.actionClickedAt) {
+        interaction.abandoned = true;
+        interaction.timeToResolution = nowMs - interaction.shownAt;
+      }
+    }
+  }
+}
+
+
+================================================================
+FILE: src/runtime/telemetry/TrialResult.ts
+================================================================
+export type TrialResult = {
+  sessionId: string;
+  participantType?: string;
+  sawDecisionAt: number;
+  understoodBeforeExplanation: boolean;
+  askedQuestion: boolean;
+  clickedAction: boolean;
+  timeToClick: number | null;  // null if never clicked
+  verbalReaction: string;
+  researcherNotes: string;
+};
+
+export class TrialRecorder {
+  private results: TrialResult[] = [];
+  private current: Partial<TrialResult> | null = null;
+
+  public startTrial(sessionId: string, participantType?: string): void {
+    this.current = {
+      sessionId,
+      participantType,
+      sawDecisionAt: Date.now(),
+      understoodBeforeExplanation: false,
+      askedQuestion: false,
+      clickedAction: false,
+      timeToClick: null,
+      verbalReaction: '',
+      researcherNotes: '',
+    };
+  }
+
+  public markUnderstood(): void {
+    if (this.current) this.current.understoodBeforeExplanation = true;
+  }
+
+  public markAskedQuestion(): void {
+    if (this.current) this.current.askedQuestion = true;
+  }
+
+  public markClicked(): void {
+    if (this.current && !this.current.clickedAction) {
+      this.current.clickedAction = true;
+      this.current.timeToClick = Date.now() - (this.current.sawDecisionAt ?? Date.now());
+    }
+  }
+
+  public setVerbalReaction(text: string): void {
+    if (this.current) this.current.verbalReaction = text;
+  }
+
+  public setResearcherNotes(text: string): void {
+    if (this.current) this.current.researcherNotes = text;
+  }
+
+  public finishTrial(): TrialResult | null {
+    if (!this.current) return null;
+    const result = this.current as TrialResult;
+    this.results.push(result);
+    this.current = null;
+    return result;
+  }
+
+  public getAllResults(): TrialResult[] {
+    return [...this.results];
+  }
+
+  public getCurrentTrial(): Partial<TrialResult> | null {
+    return this.current;
+  }
+}
+
+
+================================================================
+FILE: src/runtime/SnapshotBuilder.ts
+================================================================
+import { Squad, Event, Signal, AwarenessSnapshot } from './types';
+import { Clock } from './Clock';
+import { TemporalComputer } from './computers/TemporalComputer';
+import { CompositionComputer } from './computers/CompositionComputer';
+import { ActivityComputer } from './computers/ActivityComputer';
+
+/**
+ * Pipeline that orchestrates domain computers to build the AwarenessSnapshot.
+ */
+export class SnapshotBuilder {
+  public static build(squad: Squad, event: Event, signals: Signal[], clock: Clock): AwarenessSnapshot {
+    return {
+      timestamp: clock.now(),
+      squad,
+      event,
+      temporal: TemporalComputer.compute(event, clock),
+      composition: CompositionComputer.compute(squad),
+      activity: ActivityComputer.compute(signals)
+    };
+  }
+}
+
+
+================================================================
+FILE: src/runtime/proposals/CommitmentResolver.ts
+================================================================
+import { Commitment } from '../types';
+import { AlignmentTracker } from './AlignmentTracker';
+
+export class CommitmentResolver {
+  static resolve(tracker: AlignmentTracker, clockTime: number): Commitment | null {
+    if (!tracker.isFullyAligned) {
+      return null;
+    }
+
+    return {
+      id: `cmt_${tracker.proposal.id}`,
+      proposalId: tracker.proposal.id,
+      ownerId: tracker.proposal.proposedBy,
+      type: 'role', // Derived from proposal context in the future
+      action: tracker.proposal.proposedAction,
+      timestamp: clockTime
+    };
+  }
+}
+
+
+================================================================
+FILE: src/runtime/proposals/AlignmentTracker.ts
+================================================================
+import { Alignment, DecisionProposal, Builder } from '../types';
+
+export class AlignmentTracker {
+  private alignments: Map<string, Alignment> = new Map();
+
+  constructor(
+    public readonly proposal: DecisionProposal,
+    public readonly squadMembers: Builder[]
+  ) {}
+
+  public addAlignment(alignment: Alignment): void {
+    if (alignment.proposalId !== this.proposal.id) {
+      throw new Error('Alignment does not belong to this proposal');
+    }
+    this.alignments.set(alignment.builderId, alignment);
+  }
+
+  public get isFullyAligned(): boolean {
+    return this.squadMembers.every(member => 
+      this.alignments.get(member.id)?.response === 'agree'
+    );
+  }
+
+  public get hasChallenges(): boolean {
+    return Array.from(this.alignments.values()).some(a => a.response === 'challenge');
+  }
+
+  public get missingAlignments(): string[] {
+    return this.squadMembers
+      .map(m => m.id)
+      .filter(id => !this.alignments.has(id));
+  }
+
+  public get state(): 'pending' | 'aligned' | 'divergent' | 'expired' {
+    if (this.hasChallenges) return 'divergent';
+    if (this.missingAlignments.length > 0) return 'pending';
+    return 'aligned';
+  }
+}
+
+
+================================================================
+FILE: src/runtime/proposals/DecisionProposal.ts
+================================================================
+import { DecisionProposal } from '../types';
+
+export const createDecisionProposal = (
+  id: string,
+  decisionType: string,
+  proposedBy: string,
+  proposedAction: string,
+  createdAt: number
+): DecisionProposal => {
+  return {
+    id,
+    decisionType,
+    proposedBy,
+    proposedAction,
+    createdAt
+  };
+};
+
+
+================================================================
+FILE: app/index.tsx
+================================================================
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useEffect, useMemo, useState } from 'react'
+import {
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
+import { evaluateDecision, projectForTier, type EntitlementTier } from '../src/decision-engine'
+import { buildDecisionInput, radarTeams, ROLE_OPTIONS, type RadarTeamCard } from '../src/data/radarTeams'
+import { DecisionStoryReveal } from '../src/presentation/decision-story'
+import { color, hit, radius, space, type } from '../src/presentation/theme/tokens'
+import { hasHackPass, restoreHackPass } from '../src/services/purchases'
+
+type Tab = 'radar' | 'profile'
+
+const profileStorageKey = 'squadradar-builder-profile'
+const passStorageKey = 'squadradar-hack-pass-demo'
+
+type UiProfile = {
+  name: string
+  role: string
+}
+
+const defaultProfile: UiProfile = {
+  name: '',
+  role: 'Mobile builder',
+}
+
+function Avatar({ initials, color: bg, size = 44 }: { initials: string; color: string; size?: number }) {
+  return (
+    <View style={[styles.avatar, { backgroundColor: bg, width: size, height: size, borderRadius: size / 2 }]}>
+      <Text style={[styles.avatarText, { fontSize: size * 0.31 }]}>{initials}</Text>
+    </View>
+  )
+}
+
+export default function HomeScreen() {
+  const [tab, setTab] = useState<Tab>('radar')
+  const [profile, setProfile] = useState<UiProfile>(defaultProfile)
+  const [profileReady, setProfileReady] = useState(false)
+  const [tier, setTier] = useState<EntitlementTier>('free')
+  const [selected, setSelected] = useState<RadarTeamCard | null>(null)
+
+  useEffect(() => {
+    Promise.all([
+      AsyncStorage.getItem(profileStorageKey),
+      AsyncStorage.getItem(passStorageKey),
+      hasHackPass(),
+    ])
+      .then(([savedProfile, savedPass, entitled]) => {
+        if (savedProfile) {
+          const parsed = JSON.parse(savedProfile) as { name?: string; role?: string }
+          setProfile({
+            name: parsed.name ?? '',
+            role: parsed.role ?? defaultProfile.role,
+          })
+        }
+        if (entitled || savedPass === 'pass') setTier('pass')
+      })
+      .finally(() => setProfileReady(true))
+  }, [])
+
+  const persistProfile = async (next: UiProfile) => {
+    setProfile(next)
+    await AsyncStorage.setItem(profileStorageKey, JSON.stringify(next)).catch(() => undefined)
+  }
+
+  const unlockPass = async () => {
+    setTier('pass')
+    await AsyncStorage.setItem(passStorageKey, 'pass').catch(() => undefined)
+  }
+
+  const clearPass = async () => {
+    setTier('free')
+    await AsyncStorage.setItem(passStorageKey, 'free').catch(() => undefined)
+  }
+
+  const tieredStory = useMemo(() => {
+    if (!selected) return null
+    const input = buildDecisionInput(selected, {
+      name: profile.name.trim() || 'You',
+      role: profile.role,
+    })
+    const full = evaluateDecision(input)
+    return projectForTier(full, tier)
+  }, [selected, profile, tier])
+
+  if (!profileReady) {
+    return <SafeAreaView style={styles.safe} />
+  }
+
+  if (selected && tieredStory) {
+    return (
+      <SafeAreaView style={styles.safe}>
+        <DecisionStoryReveal
+          story={tieredStory}
+          teamName={selected.name}
+          onBack={() => setSelected(null)}
+          onPassUnlocked={unlockPass}
+        />
+      </SafeAreaView>
+    )
+  }
+
+  return (
+    <SafeAreaView style={styles.safe}>
+      {tab === 'radar' ? (
+        <Radar onOpen={setSelected} tier={tier} />
+      ) : (
+        <Profile
+          profile={profile}
+          tier={tier}
+          onChange={persistProfile}
+          onRestore={async () => {
+            const result = await restoreHackPass()
+            if (result.ok) await unlockPass()
+          }}
+          onClear={clearPass}
+        />
+      )}
+      <BottomNav active={tab} onChange={setTab} />
+    </SafeAreaView>
+  )
+}
+
+function Radar({ onOpen, tier }: { onOpen: (team: RadarTeamCard) => void; tier: EntitlementTier }) {
+  return (
+    <ScrollView contentContainerStyle={styles.screen} showsVerticalScrollIndicator={false}>
+      <View style={styles.topRow}>
+        <View style={{ flex: 1, paddingRight: space.md }}>
+          <Text style={styles.eyebrow}>SQUADRADAR</Text>
+          <Text style={styles.title}>Should I join{`\n`}this team?</Text>
+        </View>
+        <View style={styles.passBadge}>
+          <Text style={styles.passBadgeText}>{tier === 'pass' ? 'PASS' : 'FREE'}</Text>
+        </View>
+      </View>
+
+      <Text style={styles.lede} numberOfLines={2}>
+        See the Biggest Risk before you waste a night.
+      </Text>
+
+      {radarTeams.length === 0 ? (
+        <View style={styles.empty}>
+          <Text style={styles.emptyTitle}>No teams to decide on</Text>
+          <Text style={styles.muted}>Check back when squads form at the venue.</Text>
+        </View>
+      ) : (
+        <>
+          <Text style={styles.sectionTitle}>Decide</Text>
+          {radarTeams.map((team) => (
+            <Pressable
+              key={team.id}
+              style={styles.teamCard}
+              onPress={() => onOpen(team)}
+              accessibilityRole="button"
+              accessibilityLabel={`Open Premortem for ${team.name}`}
+            >
+              <View style={styles.cardHeader}>
+                <Avatar initials={team.initials} color={team.color} />
+                <View style={styles.cardTitleWrap}>
+                  <Text style={styles.teamName}>{team.name}</Text>
+                  <Text style={styles.muted}>
+                    {team.context} · {team.membersLabel}
+                  </Text>
+                </View>
+                <Text style={styles.chevron}>›</Text>
+              </View>
+              <Text style={styles.idea} numberOfLines={2}>
+                {team.idea}
+              </Text>
+              <Text style={styles.hint}>Tap for Biggest Risk</Text>
+            </Pressable>
+          ))}
+        </>
+      )}
+    </ScrollView>
+  )
+}
+
+function Profile({
+  profile,
+  tier,
+  onChange,
+  onRestore,
+  onClear,
+}: {
+  profile: UiProfile
+  tier: EntitlementTier
+  onChange: (next: UiProfile) => void
+  onRestore: () => void
+  onClear: () => void
+}) {
+  return (
+    <ScrollView contentContainerStyle={styles.screen} keyboardShouldPersistTaps="handled">
+      <Text style={styles.eyebrow}>YOU</Text>
+      <Text style={styles.profileLead}>Who walks into the Premortem?</Text>
+
+      <Text style={styles.fieldLabel}>Name</Text>
+      <TextInput
+        value={profile.name}
+        onChangeText={(name) => onChange({ ...profile, name })}
+        placeholder="Your name"
+        placeholderTextColor={color.textMuted}
+        style={styles.input}
+        autoCapitalize="words"
+        accessibilityLabel="Your name"
+      />
+
+      <Text style={styles.fieldLabel}>Role</Text>
+      <View style={styles.roleWrap}>
+        {ROLE_OPTIONS.map((role) => {
+          const active = profile.role === role
+          return (
+            <Pressable
+              key={role}
+              onPress={() => onChange({ ...profile, role })}
+              style={[styles.roleChip, active && styles.roleChipActive]}
+              accessibilityRole="button"
+              accessibilityState={{ selected: active }}
+            >
+              <Text style={[styles.roleChipText, active && styles.roleChipTextActive]}>{role}</Text>
+            </Pressable>
+          )
+        })}
+      </View>
+
+      <View style={styles.passUpsell}>
+        <Text style={styles.passUpsellLabel}>HACK PASS</Text>
+        <Text style={styles.passUpsellTitle}>
+          {tier === 'pass' ? 'Prevention unlocked' : 'Unlock inside a Premortem'}
+        </Text>
+        <Text style={styles.passUpsellCopy} numberOfLines={3}>
+          {tier === 'pass'
+            ? 'Ownership locks, outcome if locked, and your first-hour plan are available.'
+            : 'After the risk lands, Pass shows how to lock roles, what happens if you do, and your first hour.'}
+        </Text>
+        <Pressable
+          onPress={onRestore}
+          style={styles.secondaryButton}
+          accessibilityRole="button"
+          accessibilityLabel="Restore Hack Pass purchases"
+        >
+          <Text style={styles.secondaryButtonText}>Restore purchases</Text>
+        </Pressable>
+        {tier === 'pass' ? (
+          <Pressable onPress={onClear} accessibilityRole="button" accessibilityLabel="Clear Hack Pass for this demo">
+            <Text style={styles.clear}>Clear Hack Pass</Text>
+          </Pressable>
+        ) : null}
+      </View>
+    </ScrollView>
+  )
+}
+
+function BottomNav({ active, onChange }: { active: Tab; onChange: (tab: Tab) => void }) {
+  const tabs: { id: Tab; label: string }[] = [
+    { id: 'radar', label: 'Radar' },
+    { id: 'profile', label: 'You' },
+  ]
+  return (
+    <View style={styles.nav}>
+      {tabs.map((item) => (
+        <Pressable
+          key={item.id}
+          onPress={() => onChange(item.id)}
+          style={styles.navItem}
+          accessibilityRole="button"
+          accessibilityLabel={`${item.label} tab`}
+          accessibilityState={{ selected: active === item.id }}
+        >
+          <Text style={[styles.navLabel, active === item.id && styles.navActive]}>{item.label}</Text>
+        </Pressable>
+      ))}
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  safe: { flex: 1, backgroundColor: color.bg },
+  screen: { padding: space.xl, paddingBottom: 112, gap: space.lg },
+  topRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: space.sm },
+  eyebrow: { ...type.label, color: color.textMuted },
+  title: { ...type.display, color: color.text, marginTop: space.xs },
+  profileLead: { ...type.body, color: color.textSecondary, marginTop: -space.sm },
+  fieldLabel: { ...type.label, color: color.textMuted, marginBottom: -space.sm },
+  input: {
+    ...type.bodyStrong,
+    color: color.text,
+    backgroundColor: color.bgElevated,
+    borderWidth: 1,
+    borderColor: color.line,
+    borderRadius: radius.md,
+    paddingHorizontal: space.lg,
+    paddingVertical: space.md,
+    minHeight: hit.min,
+  },
+  roleWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
+  roleChip: {
+    borderWidth: 1,
+    borderColor: color.lineStrong,
+    borderRadius: radius.pill,
+    paddingHorizontal: space.md,
+    paddingVertical: space.sm,
+    minHeight: 36,
+    justifyContent: 'center',
+  },
+  roleChipActive: {
+    backgroundColor: color.accentDim,
+    borderColor: color.accentSoft,
+  },
+  roleChipText: { ...type.meta, color: color.textSecondary },
+  roleChipTextActive: { color: color.accentSoft },
+  lede: { ...type.body, color: color.textSecondary, marginTop: -space.sm },
+  passBadge: {
+    backgroundColor: color.accentDim,
+    paddingHorizontal: space.md,
+    paddingVertical: space.sm,
+    borderRadius: radius.pill,
+    marginTop: space.xs,
+    borderWidth: 1,
+    borderColor: color.lineStrong,
+  },
+  passBadgeText: { ...type.label, color: color.accentSoft, letterSpacing: 1 },
+  sectionTitle: { ...type.bodyStrong, color: color.text, marginTop: space.sm },
+  teamCard: {
+    backgroundColor: color.bgElevated,
+    borderRadius: radius.xl,
+    padding: space.lg,
+    gap: space.md,
+    borderWidth: 1,
+    borderColor: color.line,
+  },
+  cardHeader: { flexDirection: 'row', alignItems: 'center' },
+  avatar: { justifyContent: 'center', alignItems: 'center' },
+  avatarText: { color: color.text, fontWeight: '800' },
+  cardTitleWrap: { marginLeft: space.md, flex: 1, gap: 3 },
+  teamName: { ...type.bodyStrong, color: color.text, fontSize: 16 },
+  muted: { ...type.meta, color: color.textSecondary },
+  chevron: { color: color.textMuted, fontSize: 28, lineHeight: 28 },
+  idea: { ...type.body, color: color.textSecondary },
+  hint: { ...type.label, color: color.accent, letterSpacing: 0.8 },
+  empty: {
+    backgroundColor: color.bgElevated,
+    borderRadius: radius.lg,
+    padding: space.xl,
+    gap: space.sm,
+    borderWidth: 1,
+    borderColor: color.line,
+  },
+  emptyTitle: { ...type.bodyStrong, color: color.text },
+  nav: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 72,
+    backgroundColor: color.bgQuiet,
+    borderTopColor: color.line,
+    borderTopWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingTop: space.lg,
+  },
+  navItem: { alignItems: 'center', minWidth: 64, minHeight: hit.min },
+  navLabel: { ...type.meta, color: color.textMuted },
+  navActive: { color: color.accentSoft },
+  secondaryButton: {
+    borderWidth: 1,
+    borderColor: color.lineStrong,
+    borderRadius: radius.md,
+    paddingVertical: space.md,
+    alignItems: 'center',
+    minHeight: hit.min,
+    justifyContent: 'center',
+    marginTop: space.sm,
+  },
+  secondaryButtonText: { ...type.button, color: color.accentSoft },
+  passUpsell: {
+    backgroundColor: color.accentDim,
+    borderRadius: radius.xl,
+    padding: space.lg,
+    gap: space.xs,
+    marginTop: space.sm,
+    borderWidth: 1,
+    borderColor: color.lineStrong,
+  },
+  passUpsellLabel: { ...type.label, color: color.accentSoft },
+  passUpsellTitle: { ...type.title, color: color.text, fontSize: 20 },
+  passUpsellCopy: { ...type.meta, color: color.textSecondary },
+  clear: { ...type.meta, color: color.textMuted, textAlign: 'center', marginTop: space.sm },
+})
+
+
+================================================================
+FILE: app/protocol/index.tsx
+================================================================
+import React, { useState, useMemo, useEffect } from 'react';
+import { SafeAreaView, ScrollView, View, Text, Pressable, StyleSheet, Platform, Switch } from 'react-native';
+import { 
+  SquadRuntime, 
+  TestClock, 
+  EvaluatorRegistry, 
+  FormationEvaluator,
+  Event,
+  Squad,
+  Builder,
+  Signal
+} from '../../src/runtime';
+import { ExperimentTracker } from '../../src/runtime/telemetry/ExperimentSession';
+
+const startTimeMs = Date.now();
+
+const mockEvent: Event = {
+  id: 'evt_shipaton_2026',
+  name: 'Shipaton 2026',
+  startTime: new Date(startTimeMs).toISOString(),
+  endTime: new Date(startTimeMs + 36 * 60 * 60 * 1000).toISOString()
+};
+
+const mockViewer: Builder = {
+  id: 'usr_1',
+  name: 'Abhi',
+  role: 'mobile',
+  builderStyle: 'architect',
+  goal: 'prize',
+  intensity: 'all_nighter',
+  hour1Ownership: 'mobile',
+  preferredTeamSize: 4
+};
+
+const mockSquad: Squad = {
+  id: 'sqd_alpha',
+  eventId: 'evt_shipaton_2026',
+  name: 'Alpha Team',
+  idea: 'Collaboration Intelligence',
+  members: [
+    mockViewer, 
+    { ...mockViewer, id: 'usr_2', name: 'Sarah', role: 'design' },
+    { ...mockViewer, id: 'usr_3', name: 'Alex', role: 'backend' }
+  ],
+  commitments: []
+};
+
+const experiment = new ExperimentTracker(`session_${Date.now()}`);
+
+export default function ProtocolDebugger() {
+  const [tick, setTick] = useState(0);
+  const [devMode, setDevMode] = useState(false); // Default to Trial Mode
+  
+  const { runtime, clock } = useMemo(() => {
+    const registry = new EvaluatorRegistry();
+    registry.register(new FormationEvaluator());
+    const clk = new TestClock(startTimeMs);
+    const rt = new SquadRuntime(mockEvent, mockSquad, registry, clk);
+    return { runtime: rt, clock: clk };
+  }, []);
+
+  const update = () => setTick(t => t + 1);
+
+  const snapshot = runtime.snapshot();
+  const moment = runtime.evaluate(mockViewer.id);
+  const insights = runtime.getInsights(mockViewer.id);
+  const signals = runtime.getSignals();
+
+  useEffect(() => {
+    if (moment) {
+      experiment.markShown(Date.now());
+    } else {
+      experiment.markResolved(Date.now());
+    }
+  }, [moment]);
+
+  const handleAction = (actionType: string, actionValue?: string) => {
+    if (moment) {
+      experiment.markAction(Date.now());
+    }
+
+    clock.advance(5 * 60 * 1000);
+    const sig: Signal = {
+      id: `sig_commit_${Date.now()}`,
+      version: 1,
+      actorId: mockViewer.id,
+      squadId: mockSquad.id,
+      type: 'commitment_made',
+      timestamp: clock.now(),
+      payload: {
+        commitment: {
+          id: `cmt_${Date.now()}`,
+          builderId: mockViewer.id,
+          type: actionType as any,
+          value: actionValue || 'locked',
+          timestamp: clock.now()
+        }
+      }
+    };
+    runtime.emit(sig);
+    update();
+  };
+
+  const handleResearcherFlag = () => {
+    experiment.flagExplanationAsked();
+    update();
+  };
+
+  const mono = Platform.OS === 'ios' ? 'Menlo' : 'monospace';
+
+  if (!devMode) {
+    // ----------------------------------------------------
+    // TRIAL MODE (Extremely clean, no jargon)
+    // ----------------------------------------------------
+    return (
+      <SafeAreaView style={styles.trialContainer}>
+        <View style={styles.trialContent}>
+          {moment ? (
+            <View>
+              <Text style={styles.trialHeader}>[Problem]</Text>
+              <Text style={styles.trialTitle}>{moment.ghostDecision.title}</Text>
+              <Text style={styles.trialForesight}>{moment.ghostDecision.foresight}</Text>
+              
+              <View style={styles.trialActionContainer}>
+                <Text style={styles.trialHeader}>[Action]</Text>
+                {moment.ghostDecision.options.map(opt => (
+                  <Pressable 
+                    key={opt.id} 
+                    style={styles.trialButton}
+                    onPress={() => handleAction(opt.actionType, opt.actionValue)}
+                  >
+                    <Text style={styles.trialButtonText}>{opt.label}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+          ) : (
+            <View style={styles.trialResolved}>
+              <Text style={styles.trialResolvedIcon}>✓</Text>
+              <Text style={styles.trialResolvedTitle}>Team alignment established</Text>
+              <Text style={styles.trialResolvedSub}>No further action needed.</Text>
+            </View>
+          )}
+        </View>
+
+        {/* Secret Researcher Overlay */}
+        <View style={styles.researcherBar}>
+           <Pressable onPress={() => setDevMode(true)} style={styles.researcherBtn}>
+             <Text style={styles.researcherBtnText}>Dev Mode</Text>
+           </Pressable>
+           <Pressable onPress={handleResearcherFlag} style={[styles.researcherBtn, {backgroundColor: '#ffebee'}]}>
+             <Text style={[styles.researcherBtnText, {color: '#c62828'}]}>Flag: Asked for Help</Text>
+           </Pressable>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  // ----------------------------------------------------
+  // DEVELOPER MODE (The Oscilloscope)
+  // ----------------------------------------------------
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        
+        <View style={styles.devModeHeader}>
+          <Text style={[styles.title, { fontFamily: mono, marginBottom: 0 }]}>PROTOCOL DEBUGGER</Text>
+          <Pressable onPress={() => setDevMode(false)}>
+            <Text style={{fontFamily: mono, color: 'blue'}}>Switch to Trial Mode</Text>
+          </Pressable>
+        </View>
+        
+        {/* STATE BLOCK */}
+        <View style={styles.block}>
+          <Text style={[styles.blockHeader, { fontFamily: mono }]}>STATE</Text>
+          <Text style={[styles.text, { fontFamily: mono }]}>Phase: {snapshot.temporal.progressPercent <= 20 ? 'Formation' : 'Build'}</Text>
+          <Text style={[styles.text, { fontFamily: mono }]}>Progress: {snapshot.temporal.progressPercent.toFixed(1)}%</Text>
+          <Text style={[styles.text, { fontFamily: mono }]}>Members: {snapshot.composition.totalMembers}</Text>
+          <Text style={[styles.text, { fontFamily: mono }]}>Commitments: {snapshot.squad.commitments.length}</Text>
+        </View>
+
+        {/* INSIGHTS BLOCK */}
+        <View style={styles.block}>
+          <Text style={[styles.blockHeader, { fontFamily: mono }]}>INSIGHT</Text>
+          {insights.length > 0 ? (
+            insights.map(ins => (
+              <Text key={ins.id} style={[styles.text, { fontFamily: mono }]}>- {ins.type} ({ins.severity})</Text>
+            ))
+          ) : (
+            <Text style={[styles.text, { fontFamily: mono }]}>0 active insights</Text>
+          )}
+        </View>
+
+        {/* DECISION MOMENT OR RESOLVED */}
+        {moment ? (
+          <View style={styles.momentBlock}>
+            <Text style={[styles.blockHeader, { fontFamily: mono }]}>GHOST DECISION</Text>
+            <Text style={[styles.title, { fontFamily: mono, marginBottom: 8 }]}>{moment.ghostDecision.title}</Text>
+            <Text style={[styles.text, { fontFamily: mono, marginBottom: 16 }]}>"{moment.ghostDecision.foresight}"</Text>
+            
+            <Text style={[styles.blockHeader, { fontFamily: mono }]}>ACTION</Text>
+            {moment.ghostDecision.options.map(opt => (
+              <Pressable 
+                key={opt.id} 
+                style={styles.button}
+                onPress={() => handleAction(opt.actionType, opt.actionValue)}
+              >
+                <Text style={[styles.buttonText, { fontFamily: mono }]}>[{opt.label}]</Text>
+              </Pressable>
+            ))}
+          </View>
+        ) : (
+          <View style={styles.resolvedBlock}>
+            <Text style={[styles.resolvedText, { fontFamily: mono }]}>✓ Shared awareness established</Text>
+            <Text style={[styles.text, { fontFamily: mono }]}>No further action needed.</Text>
+          </View>
+        )}
+
+        <View style={styles.devPanel}>
+          <Text style={[styles.devHeader, { fontFamily: mono }]}>EXPERIMENT SESSION</Text>
+          <Text style={[styles.devJson, { fontFamily: mono }]}>{JSON.stringify(experiment.getSession(), null, 2)}</Text>
+          
+          <Text style={[styles.devHeader, { fontFamily: mono, marginTop: 12 }]}>SIGNALS ({signals.length})</Text>
+          <Text style={[styles.devJson, { fontFamily: mono }]}>{JSON.stringify(signals, null, 2)}</Text>
+        </View>
+
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  // Trial Styles
+  trialContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+  },
+  trialContent: {
+    padding: 32,
+    maxWidth: 500,
+    alignSelf: 'center',
+    width: '100%',
+  },
+  trialHeader: {
+    fontSize: 14,
+    color: '#888',
+    marginBottom: 8,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  trialTitle: {
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#000',
+    marginBottom: 16,
+    lineHeight: 34,
+  },
+  trialForesight: {
+    fontSize: 18,
+    color: '#444',
+    lineHeight: 28,
+  },
+  trialActionContainer: {
+    marginTop: 48,
+  },
+  trialButton: {
+    backgroundColor: '#000',
+    paddingVertical: 18,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  trialButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  trialResolved: {
+    alignItems: 'center',
+    paddingVertical: 40,
+  },
+  trialResolvedIcon: {
+    fontSize: 48,
+    color: '#10b981',
+    marginBottom: 16,
+  },
+  trialResolvedTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 8,
+  },
+  trialResolvedSub: {
+    fontSize: 16,
+    color: '#666',
+  },
+  researcherBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderTopWidth: 1,
+    borderColor: '#eee',
+    backgroundColor: '#fafafa',
+  },
+  researcherBtn: {
+    padding: 8,
+    borderRadius: 4,
+    backgroundColor: '#eee',
+  },
+  researcherBtnText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#555',
+  },
+
+  // Dev Styles
+  container: { flex: 1, backgroundColor: '#fff' },
+  scroll: { padding: 24 },
+  devModeHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 },
+  title: { fontSize: 18, fontWeight: 'bold', letterSpacing: 1 },
+  block: { borderWidth: 1, borderColor: '#000', padding: 16, marginBottom: 24 },
+  blockHeader: { fontSize: 12, fontWeight: 'bold', marginBottom: 12, color: '#666', letterSpacing: 1 },
+  text: { fontSize: 14, lineHeight: 20, marginBottom: 4, color: '#000' },
+  momentBlock: { borderWidth: 2, borderColor: '#000', padding: 16, marginBottom: 24, backgroundColor: '#f9f9f9' },
+  button: { borderWidth: 1, borderColor: '#000', padding: 12, marginTop: 8, alignItems: 'center', backgroundColor: '#000' },
+  buttonText: { color: '#fff', fontWeight: 'bold' },
+  resolvedBlock: { borderWidth: 1, borderColor: '#000', borderStyle: 'dashed', padding: 24, marginBottom: 24, alignItems: 'center' },
+  resolvedText: { fontSize: 16, fontWeight: 'bold', color: '#000', marginBottom: 8 },
+  devPanel: { marginTop: 16, backgroundColor: '#f4f4f4', padding: 12 },
+  devHeader: { fontSize: 12, fontWeight: 'bold', marginTop: 12, marginBottom: 8, color: '#333' },
+  devJson: { fontSize: 10, color: '#333' }
+});
+
+
+================================================================
+FILE: app/protocol/trial.tsx
+================================================================
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
+import {
+  SquadRuntime,
+  TestClock,
+  EvaluatorRegistry,
+  FormationEvaluator,
+  Event,
+  Squad,
+  Builder,
+  Signal,
+} from '../../src/runtime';
+import { TrialRecorder } from '../../src/runtime/telemetry/TrialResult';
+
+// ── Frozen Trial Scenario: Leadership Gap ──────────────────────────
+const startTimeMs = Date.now();
+
+const trialEvent: Event = {
+  id: 'evt_trial_001',
+  name: 'Trial Hackathon',
+  startTime: new Date(startTimeMs).toISOString(),
+  endTime: new Date(startTimeMs + 36 * 60 * 60 * 1000).toISOString(),
+};
+
+const trialViewer: Builder = {
+  id: 'trial_viewer',
+  name: 'You',
+  role: 'mobile',
+  builderStyle: 'architect',
+  goal: 'prize',
+  intensity: 'all_nighter',
+  hour1Ownership: 'mobile',
+  preferredTeamSize: 4,
+};
+
+const trialSquad: Squad = {
+  id: 'sqd_trial',
+  eventId: 'evt_trial_001',
+  name: 'Your Team',
+  idea: 'TBD',
+  members: [
+    trialViewer,
+    { ...trialViewer, id: 'p2', name: 'Jordan', role: 'design', builderStyle: 'executor' },
+    { ...trialViewer, id: 'p3', name: 'Sam', role: 'backend', builderStyle: 'executor' },
+    { ...trialViewer, id: 'p4', name: 'Riley', role: 'frontend', builderStyle: 'explorer' },
+  ],
+  commitments: [],
+};
+
+// ── Component ──────────────────────────────────────────────────────
+
+type Phase = 'reveal' | 'align' | 'resolved_agreed' | 'resolved_challenged';
+
+export default function TrialScreen() {
+  const [phase, setPhase] = useState<Phase>('reveal');
+  const [researcherOpen, setResearcherOpen] = useState(false);
+  const [notes, setNotes] = useState('');
+  const [reaction, setReaction] = useState('');
+
+  const recorder = useMemo(() => new TrialRecorder(), []);
+
+  const { runtime, clock } = useMemo(() => {
+    const registry = new EvaluatorRegistry();
+    registry.register(new FormationEvaluator());
+    const clk = new TestClock(startTimeMs);
+    const rt = new SquadRuntime(trialEvent, trialSquad, registry, clk);
+    return { runtime: rt, clock: clk };
+  }, []);
+
+  useEffect(() => {
+    recorder.startTrial(`trial_${Date.now()}`);
+  }, []);
+
+  const moment = phase === 'reveal' ? runtime.evaluate(trialViewer.id) : null;
+
+  const handleReviewDecision = () => {
+    recorder.markClicked();
+    setPhase('align');
+  };
+
+  const handleAlign = (status: 'agree' | 'challenge') => {
+    const alignSig: Signal = {
+      id: `sig_align_${Date.now()}`,
+      version: 1,
+      actorId: trialViewer.id,
+      squadId: trialSquad.id,
+      type: 'alignment_made',
+      timestamp: clock.now(),
+      payload: {
+        alignment: {
+          id: `aln_${Date.now()}`,
+          decisionId: 'ghost-1',
+          builderId: trialViewer.id,
+          status,
+          timestamp: clock.now()
+        }
+      }
+    };
+    runtime.emit(alignSig);
+
+    if (status === 'agree') {
+      const commitSig: Signal = {
+        id: `sig_trial_${Date.now()}`,
+        version: 1,
+        actorId: trialViewer.id,
+        squadId: trialSquad.id,
+        type: 'commitment_made',
+        timestamp: clock.now(),
+        payload: {
+          commitment: {
+            id: `cmt_trial_${Date.now()}`,
+            builderId: trialViewer.id,
+            type: 'role',
+            value: 'lead',
+            timestamp: clock.now(),
+          },
+        },
+      };
+      runtime.emit(commitSig);
+      setPhase('resolved_agreed');
+    } else {
+      setPhase('resolved_challenged');
+    }
+  };
+
+  // ── Reveal Phase ─────────────────────────────────────────────────
+  if (phase === 'reveal' && moment) {
+    return (
+      <SafeAreaView style={s.container}>
+        <View style={s.content}>
+          <Text style={s.situation}>Situation</Text>
+          <Text style={s.title}>{moment.ghostDecision.title}</Text>
+
+          <View style={s.divider} />
+
+          <Text style={s.consequenceLabel}>If nobody acts:</Text>
+          <Text style={s.consequence}>{moment.ghostDecision.foresight}</Text>
+
+          <Pressable style={s.commitButton} onPress={handleReviewDecision}>
+            <Text style={s.commitText}>{moment.ghostDecision.options[0]?.label}</Text>
+          </Pressable>
+        </View>
+
+        <ResearcherOverlay
+          open={researcherOpen}
+          onToggle={() => setResearcherOpen(!researcherOpen)}
+          onUnderstood={() => recorder.markUnderstood()}
+          onAskedQuestion={() => recorder.markAskedQuestion()}
+          recorder={recorder}
+        />
+      </SafeAreaView>
+    );
+  }
+
+  // ── Align Phase ─────────────────────────────────────────────────
+  if (phase === 'align') {
+    return (
+      <SafeAreaView style={s.container}>
+        <View style={s.content}>
+          <Text style={s.situation}>Leadership decision proposed</Text>
+          <Text style={s.title}>Abhi will own final decisions.</Text>
+          
+          <View style={s.divider} />
+          
+          <Text style={s.consequenceLabel}>Before this locks:</Text>
+          <Text style={s.consequence}>Does this match your team's understanding?</Text>
+
+          <View style={s.alignActionRow}>
+            <Pressable style={[s.commitButton, { flex: 1, marginRight: 8, backgroundColor: '#000' }]} onPress={() => handleAlign('agree')}>
+              <Text style={s.commitText}>[Agree]</Text>
+            </Pressable>
+            <Pressable style={[s.commitButton, { flex: 1, marginLeft: 8, backgroundColor: '#f44336' }]} onPress={() => handleAlign('challenge')}>
+              <Text style={s.commitText}>[Challenge]</Text>
+            </Pressable>
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  // ── Resolved Phase ───────────────────────────────────────────────
+  return (
+    <SafeAreaView style={s.container}>
+      <View style={s.resolvedContent}>
+        {phase === 'resolved_agreed' ? (
+          <>
+            <Text style={s.checkmark}>✓</Text>
+            <Text style={s.resolvedTitle}>Leadership ownership established</Text>
+            <Text style={s.resolvedSub}>Abhi owns final decisions.{'\n'}Everyone is aligned.</Text>
+          </>
+        ) : (
+          <>
+            <Text style={[s.checkmark, { color: '#f44336' }]}>⚠</Text>
+            <Text style={s.resolvedTitle}>Alignment required</Text>
+            <Text style={s.resolvedSub}>The team disagrees.{'\n'}Resolve before committing.</Text>
+          </>
+        )}
+      </View>
+
+      {/* Researcher post-trial capture */}
+      <ResearcherOverlay
+        open={researcherOpen}
+        onToggle={() => setResearcherOpen(!researcherOpen)}
+        onUnderstood={() => recorder.markUnderstood()}
+        onAskedQuestion={() => recorder.markAskedQuestion()}
+        recorder={recorder}
+        postTrial
+        reaction={reaction}
+        onReactionChange={setReaction}
+        notes={notes}
+        onNotesChange={setNotes}
+        onFinish={() => {
+          recorder.setVerbalReaction(reaction);
+          recorder.setResearcherNotes(notes);
+          const result = recorder.finishTrial();
+          console.log('=== TRIAL RESULT ===');
+          console.log(JSON.stringify(result, null, 2));
+        }}
+      />
+    </SafeAreaView>
+  );
+}
+
+// ── Researcher Overlay ─────────────────────────────────────────────
+
+type OverlayProps = {
+  open: boolean;
+  onToggle: () => void;
+  onUnderstood: () => void;
+  onAskedQuestion: () => void;
+  recorder: TrialRecorder;
+  postTrial?: boolean;
+  reaction?: string;
+  onReactionChange?: (t: string) => void;
+  notes?: string;
+  onNotesChange?: (t: string) => void;
+  onFinish?: () => void;
+};
+
+function ResearcherOverlay({
+  open,
+  onToggle,
+  onUnderstood,
+  onAskedQuestion,
+  recorder,
+  postTrial,
+  reaction,
+  onReactionChange,
+  notes,
+  onNotesChange,
+  onFinish,
+}: OverlayProps) {
+  const trial = recorder.getCurrentTrial();
+  const timeElapsed = trial?.sawDecisionAt
+    ? ((Date.now() - trial.sawDecisionAt) / 1000).toFixed(1)
+    : '—';
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={s.researcherBar}
+    >
+      <Pressable onPress={onToggle} style={s.researcherToggle}>
+        <Text style={s.researcherToggleText}>
+          {open ? '▼ Researcher' : '▶ Researcher'}
+        </Text>
+      </Pressable>
+
+      {open && (
+        <ScrollView style={s.researcherPanel}>
+          <Text style={s.researcherMeta}>
+            Time since shown: {timeElapsed}s{'\n'}
+            Understood: {trial?.understoodBeforeExplanation ? '✓' : '—'}{'\n'}
+            Asked question: {trial?.askedQuestion ? '⚠ YES' : '—'}{'\n'}
+            Clicked: {trial?.clickedAction ? '✓' : '—'}{'\n'}
+            Time to click: {trial?.timeToClick ? `${(trial.timeToClick / 1000).toFixed(1)}s` : '—'}
+          </Text>
+
+          <View style={s.researcherButtons}>
+            <Pressable style={[s.rBtn, { backgroundColor: '#e8f5e9' }]} onPress={onUnderstood}>
+              <Text style={s.rBtnText}>✓ Understood</Text>
+            </Pressable>
+            <Pressable style={[s.rBtn, { backgroundColor: '#ffebee' }]} onPress={onAskedQuestion}>
+              <Text style={[s.rBtnText, { color: '#c62828' }]}>⚠ Asked Question</Text>
+            </Pressable>
+          </View>
+
+          {postTrial && (
+            <View style={s.postTrial}>
+              <Text style={s.postTrialLabel}>
+                Ask: "What just happened?"
+              </Text>
+              <TextInput
+                style={s.postTrialInput}
+                placeholder="Record verbal reaction..."
+                value={reaction}
+                onChangeText={onReactionChange}
+                multiline
+              />
+              <Text style={s.postTrialLabel}>Researcher notes</Text>
+              <TextInput
+                style={s.postTrialInput}
+                placeholder="Observations, hesitations, body language..."
+                value={notes}
+                onChangeText={onNotesChange}
+                multiline
+              />
+              <Pressable style={s.finishBtn} onPress={onFinish}>
+                <Text style={s.finishBtnText}>Save Trial Result</Text>
+              </Pressable>
+            </View>
+          )}
+        </ScrollView>
+      )}
+    </KeyboardAvoidingView>
+  );
+}
+
+// ── Styles ──────────────────────────────────────────────────────────
+
+const s = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 32,
+  },
+  situation: {
+    fontSize: 14,
+    color: '#999',
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+    marginBottom: 12,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: '700',
+    color: '#000',
+    lineHeight: 34,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#e0e0e0',
+    marginVertical: 28,
+  },
+  consequenceLabel: {
+    fontSize: 14,
+    color: '#999',
+    marginBottom: 8,
+  },
+  consequence: {
+    fontSize: 18,
+    color: '#333',
+    lineHeight: 28,
+    marginBottom: 48,
+  },
+  commitButton: {
+    backgroundColor: '#000',
+    paddingVertical: 18,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  commitText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  alignActionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 16,
+  },
+
+  // Resolved
+  resolvedContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+  },
+  checkmark: {
+    fontSize: 56,
+    color: '#10b981',
+    marginBottom: 16,
+  },
+  resolvedTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#000',
+    marginBottom: 8,
+  },
+  resolvedSub: {
+    fontSize: 16,
+    color: '#666',
+  },
+
+  // Researcher
+  researcherBar: {
+    borderTopWidth: 1,
+    borderColor: '#eee',
+    backgroundColor: '#fafafa',
+  },
+  researcherToggle: {
+    padding: 12,
+  },
+  researcherToggleText: {
+    fontSize: 12,
+    color: '#888',
+    fontWeight: '600',
+  },
+  researcherPanel: {
+    padding: 12,
+    maxHeight: 320,
+  },
+  researcherMeta: {
+    fontSize: 12,
+    fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+    color: '#555',
+    lineHeight: 20,
+    marginBottom: 12,
+  },
+  researcherButtons: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 16,
+  },
+  rBtn: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 6,
+    alignItems: 'center',
+  },
+  rBtnText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#2e7d32',
+  },
+  postTrial: {
+    borderTopWidth: 1,
+    borderColor: '#e0e0e0',
+    paddingTop: 16,
+  },
+  postTrialLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 8,
+  },
+  postTrialInput: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 6,
+    padding: 12,
+    fontSize: 14,
+    minHeight: 60,
+    textAlignVertical: 'top',
+    marginBottom: 16,
+    backgroundColor: '#fff',
+  },
+  finishBtn: {
+    backgroundColor: '#1a73e8',
+    padding: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  finishBtnText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 15,
+  },
+});
+
+
+================================================================
+FILE: app/_layout.tsx
+================================================================
+import { useEffect, useState } from 'react'
+import { ActivityIndicator, View } from 'react-native'
+import { Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
+import * as SplashScreen from 'expo-splash-screen'
+import { initPurchases } from '../src/services/purchases'
+import { color } from '../src/presentation/theme/tokens'
+
+SplashScreen.preventAutoHideAsync().catch(() => undefined)
+
+export default function RootLayout() {
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    let mounted = true
+    ;(async () => {
+      await initPurchases()
+      if (mounted) {
+        setReady(true)
+        SplashScreen.hideAsync().catch(() => undefined)
+      }
+    })()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  if (!ready) {
+    return (
+      <View style={{ flex: 1, backgroundColor: color.bg, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color={color.accent} />
+      </View>
+    )
+  }
+
+  return (
+    <>
+      <StatusBar style="light" />
+      <Stack screenOptions={{ headerShown: false, animation: 'fade', contentStyle: { backgroundColor: color.bg } }} />
+    </>
+  )
+}

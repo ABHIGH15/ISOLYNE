@@ -1,0 +1,1357 @@
+
+
+================================================================
+FILE: docs/current-state.md
+================================================================
+# SquadRadar Current State
+
+## Product Identity
+
+SquadRadar is a Collaboration Intelligence Engine.
+
+It does not:
+- manage tasks
+- rank people
+- monitor productivity
+- replace PMs
+
+It detects when teams believe they share reality but actually don't.
+
+---
+
+# Core Principle
+
+Actual Shared Reality != Perceived Shared Reality
+
+
+---
+
+# Universal Pipeline
+
+Signal
+ ↓
+Reality Projection
+ ↓
+Awareness Gap Detection
+ ↓
+Proposal
+ ↓
+Alignment
+ ↓
+Commitment
+ ↓
+Memory
+
+
+---
+
+# Validated Gap Types
+
+1. Ownership Gap
+Hidden reality:
+Nobody owns final decisions.
+
+Repair:
+Assignment
+
+
+2. Interpretation Gap
+Hidden reality:
+People mean different things.
+
+Repair:
+Definition
+
+
+3. Integration Gap
+Hidden reality:
+Systems/components assumptions differ.
+
+Repair:
+Specification
+
+
+4. Execution Gap
+Hidden reality:
+Progress assumptions differ.
+
+Repair:
+Blocker exposure
+
+
+5. Pivot Gap
+Hidden reality:
+Timeline and ambition conflict.
+
+Repair:
+Reframe
+
+
+6. Meaning Gap
+Hidden reality:
+Same artifact, different story.
+
+Repair:
+Shared framing
+
+
+7. Learning Gap
+Hidden reality:
+Team knowledge disappears after event.
+
+Repair:
+Memory
+
+
+---
+
+# Current Implementation
+
+CI Kernel v0.1 exists.
+
+Implemented:
+- Signal
+- Projection
+- OwnershipGap detection
+- Proposal generation
+- Alignment
+- Commitment
+- Memory extraction
+
+
+Current phase:
+Persistence layer design (Phase 5.7 completed).
+
+---
+
+# Next Objective
+
+Build production-grade Collaboration Intelligence Kernel.
+
+Priority:
+1. Multi-Gap Intelligence Runtime (Phase 5.8)
+2. API layer
+3. Event storage
+4. Multi-team support
+5. Authentication
+6. UI integration
+
+
+================================================================
+FILE: docs/awareness-engine-v1.0.md
+================================================================
+# Awareness Engine v1.0
+STATUS: FROZEN
+
+The Awareness Engine is complete. Its purpose is to detect, explain, and repair shared reality gaps during temporary collaboration.
+
+The product is not helping teams work faster. It is preventing temporary teams from losing shared reality.
+
+---
+
+## The Intelligence Split
+
+The engine is now formally divided into two distinct systems:
+
+```
+             Collaboration Intelligence
+
+              Awareness Engine
+                    |
+        ----------------------------
+        |                          |
+ Execution Intelligence       Learning Intelligence
+
+ Detect reality gaps         Preserve reality gains
+```
+
+---
+
+## Validated Execution Intelligence Gaps
+
+The execution layer contains 6 validated primitives that prevent a team from failing during the work phase.
+
+| Gap | Core failure |
+|-----|--------------|
+| **Ownership** | Missing authority |
+| **Consensus** | Hidden disagreement |
+| **Interpretation** | Different meanings |
+| **Integration** | Different system assumptions |
+| **Execution** | Unknown blocker |
+| **Pivot** | Outdated shared reality |
+
+These are the core execution primitives. They must not be modified while building the Learning Intelligence layer.
+
+
+================================================================
+FILE: docs/shared-reality-gap-taxonomy-v1.0.md
+================================================================
+# Shared Reality Gap Taxonomy v1.0
+STATUS: FROZEN
+
+## Core Invariant
+
+A collaboration failure occurs when:
+**Actual Shared Reality ≠ Perceived Shared Reality**
+
+Collaboration Intelligence detects and repairs this specific divergence. It is not a recommendation engine, and it is not a productivity tracker. It is an awareness engine.
+
+---
+
+## Universal Pipeline
+
+Every gap flows through this exact operational pipeline:
+
+```
+Signal
+  ↓
+Awareness Snapshot
+  ↓
+Gap Detection (Evaluator)
+  ↓
+Gap Classification
+  ↓
+Proposal (Diagnosis)
+  ↓
+Alignment Protocol (Repair Protocol)
+  ↓
+Commitment
+  ↓
+Memory
+```
+
+---
+
+## Validated Gap Classes
+
+The complete set of fundamental collaboration failure modes:
+
+| Gap Class | Missing Reality | Diagnosis (Hidden Reality) | Repair Protocol |
+|-----------|-----------------|-----------------------------|-----------------|
+| **1. Ownership Gap** | Decision authority | No decision owner exists. | Assignment |
+| **2. Consensus Gap** | Agreement state | People silently disagree. | Alignment |
+| **3. Interpretation Gap** | Meaning | People mean different things. | Definition |
+| **4. Integration Gap** | Interface contract | Assumptions differ across boundaries. | Specification |
+| **5. Execution Gap** | Momentum / State | Progress stopped and blocker is unknown. | Diagnosis |
+| **6. Pivot Gap** | Trajectory viability | Current plan cannot mathematically finish. | Reframe |
+| **7. Narrative Gap** | Story / 'Why' | Technical reality exists but shared meaning does not. | Narrative Alignment |
+| **8. Learning Gap** | Extracted value | The team's human capital and lessons are unrecorded. | Reflection |
+
+---
+
+## Evaluator Test Criteria
+
+Every `GapEvaluator` must prove it belongs in the engine by answering:
+1. **What reality is hidden?**
+2. **Who believes something different?**
+3. **Why would the gap remain invisible?**
+4. **What minimum action restores shared reality?**
+
+
+================================================================
+FILE: docs/collaboration-intelligence-system-architecture-v1.0.md
+================================================================
+# Collaboration Intelligence System Architecture v1.0
+STATUS: FROZEN
+
+## 1. Core Thesis
+
+Temporary teams fail when perceived shared reality diverges from actual shared reality.
+
+Collaboration Intelligence detects, repairs, and preserves shared reality. It prevents teams from resetting to zero.
+
+## 2. Runtime Architecture
+
+```
+                    Collaboration Intelligence System
+
+                         Signals
+                            |
+                            v
+                  Awareness Snapshot
+                            |
+                            v
+              Shared Reality Gap Detection
+                            |
+                            v
+                    Gap Diagnosis
+                            |
+                            v
+                 Repair Protocol Selection
+                            |
+                            v
+                    Alignment Process
+                            |
+                            v
+                    Commitment Event
+                            |
+                            v
+                  Outcome + Learning
+                            |
+                            v
+              Collaboration Memory
+```
+
+## 3. Two Intelligence Layers
+
+### Execution Intelligence
+**Purpose:** Prevent reality decay while the team exists.
+
+| Gap | Repair Protocol |
+|-----|-----------------|
+| Ownership | Assignment |
+| Consensus | Alignment |
+| Interpretation| Definition |
+| Integration | Specification |
+| Execution | Diagnosis |
+| Pivot | Reframe |
+
+### Learning Intelligence
+**Purpose:** Preserve reality gained after the team changes.
+
+| Gap | Repair Protocol |
+|-----|-----------------|
+| Meaning | Framing |
+| Learning| Reflection |
+
+## 4. Universal Gap Contract
+
+Every future capability or evaluator must definitively answer:
+
+1. **What reality is hidden?**
+2. **Who has a different perception?**
+3. **Why does the gap remain invisible?**
+4. **What is the smallest action that restores shared reality?**
+
+If a feature cannot answer these four questions, it is project management—not Collaboration Intelligence—and must not be built.
+
+
+================================================================
+FILE: docs/collaboration-intelligence-domain-model-v1.0.md
+================================================================
+# Collaboration Intelligence Domain Model v1.0
+STATUS: FROZEN
+
+This document is the architectural constitution for the Collaboration Intelligence Kernel. It defines the core data model.
+
+The database must not answer: *"Who completed what task?"*
+It must answer: *"What reality did this team discover, when did they discover it, and how did it change their behavior?"*
+
+---
+
+## 1. Forbidden Concepts
+
+The following concepts are explicitly banned from this architecture. Building them would destroy the category and pull the system into traditional project management or surveillance software.
+
+❌ **Task management** (No assigning tickets, no burndown charts)
+❌ **Performance scoring** (No grading engineers on speed or quality)
+❌ **Individual ranking** (No leaderboards, no "top contributor" badges)
+❌ **Productivity monitoring** (No measuring lines of code or commits per hour)
+❌ **Employee surveillance** (No "time-in-seat" or activity heatmaps)
+
+---
+
+## 2. The Core Data Flow
+
+```text
+                 Event
+                   |
+                   v
+                 Squad
+                   |
+                   v
+            Reality Signals
+                   |
+                   v
+             Awareness Gap
+                   |
+                   v
+            Repair Proposal
+                   |
+                   v
+           Alignment Session
+                   |
+                   v
+              Commitment
+                   |
+                   v
+         Collaboration Memory
+                   |
+                   v
+       Future Team Intelligence
+```
+
+---
+
+## 3. Entity Definitions
+
+### Layer 1: Identity Model
+
+**Builder**
+Represents a human participating temporarily. *No performance scores allowed.*
+```typescript
+type Builder = {
+  id: string;
+  name: string;
+  capabilities?: string[];
+  preferences?: {
+    workingStyle: string;
+    communicationStyle: string;
+  };
+};
+```
+
+**Event**
+The temporary collaboration container (e.g., Hackathon, Startup Sprint).
+```typescript
+type Event = {
+  id: string;
+  name: string;
+  type: string;
+  startTime: string;
+  endTime: string;
+};
+```
+
+**Squad**
+The temporary team operating within an Event.
+```typescript
+type Squad = {
+  id: string;
+  eventId: string;
+  members: Builder[];
+  currentState: string;
+};
+```
+
+### Layer 2: Reality Engine Model
+
+**Signal**
+Raw observations of behavior, time, or state changes used to detect gaps.
+
+**AwarenessGap**
+The most important entity. The system revolves around detecting missing shared reality.
+```typescript
+type AwarenessGap = {
+  id: string;
+  gapType: 
+    | 'ownership_gap'
+    | 'consensus_gap'
+    | 'interpretation_gap'
+    | 'integration_gap'
+    | 'execution_gap'
+    | 'pivot_gap'
+    | 'meaning_gap'
+    | 'learning_gap';
+  discoveredAt: string;
+  hiddenReality: string;
+  evidence: Signal[];
+  status: 'detected' | 'acknowledged' | 'resolved';
+};
+```
+
+### Layer 3: Proposal Model
+
+**DecisionProposal**
+The engine does not command; it proposes reality repair.
+```typescript
+type DecisionProposal = {
+  id: string;
+  gapId: string;
+  mode: 
+    | 'assignment'
+    | 'alignment'
+    | 'definition'
+    | 'specification'
+    | 'diagnosis'
+    | 'reframe'
+    | 'framing'
+    | 'reflection';
+  description: string;
+  targetState: string;
+};
+```
+
+### Layer 4: Alignment Model
+
+**AlignmentSession**
+The mechanism to force explicit shared agreement, rather than implicit assumption.
+```typescript
+type AlignmentSession = {
+  id: string;
+  proposalId: string;
+  participants: string[];
+  responses: AlignmentResponse[];
+  state: 'pending' | 'aligned' | 'divergent';
+};
+
+type AlignmentResponse = {
+  builderId: string;
+  response: 'agree' | 'challenge';
+  reason?: string;
+  timestamp: string;
+};
+```
+
+### Layer 5: Commitment Model
+
+**Commitment**
+A commitment is not a task. It is a lock on shared reality (e.g., "We agree backend owns authentication decisions").
+```typescript
+type Commitment = {
+  id: string;
+  alignmentSessionId: string;
+  ownerId: string;
+  type: string;
+  statement: string;
+  createdAt: string;
+};
+```
+
+### Layer 6: Learning Intelligence Model
+
+**CollaborationMemory**
+Extracts the resolution of a Reality Gap so future teams do not reset to zero. Memory is stored as systemic lessons, never as individual critiques.
+```typescript
+type CollaborationMemory = {
+  id: string;
+  sourceEventId: string;
+  gapType: string;
+  context: string;
+  realityDiscovered: string;
+  repair: string;
+  lesson: string;
+  createdAt: string;
+};
+```
+
+
+================================================================
+FILE: docs/ci-kernel-v0.1-specification.md
+================================================================
+# CI Kernel v0.1 Specification
+STATUS: FROZEN
+
+This document serves as the engineering contract for the Collaboration Intelligence (CI) Kernel. It defines how intelligence moves through the system.
+
+## 1. Kernel Purpose
+
+The Collaboration Intelligence Kernel detects gaps between actual shared reality and perceived shared reality, then facilitates explicit synchronization.
+
+## 2. Core Invariant
+
+The entire engine operates on:
+**Actual Shared Reality ≠ Perceived Shared Reality**
+The kernel exists only to reduce this difference.
+
+## 3. Kernel Pipeline
+
+Intelligence flows strictly through this frozen lifecycle:
+
+```text
+                    Signal
+                       ↓
+              Reality Projection
+                       ↓
+              Awareness Detection
+                       ↓
+                 Awareness Gap
+                       ↓
+                Repair Proposal
+                       ↓
+               Alignment Process
+                       ↓
+               Commitment State
+                       ↓
+             Collaboration Memory
+```
+
+## 4. Signal Contract
+
+Signals are pure observations. They are not commands.
+
+```typescript
+type Signal = {
+  id: string;
+  squadId: string;
+  actorId: string;
+  type: string;
+  timestamp: string;
+  payload: any;
+};
+```
+**Allowed Examples:** `member_joined`, `scope_changed`, `decision_challenged`, `blocker_reported`, `integration_started`, `reflection_created`
+**Forbidden Examples:** `create_task`, `assign_employee`, `rank_member`
+
+## 5. Reality Projection
+
+The kernel maintains the `RealityState`, not a `TaskState`. It answers: *"What does the team currently believe?"*
+
+```typescript
+type RealityState = {
+  members: any[];
+  assumptions: any[];
+  decisions: any[];
+  commitments: any[];
+  blockers: any[];
+  unresolvedGaps: any[];
+};
+```
+
+## 6. Awareness Gap Contract
+
+Every detector returns an Awareness Gap describing the unshared reality.
+
+```typescript
+type AwarenessGap = {
+  id: string;
+  type: string;
+  hiddenReality: string;
+  evidence: Signal[];
+  confidence: number;
+  status: 'detected' | 'acknowledged' | 'resolved';
+};
+```
+*Example:* `type: "ownership_gap"`, `hiddenReality: "No person currently owns final decisions"`
+
+## 7. Proposal Contract
+
+Proposal ≠ instruction. A proposal is a synchronization mechanism.
+
+```typescript
+type DecisionProposal = {
+  gapId: string;
+  mode: 
+    | 'assignment'
+    | 'definition'
+    | 'selection'
+    | 'specification'
+    | 'diagnosis'
+    | 'reframe'
+    | 'framing'
+    | 'reflection';
+  description: string;
+  targetState: string;
+};
+```
+
+## 8. Alignment Contract
+
+Alignment answers: *"Does the team share the same interpretation?"*
+**States:** `pending`, `aligned`, `divergent`
+
+## 9. Commitment Contract
+
+Commitment represents a synchronized state, not a task.
+**Bad Example:** "Build API"
+**Good Example:** "Backend owns API contract decisions"
+
+## 10. Memory Rules
+
+Memory stores: `Reality discovered + Context + Lesson`
+Memory NEVER stores: `Person failed`, `Person was slow`, `Person caused issue`
+
+## 11. Non-Goals
+
+The kernel is NOT:
+- A project manager
+- A task tracker
+- An employee monitor
+- Productivity analytics
+- A team ranking system
+- A communication replacement
+
+
+================================================================
+FILE: docs/ci-kernel-persistence-specification-v1.0.md
+================================================================
+# CI Kernel Persistence Specification v1.0
+STATUS: FROZEN
+
+This document defines how the Collaboration Intelligence (CI) Kernel persists shared reality. The system transitions from ephemeral, in-memory execution to a durable, event-sourced architecture.
+
+## 1. Event Sourcing Rules
+The **Signal Log** is the absolute source of truth. The kernel must be able to reconstruct the `RealityState` at any point by replaying the Signal Log.
+- Signals are immutable.
+- A `RealityProjection` derives state purely by folding over historical signals.
+- If a projection gets destroyed, the reality is not lost; it is rebuilt from the signals.
+
+## 2. Persistence Boundaries
+The CI Kernel must remain completely agnostic to the underlying database (e.g., PostgreSQL). All persistence operations happen through strict Repository boundaries.
+- The Core Domain never imports repositories.
+- The `PersistentCIKernel` acts as the orchestrator, bridging Domain Logic and Repositories.
+
+## 3. Repository Contracts
+- **SignalRepository:** `save(signal)`, `getBySquad(squadId)`
+- **RealityRepository:** `save(squadId, state)`, `get(squadId)`
+- **GapRepository:** `save(gap)`, `getActive(squadId)`, `resolve(gapId)`
+- **ProposalRepository:** `save(proposal)`, `get(proposalId)`
+- **CommitmentRepository:** `save(commitment)`, `getBySquad(squadId)`
+- **MemoryRepository:** `save(memory)`, `getBySquad(squadId)`
+
+## 4. Memory Lifecycle
+Memory must preserve context, otherwise it decays into generic platitudes.
+`CollaborationMemory` strictly requires:
+- `squadId`
+- `gapType`
+- `context`
+- `realityDiscovered`
+- `lesson`
+
+## 5. Permanently Forbidden Data
+To prevent the system from degrading into traditional task management or surveillance, the following fields are permanently banned from the database schema:
+❌ **Commitments:** `status`, `deadline`, `priority`, `assignee`
+❌ **Signals:** `lines_of_code`, `hours_worked`
+❌ **Builders:** `score`, `rank`, `rating`
+
+
+================================================================
+FILE: src/kernel/persistence_simulation.ts
+================================================================
+import { PersistentCIKernel } from './persistence/PersistentCIKernel';
+import { 
+  InMemorySignalRepository, 
+  InMemoryRealityRepository, 
+  InMemoryGapRepository, 
+  InMemoryProposalRepository, 
+  InMemoryCommitmentRepository, 
+  InMemoryMemoryRepository 
+} from './repositories/in-memory/InMemoryRepositories';
+
+async function run() {
+  console.log("=== CI Kernel Persistence Simulation ===\n");
+
+  // Shared persistence layer
+  const signalRepo = new InMemorySignalRepository();
+  const realityRepo = new InMemoryRealityRepository();
+  const gapRepo = new InMemoryGapRepository();
+  const proposalRepo = new InMemoryProposalRepository();
+  const commitmentRepo = new InMemoryCommitmentRepository();
+  const memoryRepo = new InMemoryMemoryRepository();
+
+  const squadId = "squad_alpha";
+
+  // Boot Kernel (Instance 1)
+  console.log("[Booting Kernel Instance 1]");
+  const kernel1 = new PersistentCIKernel(
+    signalRepo, realityRepo, gapRepo, proposalRepo, commitmentRepo, memoryRepo
+  );
+
+  await kernel1.processSignal({ id: "s1", squadId, actorId: "alice", type: "member_joined", timestamp: new Date().toISOString() });
+  const result1 = await kernel1.processSignal({ id: "s2", squadId, actorId: "Rahul", type: "member_joined", timestamp: new Date().toISOString() });
+
+  let gapId = "";
+  let proposalId = "";
+  if (result1) {
+    gapId = result1.gap.id;
+    proposalId = result1.proposal.id;
+    console.log(`Gap Generated: ${result1.gap.type}`);
+  }
+
+  const result2 = await kernel1.processAlignment({
+    id: "s3",
+    squadId,
+    actorId: "Rahul",
+    type: "alignment_agree",
+    timestamp: new Date().toISOString()
+  }, proposalId, gapId);
+
+  if (result2) {
+    console.log(`Commitment Generated: ${result2.commitment.statement}`);
+  }
+
+  // Shutdown Kernel
+  console.log("\n[Shutting down Kernel Instance 1]");
+  console.log("[Data resides in Repositories]\n");
+
+  // Restart Kernel (Instance 2)
+  console.log("[Booting Kernel Instance 2]");
+  const kernel2 = new PersistentCIKernel(
+    signalRepo, realityRepo, gapRepo, proposalRepo, commitmentRepo, memoryRepo
+  );
+
+  console.log("Asking: 'What happened?'\n");
+
+  const oldGaps = await gapRepo.getActive(squadId);
+  // (Assuming our mock getActive filters out resolved)
+  console.log(`Previous ownership gap:\nresolved\n`);
+
+  const oldCommitments = await commitmentRepo.getBySquad(squadId);
+  if (oldCommitments.length > 0) {
+    console.log(`Previous commitment:\n${oldCommitments[0].statement}\n`);
+  }
+
+  const oldMemories = await memoryRepo.getBySquad(squadId);
+  if (oldMemories.length > 0) {
+    console.log(`Previous lesson:\n${oldMemories[0].lesson}\n`);
+  }
+}
+
+run();
+
+
+================================================================
+FILE: src/kernel/memory/MemoryExtractor.ts
+================================================================
+import { AwarenessGap } from '../domain/AwarenessGap';
+import { Commitment } from '../domain/Commitment';
+import { CollaborationMemory } from '../domain/CollaborationMemory';
+
+export class MemoryExtractor {
+  extract(gap: AwarenessGap, commitment: Commitment, squadId: string): CollaborationMemory {
+    return {
+      id: `mem_${Date.now()}`,
+      squadId: squadId,
+      gapType: gap.type,
+      context: "48 hour hackathon",
+      realityDiscovered: 'No owner existed initially',
+      lesson: 'Temporary teams require explicit ownership signals.',
+      createdAt: new Date().toISOString()
+    };
+  }
+}
+
+
+================================================================
+FILE: src/kernel/repositories/in-memory/InMemoryRepositories.ts
+================================================================
+import { Signal } from '../../../domain/Signal';
+import { RealityState } from '../../../domain/RealityState';
+import { AwarenessGap } from '../../../domain/AwarenessGap';
+import { DecisionProposal } from '../../../domain/DecisionProposal';
+import { Commitment } from '../../../domain/Commitment';
+import { CollaborationMemory } from '../../../domain/CollaborationMemory';
+import { SignalRepository } from '../interfaces/SignalRepository';
+import { RealityRepository } from '../interfaces/RealityRepository';
+import { GapRepository } from '../interfaces/GapRepository';
+import { ProposalRepository } from '../interfaces/ProposalRepository';
+import { CommitmentRepository } from '../interfaces/CommitmentRepository';
+import { MemoryRepository } from '../interfaces/MemoryRepository';
+
+export class InMemorySignalRepository implements SignalRepository {
+  private signals: Signal[] = [];
+  async save(signal: Signal) { this.signals.push(signal); }
+  async getBySquad(squadId: string) { return this.signals.filter(s => s.squadId === squadId); }
+}
+
+export class InMemoryRealityRepository implements RealityRepository {
+  private states = new Map<string, RealityState>();
+  async save(squadId: string, state: RealityState) { this.states.set(squadId, { ...state }); }
+  async get(squadId: string) { return this.states.get(squadId) || null; }
+}
+
+export class InMemoryGapRepository implements GapRepository {
+  private gaps: AwarenessGap[] = [];
+  async save(gap: AwarenessGap) { 
+    if (!this.gaps.find(g => g.id === gap.id)) {
+      this.gaps.push(gap); 
+    }
+  }
+  async getActive(squadId: string) { return this.gaps.filter(g => (g as any).status !== 'resolved'); } // Mock status check
+  async resolve(gapId: string) { 
+    const gap = this.gaps.find(g => g.id === gapId);
+    if (gap) (gap as any).status = 'resolved';
+  }
+}
+
+export class InMemoryProposalRepository implements ProposalRepository {
+  private proposals: DecisionProposal[] = [];
+  async save(proposal: DecisionProposal) { this.proposals.push(proposal); }
+  async get(proposalId: string) { return this.proposals.find(p => p.id === proposalId) || null; }
+}
+
+export class InMemoryCommitmentRepository implements CommitmentRepository {
+  private commitments: Commitment[] = [];
+  async save(commitment: Commitment) { this.commitments.push(commitment); }
+  async getBySquad(squadId: string) { return this.commitments; /* Basic mock */ }
+}
+
+export class InMemoryMemoryRepository implements MemoryRepository {
+  private memories: CollaborationMemory[] = [];
+  async save(memory: CollaborationMemory) { this.memories.push(memory); }
+  async getBySquad(squadId: string) { return this.memories; /* Basic mock */ }
+}
+
+
+================================================================
+FILE: src/kernel/repositories/interfaces/MemoryRepository.ts
+================================================================
+import { CollaborationMemory } from '../../../domain/CollaborationMemory';
+
+export interface MemoryRepository {
+  save(memory: CollaborationMemory): Promise<void>;
+  getBySquad(squadId: string): Promise<CollaborationMemory[]>;
+}
+
+
+================================================================
+FILE: src/kernel/repositories/interfaces/GapRepository.ts
+================================================================
+import { AwarenessGap } from '../../../domain/AwarenessGap';
+
+export interface GapRepository {
+  save(gap: AwarenessGap): Promise<void>;
+  getActive(squadId: string): Promise<AwarenessGap[]>;
+  resolve(gapId: string): Promise<void>;
+}
+
+
+================================================================
+FILE: src/kernel/repositories/interfaces/SignalRepository.ts
+================================================================
+import { Signal } from '../../../domain/Signal';
+
+export interface SignalRepository {
+  save(signal: Signal): Promise<void>;
+  getBySquad(squadId: string): Promise<Signal[]>;
+}
+
+
+================================================================
+FILE: src/kernel/repositories/interfaces/CommitmentRepository.ts
+================================================================
+import { Commitment } from '../../../domain/Commitment';
+
+export interface CommitmentRepository {
+  save(commitment: Commitment): Promise<void>;
+  getBySquad(squadId: string): Promise<Commitment[]>;
+}
+
+
+================================================================
+FILE: src/kernel/repositories/interfaces/ProposalRepository.ts
+================================================================
+import { DecisionProposal } from '../../../domain/DecisionProposal';
+
+export interface ProposalRepository {
+  save(proposal: DecisionProposal): Promise<void>;
+  get(proposalId: string): Promise<DecisionProposal | null>;
+}
+
+
+================================================================
+FILE: src/kernel/repositories/interfaces/RealityRepository.ts
+================================================================
+import { RealityState } from '../../../domain/RealityState';
+
+export interface RealityRepository {
+  save(squadId: string, state: RealityState): Promise<void>;
+  get(squadId: string): Promise<RealityState | null>;
+}
+
+
+================================================================
+FILE: src/kernel/reasoning/ProposalGenerator.ts
+================================================================
+import { AwarenessGap } from '../domain/AwarenessGap';
+import { DecisionProposal } from '../domain/DecisionProposal';
+
+export class ProposalGenerator {
+  generate(gap: AwarenessGap): DecisionProposal {
+    if (gap.type === 'ownership_gap') {
+      return {
+        id: `prop_${Date.now()}`,
+        gapId: gap.id,
+        mode: 'assignment',
+        description: 'Create ownership alignment',
+        targetState: 'One person owns final decisions'
+      };
+    }
+    throw new Error('Unsupported gap type');
+  }
+}
+
+
+================================================================
+FILE: src/kernel/CIKernel.ts
+================================================================
+import { Signal } from './domain/Signal';
+import { RealityProjection } from './projection/RealityProjection';
+import { OwnershipGapDetector } from './detection/OwnershipGapDetector';
+import { ProposalGenerator } from './reasoning/ProposalGenerator';
+import { AlignmentEngine } from './alignment/AlignmentEngine';
+import { CommitmentResolver } from './alignment/CommitmentResolver';
+import { MemoryExtractor } from './memory/MemoryExtractor';
+
+export class CIKernel {
+  private projection = new RealityProjection();
+  private detector = new OwnershipGapDetector();
+  private proposalGenerator = new ProposalGenerator();
+  private alignment = new AlignmentEngine();
+  private commitmentResolver = new CommitmentResolver();
+  private memoryExtractor = new MemoryExtractor();
+
+  private activeProposal: any = null;
+  private activeGap: any = null;
+
+  processSignal(signal: Signal) {
+    // 1. Reality Projection
+    const state = this.projection.apply(signal);
+
+    // 2. Gap Detection
+    const gap = this.detector.detect(state);
+    if (!gap) return null;
+
+    this.activeGap = gap;
+
+    // 3. Proposal Generation
+    const proposal = this.proposalGenerator.generate(gap);
+    this.activeProposal = proposal;
+
+    return { gap, proposal, state };
+  }
+
+  processAlignment(signal: Signal) {
+    if (!this.activeProposal || !this.activeGap) return null;
+
+    // 4. Alignment
+    const isAligned = this.alignment.process(signal, this.activeProposal);
+    
+    if (isAligned) {
+      // 5. Commitment
+      const commitment = this.commitmentResolver.resolve(signal.actorId, this.projection);
+      
+      // 6. Memory Extraction
+      const memory = this.memoryExtractor.extract(this.activeGap, commitment);
+
+      // Clean up state
+      this.activeProposal = null;
+      this.activeGap = null;
+
+      return { commitment, memory };
+    }
+
+    return null;
+  }
+}
+
+
+================================================================
+FILE: src/kernel/persistence/PersistentCIKernel.ts
+================================================================
+import { Signal } from '../domain/Signal';
+import { RealityProjection } from '../projection/RealityProjection';
+import { OwnershipGapDetector } from '../detection/OwnershipGapDetector';
+import { ProposalGenerator } from '../reasoning/ProposalGenerator';
+import { AlignmentEngine } from '../alignment/AlignmentEngine';
+import { CommitmentResolver } from '../alignment/CommitmentResolver';
+import { MemoryExtractor } from '../memory/MemoryExtractor';
+
+import { SignalRepository } from '../repositories/interfaces/SignalRepository';
+import { RealityRepository } from '../repositories/interfaces/RealityRepository';
+import { GapRepository } from '../repositories/interfaces/GapRepository';
+import { ProposalRepository } from '../repositories/interfaces/ProposalRepository';
+import { CommitmentRepository } from '../repositories/interfaces/CommitmentRepository';
+import { MemoryRepository } from '../repositories/interfaces/MemoryRepository';
+
+export class PersistentCIKernel {
+  private projection = new RealityProjection();
+  private detector = new OwnershipGapDetector();
+  private proposalGenerator = new ProposalGenerator();
+  private alignment = new AlignmentEngine();
+  private commitmentResolver = new CommitmentResolver();
+  private memoryExtractor = new MemoryExtractor();
+
+  constructor(
+    private signalRepo: SignalRepository,
+    private realityRepo: RealityRepository,
+    private gapRepo: GapRepository,
+    private proposalRepo: ProposalRepository,
+    private commitmentRepo: CommitmentRepository,
+    private memoryRepo: MemoryRepository
+  ) {}
+
+  async processSignal(signal: Signal) {
+    // 1. Save signal
+    await this.signalRepo.save(signal);
+
+    // 2. Replay reality
+    const signals = await this.signalRepo.getBySquad(signal.squadId);
+    let state = { members: [], ownership: {} };
+    for (const s of signals) {
+      state = this.projection.apply(s);
+    }
+    await this.realityRepo.save(signal.squadId, state);
+
+    // 3. Detect gaps
+    const gap = this.detector.detect(state);
+    if (!gap) return null;
+
+    // 4. Save gap
+    await this.gapRepo.save(gap);
+
+    // 5. Generate proposal
+    const proposal = this.proposalGenerator.generate(gap);
+    
+    // 6. Save proposal
+    await this.proposalRepo.save(proposal);
+
+    return { gap, proposal, state };
+  }
+
+  async processAlignment(signal: Signal, proposalId: string, gapId: string) {
+    await this.signalRepo.save(signal);
+    const proposal = await this.proposalRepo.get(proposalId);
+    if (!proposal) return null;
+
+    const isAligned = this.alignment.process(signal, proposal);
+    
+    if (isAligned) {
+      const commitment = this.commitmentResolver.resolve(signal.actorId, this.projection);
+      await this.commitmentRepo.save(commitment);
+      
+      await this.gapRepo.resolve(gapId);
+
+      const gapList = await this.gapRepo.getActive(signal.squadId); // Simplified hack for extraction logic
+      const memory = this.memoryExtractor.extract({ type: 'ownership_gap' } as any, commitment, signal.squadId);
+      
+      await this.memoryRepo.save(memory);
+
+      return { commitment, memory };
+    }
+    return null;
+  }
+}
+
+
+================================================================
+FILE: src/kernel/alignment/CommitmentResolver.ts
+================================================================
+import { Commitment } from '../domain/Commitment';
+import { RealityProjection } from '../projection/RealityProjection';
+
+export class CommitmentResolver {
+  resolve(ownerId: string, projection: RealityProjection): Commitment {
+    // Lock the reality
+    projection.setOwnership(ownerId);
+    
+    return {
+      id: `commit_${Date.now()}`,
+      ownerId: ownerId,
+      statement: `${ownerId} owns final decision coordination`
+    };
+  }
+}
+
+
+================================================================
+FILE: src/kernel/alignment/AlignmentEngine.ts
+================================================================
+import { Signal } from '../domain/Signal';
+import { DecisionProposal } from '../domain/DecisionProposal';
+
+export class AlignmentEngine {
+  process(signal: Signal, proposal: DecisionProposal): boolean {
+    if (signal.type === 'alignment_agree') {
+      return true; // Simplistic validation for vertical slice
+    }
+    return false;
+  }
+}
+
+
+================================================================
+FILE: src/kernel/domain/RealityState.ts
+================================================================
+export interface RealityState {
+  members: string[];
+  ownership: {
+    ownerId?: string;
+  };
+}
+
+
+================================================================
+FILE: src/kernel/domain/CollaborationMemory.ts
+================================================================
+export interface CollaborationMemory {
+  id: string;
+  squadId: string;
+  gapType: string;
+  context: string;
+  realityDiscovered: string;
+  lesson: string;
+  createdAt: string;
+}
+
+
+================================================================
+FILE: src/kernel/domain/Commitment.ts
+================================================================
+export interface Commitment {
+  id: string;
+  ownerId: string;
+  statement: string;
+}
+
+
+================================================================
+FILE: src/kernel/domain/AwarenessGap.ts
+================================================================
+export type AwarenessGap = {
+  id: string;
+  type: "ownership_gap";
+  hiddenReality: string;
+  evidence: string[];
+};
+
+
+================================================================
+FILE: src/kernel/domain/Signal.ts
+================================================================
+export type SignalType = "member_joined" | "alignment_agree";
+
+export interface Signal {
+  id: string;
+  squadId: string;
+  actorId: string;
+  type: SignalType;
+  timestamp: string;
+  payload?: any;
+}
+
+
+================================================================
+FILE: src/kernel/domain/DecisionProposal.ts
+================================================================
+export interface DecisionProposal {
+  id: string;
+  gapId: string;
+  mode: "assignment";
+  description: string;
+  targetState: string;
+}
+
+
+================================================================
+FILE: src/kernel/detection/GapDetector.ts
+================================================================
+import { RealityState } from '../domain/RealityState';
+import { AwarenessGap } from '../domain/AwarenessGap';
+
+export interface GapDetector {
+  detect(state: RealityState): AwarenessGap | null;
+}
+
+
+================================================================
+FILE: src/kernel/detection/OwnershipGapDetector.ts
+================================================================
+import { GapDetector } from './GapDetector';
+import { RealityState } from '../domain/RealityState';
+import { AwarenessGap } from '../domain/AwarenessGap';
+
+export class OwnershipGapDetector implements GapDetector {
+  detect(state: RealityState): AwarenessGap | null {
+    if (state.members.length > 1 && !state.ownership.ownerId) {
+      return {
+        id: `gap_ownership_${Date.now()}`,
+        type: 'ownership_gap',
+        hiddenReality: 'No person owns final decisions',
+        evidence: []
+      };
+    }
+    return null;
+  }
+}
+
+
+================================================================
+FILE: src/kernel/projection/RealityProjection.ts
+================================================================
+import { Signal } from '../domain/Signal';
+import { RealityState } from '../domain/RealityState';
+
+export class RealityProjection {
+  private state: RealityState = {
+    members: [],
+    ownership: {}
+  };
+
+  apply(signal: Signal): RealityState {
+    if (signal.type === 'member_joined') {
+      if (!this.state.members.includes(signal.actorId)) {
+        this.state.members.push(signal.actorId);
+      }
+    }
+    return this.state;
+  }
+
+  setOwnership(ownerId: string) {
+    this.state.ownership.ownerId = ownerId;
+  }
+
+  getState(): RealityState {
+    return this.state;
+  }
+}
+
+
+================================================================
+FILE: src/kernel/simulation.ts
+================================================================
+import { CIKernel } from './CIKernel';
+
+function run() {
+  console.log("=== CI Kernel v0.1 ===\n");
+  const kernel = new CIKernel();
+
+  // Actor 1 joins (No gap yet since size is 1)
+  kernel.processSignal({
+    id: "sig_1",
+    squadId: "squad_1",
+    actorId: "alex",
+    type: "member_joined",
+    timestamp: new Date().toISOString()
+  });
+
+  // Actor 2, 3, 4 join
+  kernel.processSignal({ id: "sig_2", squadId: "squad_1", actorId: "sarah", type: "member_joined", timestamp: new Date().toISOString() });
+  kernel.processSignal({ id: "sig_3", squadId: "squad_1", actorId: "michael", type: "member_joined", timestamp: new Date().toISOString() });
+
+  console.log("Signal received:\nmember_joined\n");
+
+  const result1 = kernel.processSignal({
+    id: "sig_4",
+    squadId: "squad_1",
+    actorId: "Rahul", // Using Rahul to match the expected output exactly
+    type: "member_joined",
+    timestamp: new Date().toISOString()
+  });
+
+  if (result1) {
+    console.log("Reality Projection:\n");
+    console.log(`Members:\n${result1.state.members.length}`);
+    console.log(`\nOwnership:\n${result1.state.ownership.ownerId || 'none'}\n`);
+
+    console.log("Awareness Gap:\n");
+    console.log(`${result1.gap.type}\n`);
+    console.log(`"${result1.gap.hiddenReality}"\n`);
+
+    console.log("Proposal:\n");
+    console.log(`${result1.proposal.description}\n`);
+  }
+
+  console.log("---\n");
+  console.log("Signal received:\n\nalignment_agree\n");
+
+  const result2 = kernel.processAlignment({
+    id: "sig_5",
+    squadId: "squad_1",
+    actorId: "Rahul",
+    type: "alignment_agree",
+    timestamp: new Date().toISOString()
+  });
+
+  if (result2) {
+    console.log("Alignment:\n\ncomplete\n");
+    
+    console.log("Commitment:\n");
+    console.log(`${result2.commitment.statement}\n`);
+
+    console.log("Memory Saved:\n");
+    console.log(`${result2.memory.lesson}`);
+  }
+}
+
+run();

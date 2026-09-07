@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Isolyne",
+    "slug": "isolyne",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "scheme": "isolyne",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.isolyne.app",
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "com.isolyne.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#07080F",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#07080F",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain"
+        }
+      ]
+    ]
+  }
+}

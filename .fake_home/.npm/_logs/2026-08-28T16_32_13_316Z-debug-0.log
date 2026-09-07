@@ -1,0 +1,12 @@
+0 verbose cli /Users/abhi/.nvm/versions/node/v24.18.0/bin/node /Users/abhi/.nvm/versions/node/v24.18.0/lib/node_modules/npm/bin/npm-cli.js
+1 info using npm@11.16.0
+2 info using node@v24.18.0
+3 silly config load:file:/Users/abhi/.nvm/versions/node/v24.18.0/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/abhi/PROJECTS 2/HACKOS/.npmrc
+5 silly config load:file:/Users/abhi/PROJECTS 2/HACKOS/.fake_home/.npmrc
+6 silly config load:file:/Users/abhi/.nvm/versions/node/v24.18.0/etc/npmrc
+7 verbose title npm exec expo start --web
+8 verbose argv "exec" "--" "expo" "start" "--web"
+9 verbose logfile logs-max:10 dir:/Users/abhi/PROJECTS 2/HACKOS/.fake_home/.npm/_logs/2026-08-28T16_32_13_316Z-
+10 verbose logfile /Users/abhi/PROJECTS 2/HACKOS/.fake_home/.npm/_logs/2026-08-28T16_32_13_316Z-debug-0.log
+11 silly logfile done cleaning log files

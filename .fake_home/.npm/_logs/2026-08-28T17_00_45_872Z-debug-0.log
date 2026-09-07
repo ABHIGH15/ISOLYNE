@@ -1,0 +1,16 @@
+0 verbose cli /Users/abhi/.nvm/versions/node/v24.18.0/bin/node /Users/abhi/.nvm/versions/node/v24.18.0/bin/npm
+1 info using npm@11.16.0
+2 info using node@v24.18.0
+3 silly config load:file:/Users/abhi/.nvm/versions/node/v24.18.0/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/abhi/PROJECTS 2/HACKOS/.fake_home/.npmrc
+5 silly config load:file:/Users/abhi/.nvm/versions/node/v24.18.0/etc/npmrc
+6 verbose title npm config get prefix
+7 verbose argv "config" "--global" "get" "prefix"
+8 verbose logfile logs-max:10 dir:/Users/abhi/PROJECTS 2/HACKOS/.fake_home/.npm/_logs/2026-08-28T17_00_45_872Z-
+9 verbose logfile /Users/abhi/PROJECTS 2/HACKOS/.fake_home/.npm/_logs/2026-08-28T17_00_45_872Z-debug-0.log
+10 verbose cwd /Users/abhi/PROJECTS 2/HACKOS
+11 verbose os Darwin 25.5.0
+12 verbose node v24.18.0
+13 verbose npm  v11.16.0
+14 verbose exit 0
+15 info ok
