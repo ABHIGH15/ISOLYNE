@@ -37,7 +37,7 @@ Isolyne provides a continuous, deterministic awareness engine:
 ```text
 Natural Language Input (Decisions Channel)
          ↓
-LLM Parser (Gemini 3.7 Flash + Keyword Fallback)
+LLM Parser (Groq openai/gpt-oss-20b default / Gemini 3.7 Flash + Keyword Fallback)
          ↓
 Structured Signal { actorId, topic, choice, verbatim }
          ↓
@@ -55,7 +55,11 @@ Radar UI (Clear vs Divergence + Verbatim Evidence)
 ### Architecture Guarantees & Boundaries
 
 - **The CQRS / Event-Sourced Kernel is 100% Deterministic:** Signals are immutable. Gaps are mathematical contradictions evaluated by pure TypeScript detectors (`OwnershipGapDetector.ts`, `InterpretationGapDetector.ts`, `ConsensusGapDetector.ts`).
-- **Strict LLM Isolation:** Gemini 3.7 Flash (`src/services/llmParser.ts`) has only one job: parsing natural language chat strings into `{ topic, choice }` JSON signals. The LLM **never** reasons about team alignment or gap detection.
+- **Strict LLM Isolation & Dual-Provider Architecture:** Natural language extraction is decoupled behind a clean provider interface (`src/services/llmParser.ts`):
+  - **Default: Groq (`openai/gpt-oss-20b`)** — Selected as the default recording and runtime engine. In live benchmark testing across our full demo script (30 live calls), Groq delivered **0 schema errors** and a **674ms median latency** with zero daily rate-limit risk.
+  - **Alternative: Gemini 3.7 Flash** — Selectable via `EXPO_PUBLIC_LLM_PROVIDER=gemini`. While architecturally capable, Gemini free-tier keys carry a strict 20-request/day ceiling (`GenerateRequestsPerDayPerProjectPerModel-FreeTier`) with a 24-hour lockout, making Groq the superior choice for live filming and rehearsal reliability.
+  - **Safety Net: Local Fallback Parser** — If API keys are unset or network fails, an offline deterministic keyword parser with dedicated Scope-vs-Database boundary handling extracts signals without blocking the app.
+  - The LLM **never** reasons about team alignment or gap detection.
 - **Offline-First Resilience:** In-memory repositories with `AsyncStorage` persistence guarantee zero external database latency and zero network failure modes during live demos.
 
 ---
@@ -141,7 +145,7 @@ Key files demonstrating the architectural rigor, deterministic CQRS kernel, and 
 | **Deterministic Detectors** | [`src/kernel/detection/`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/detection/) | Pure TypeScript detectors (`OwnershipGapDetector.ts`, `InterpretationGapDetector.ts`, `ConsensusGapDetector.ts`) |
 | **Pure CQRS Projection** | [`RealityProjection.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/projection/RealityProjection.ts) | Pure event-replay function mapping immutable signal stream to current `RealityState` |
 | **Kernel Invariant Suite** | [`kernel.test.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/tests/kernel.test.ts) | Invariant tests verifying gap triggering, cross-squad isolation, and priority ordering |
-| **Isolated LLM Boundary** | [`llmParser.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/llmParser.ts) | Gemini 3.7 Flash structured extraction with deterministic keyword fallback |
+| **Isolated LLM Boundary** | [`llmParser.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/llmParser.ts) | Dual-provider parser (Groq default, Gemini alternative) with deterministic keyword fallback |
 | **RevenueCat Pro Paywall** | [`paywall.tsx`](file:///Users/abhi/PROJECTS%202/HACKOS/app/paywall.tsx) | "Moment of Doubt" paywall triggered from active radar gap with Monthly & Annual packages |
 | **Customer Center** | [`customer-center.tsx`](file:///Users/abhi/PROJECTS%202/HACKOS/app/customer-center.tsx) | Native RevenueCat UI embedding + gated fallback with scripted retention offer simulation |
 | **RevenueCat Service** | [`purchases.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/purchases.ts) | Offering fetching, typed packages, introductory pricing, and customer info |

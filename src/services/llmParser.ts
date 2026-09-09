@@ -9,12 +9,15 @@ export function fallbackParser(input: string): ParsedStatement | null {
   let topic = '';
   let choice = input.trim();
   
-  if (lowerInput.includes('postgres') || lowerInput.includes('mongo') || lowerInput.includes('db') || lowerInput.includes('database') || lowerInput.includes('supabase') || lowerInput.includes('firebase')) {
-    topic = 'Database';
-  } else if (lowerInput.includes('scope') || lowerInput.includes('mvp') || lowerInput.includes('mock') || lowerInput.includes('prototype') || lowerInput.includes('full crud') || lowerInput.includes('landing page')) {
+  const hasSpecificDb = lowerInput.includes('postgres') || lowerInput.includes('mongo') || lowerInput.includes('supabase') || lowerInput.includes('firebase');
+  const hasScopeKeyword = lowerInput.includes('scope') || lowerInput.includes('mvp') || lowerInput.includes('mock') || lowerInput.includes('prototype') || lowerInput.includes('full crud') || lowerInput.includes('landing page');
+
+  if (hasScopeKeyword && !hasSpecificDb) {
     topic = 'Scope';
-    if (lowerInput.includes('mock') || lowerInput.includes('prototype') || lowerInput.includes('landing page')) choice = 'Mock / Prototype Only';
+    if (lowerInput.includes('mock') || lowerInput.includes('prototype') || lowerInput.includes('landing page') || lowerInput.includes('demo')) choice = 'Mock / Prototype Only';
     else if (lowerInput.includes('full') || lowerInput.includes('crud') || lowerInput.includes('auth')) choice = 'Full Feature Build';
+  } else if (hasSpecificDb || lowerInput.includes('db') || lowerInput.includes('database')) {
+    topic = 'Database';
   } else if (lowerInput.includes('react') || lowerInput.includes('vue') || lowerInput.includes('frontend') || lowerInput.includes('next.js') || lowerInput.includes('react native')) {
     topic = 'Frontend Framework';
   } else if (lowerInput.includes('monolith') || lowerInput.includes('microservices') || lowerInput.includes('architecture')) {
@@ -74,22 +77,35 @@ function cleanJsonText(text: string): string {
   return cleaned.trim();
 }
 
-export async function interpretStatement(input: string, existingTopics: string[]): Promise<ParsedStatement | null> {
+export type LLMCallInspection = {
+  provider: 'gemini' | 'groq';
+  latencyMs: number;
+  rawText: string;
+  isStrictJson: boolean;
+  result: ParsedStatement | null;
+  error?: string;
+};
+
+export async function executeGeminiBenchmarkCall(
+  sanitizedInput: string,
+  recentTopics: string[]
+): Promise<LLMCallInspection> {
   const apiKey = process.env.EXPO_PUBLIC_GEMINI_API_KEY;
-  
-  // Prevent absurdly long inputs for basic security & cost
-  const sanitizedInput = input.slice(0, 500).replace(/[\n\r]/g, ' ');
-  
   if (!apiKey) {
     console.warn("No EXPO_PUBLIC_GEMINI_API_KEY found. Falling back to keyword parser.");
-    return fallbackParser(sanitizedInput);
+    return {
+      provider: 'gemini',
+      latencyMs: 0,
+      rawText: '',
+      isStrictJson: false,
+      result: fallbackParser(sanitizedInput),
+      error: 'Missing API Key'
+    };
   }
-
-  const recentTopics = existingTopics.slice(-10); // Bound the array
 
   const systemInstruction = {
     parts: [{ 
-      text: "You are a precise data extraction engine for a team decision tracker. Extract the core architectural, product scope, technical, or organizational decision from the statement. For statements defining project scope, MVP boundary, or prototype definition (e.g., 'let\'s just do a mock login for demo', 'we need full auth and database for MVP'), use topic 'Scope'. If the statement is casual chat, unparseable, or not a decision, you MUST return 'UNKNOWN' for both topic and choice."
+      text: "You are a precise data extraction engine for a team decision tracker. Extract the core architectural, product scope, technical, or organizational decision from the statement. For statements defining project scope, MVP boundary, or prototype definition (e.g., 'let\\'s just do a mock login for demo', 'we need full auth and database for MVP'), use topic 'Scope'. If the statement is casual chat, unparseable, or not a decision, you MUST return 'UNKNOWN' for both topic and choice."
     }]
   };
 
@@ -98,6 +114,7 @@ Existing topics to reuse if applicable: [${recentTopics.join(', ')}]
 
 Statement: "${sanitizedInput}"`;
 
+  const start = performance.now();
   try {
     const model = process.env.EXPO_PUBLIC_GEMINI_MODEL || 'gemini-3.7-flash';
     const res = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
@@ -130,6 +147,8 @@ Statement: "${sanitizedInput}"`;
       })
     });
 
+    const latencyMs = Math.round(performance.now() - start);
+
     if (!res.ok) {
       throw new Error(`LLM Network Error: ${res.status}`);
     }
@@ -139,12 +158,25 @@ Statement: "${sanitizedInput}"`;
     // Check for safety blocks
     if (data.promptFeedback?.blockReason || data.candidates?.[0]?.finishReason === 'SAFETY' || data.candidates?.[0]?.finishReason === 'RECITATION' || data.candidates?.[0]?.finishReason === 'BLOCKLIST') {
       console.warn("LLM prompt blocked for safety");
-      return null;
+      return {
+        provider: 'gemini',
+        latencyMs,
+        rawText: '',
+        isStrictJson: false,
+        result: null,
+        error: 'Safety Block'
+      };
     }
     
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
     if (!text) throw new Error("Empty response from LLM");
     
+    let isStrictJson = false;
+    try {
+      JSON.parse(text);
+      isStrictJson = true;
+    } catch {}
+
     let parsed: any;
     try {
       parsed = JSON.parse(cleanJsonText(text));
@@ -157,12 +189,156 @@ Statement: "${sanitizedInput}"`;
     if (typeof parsed.topic !== 'string' || typeof parsed.choice !== 'string') throw new Error("Invalid field types");
     
     if (parsed.topic.toUpperCase() === 'UNKNOWN' || parsed.choice.toUpperCase() === 'UNKNOWN') {
-      return null;
+      return {
+        provider: 'gemini',
+        latencyMs,
+        rawText: text,
+        isStrictJson,
+        result: null
+      };
     }
     
-    return { topic: parsed.topic, choice: parsed.choice };
-  } catch (err) {
+    return {
+      provider: 'gemini',
+      latencyMs,
+      rawText: text,
+      isStrictJson,
+      result: { topic: parsed.topic, choice: parsed.choice }
+    };
+  } catch (err: any) {
+    const latencyMs = Math.round(performance.now() - start);
     console.warn("LLM Parsing failed, falling back.", err);
-    return fallbackParser(sanitizedInput);
+    return {
+      provider: 'gemini',
+      latencyMs,
+      rawText: '',
+      isStrictJson: false,
+      result: fallbackParser(sanitizedInput),
+      error: err.message || String(err)
+    };
   }
+}
+
+export async function interpretWithGemini(sanitizedInput: string, recentTopics: string[]): Promise<ParsedStatement | null> {
+  const inspection = await executeGeminiBenchmarkCall(sanitizedInput, recentTopics);
+  return inspection.result;
+}
+
+export async function executeGroqBenchmarkCall(
+  sanitizedInput: string,
+  recentTopics: string[]
+): Promise<LLMCallInspection> {
+  const apiKey = process.env.EXPO_PUBLIC_GROQ_API_KEY;
+  if (!apiKey) {
+    console.warn("No EXPO_PUBLIC_GROQ_API_KEY found. Falling back to keyword parser.");
+    return {
+      provider: 'groq',
+      latencyMs: 0,
+      rawText: '',
+      isStrictJson: false,
+      result: fallbackParser(sanitizedInput),
+      error: 'Missing API Key'
+    };
+  }
+
+  const systemContent = "You are a precise data extraction engine for a team decision tracker. Extract the core domain or category of the decision (e.g., Database, Architecture, Frontend, Scope, CI/CD) and the specific choice made. For statements defining project scope, MVP boundary, or prototype definition (e.g., 'let\\'s just do a mock login for demo', 'we need full auth and database for MVP'), use topic 'Scope'. If the statement is casual chat, unparseable, or not a decision, you MUST return 'UNKNOWN' for both topic and choice. You must respond strictly with a valid JSON object containing exactly two keys: 'topic' and 'choice'.";
+
+  const userContent = `Extract the decision. 
+Existing topics to reuse if applicable: [${recentTopics.join(', ')}]
+
+Statement: "${sanitizedInput}"`;
+
+  const start = performance.now();
+  try {
+    const model = process.env.EXPO_PUBLIC_GROQ_MODEL || 'openai/gpt-oss-20b';
+    const res = await fetchWithRetry('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: 'system', content: systemContent },
+          { role: 'user', content: userContent }
+        ],
+        response_format: { type: 'json_object' },
+        temperature: 0.1
+      })
+    });
+
+    const latencyMs = Math.round(performance.now() - start);
+
+    if (!res.ok) {
+      throw new Error(`Groq Network Error: ${res.status}`);
+    }
+
+    const data: any = await res.json();
+    const content = data.choices?.[0]?.message?.content;
+    if (!content) throw new Error("Empty response from Groq");
+
+    let isStrictJson = false;
+    try {
+      JSON.parse(content);
+      isStrictJson = true;
+    } catch {}
+
+    let parsed: any;
+    try {
+      parsed = JSON.parse(cleanJsonText(content));
+    } catch (e) {
+      throw new Error("Invalid JSON syntax from Groq");
+    }
+
+    if (!parsed || typeof parsed !== 'object') throw new Error("Parsed result is not an object");
+    if (!parsed.topic || !parsed.choice) throw new Error("Missing required fields");
+    if (typeof parsed.topic !== 'string' || typeof parsed.choice !== 'string') throw new Error("Invalid field types");
+
+    if (parsed.topic.toUpperCase() === 'UNKNOWN' || parsed.choice.toUpperCase() === 'UNKNOWN') {
+      return {
+        provider: 'groq',
+        latencyMs,
+        rawText: content,
+        isStrictJson,
+        result: null
+      };
+    }
+
+    return {
+      provider: 'groq',
+      latencyMs,
+      rawText: content,
+      isStrictJson,
+      result: { topic: parsed.topic, choice: parsed.choice }
+    };
+  } catch (err: any) {
+    const latencyMs = Math.round(performance.now() - start);
+    console.warn("Groq Parsing failed, falling back.", err);
+    return {
+      provider: 'groq',
+      latencyMs,
+      rawText: '',
+      isStrictJson: false,
+      result: fallbackParser(sanitizedInput),
+      error: err.message || String(err)
+    };
+  }
+}
+
+export async function interpretWithGroq(sanitizedInput: string, recentTopics: string[]): Promise<ParsedStatement | null> {
+  const inspection = await executeGroqBenchmarkCall(sanitizedInput, recentTopics);
+  return inspection.result;
+}
+
+export async function interpretStatement(input: string, existingTopics: string[]): Promise<ParsedStatement | null> {
+  // Prevent absurdly long inputs for basic security & cost
+  const sanitizedInput = input.slice(0, 500).replace(/[\n\r]/g, ' ');
+  const recentTopics = existingTopics.slice(-10); // Bound the array
+
+  const provider = (process.env.EXPO_PUBLIC_LLM_PROVIDER || 'groq').toLowerCase();
+  if (provider === 'gemini') {
+    return interpretWithGemini(sanitizedInput, recentTopics);
+  }
+  return interpretWithGroq(sanitizedInput, recentTopics);
 }

@@ -27,7 +27,7 @@
 | Time | Visual / Screen | Action / Interaction | On-Screen Caption |
 |---|---|---|---|
 | **0:18** | Decisions Channel (`/decisions`) | Tap Decisions Channel. Tap starter chip: `"We're using Postgres for the database"`. | *No forms or tickets. Just state what you are building.* |
-| **0:25** | Statement Channel | Tap Send (`↑`). State indicator shows *"Isolyne is extracting decision logic..."*. | *Bounded Gemini 3.7 Flash parses natural chat into structured signals.* |
+| **0:25** | Statement Channel | Tap Send (`↑`). State indicator shows *"Isolyne is extracting decision logic..."*. | *Bounded LLM parser parses natural chat into structured signals.* |
 | **0:31** | Candidate Card | Card appears: **DATABASE** → **PostgreSQL**. Tap **"Lock decision"**. | *Alice locks in PostgreSQL.* |
 | **0:36** | Decisions Feed | Feed displays **DATABASE** → `PostgreSQL` (Alice). Radar remains ALL CLEAR. | *Shared reality ledger is updated.* |
 
