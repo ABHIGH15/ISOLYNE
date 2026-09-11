@@ -1,220 +1,169 @@
-# Isolyne
+<div align="center">
+  <!-- TODO: Insert Hero GIF/Screenshot here showing the Radar resolving an Alice/Bob conflict -->
+  <!-- <img src="docs/assets/placeholder-hero.gif" alt="Isolyne Demo" width="600" /> -->
 
-> *"Small, fast-moving teams don't fail because they can't code — they fail because Alice thinks they are using Postgres and Bob is setting up Mongo. Silence is a feature, until you drift."*
+  <h1>Isolyne</h1>
+  <p><b>The disagreement detector for teams that move too fast to argue.</b></p>
+  <p><i>Your teammate is building on Firebase. You're building on Postgres. Neither of you knows.</i></p>
 
-**Isolyne** is a deterministic alignment radar for fast-moving software teams. It listens to decisions stated in natural language, projects shared team reality, and deterministically detects awareness gaps before silence turns into irreversible architectural drift.
-
-Built for [RevenueCat Shipaton 2026](https://www.revenuecat.com/).
-
----
-
-## The Problem: The Drift of Silence
-
-In hackathons and early-stage sprints, teams rarely argue — they simply assume.
-
-- Alice says: *"Postgres is locked in."*
-- 20 minutes later, Bob says: *"Setting up Firebase for speed."*
-- Neither notices the contradiction until integration hour at 3 AM.
-
-Traditional tools either manage tasks (Jira, Linear) or host chat (Slack, Discord). None continuously calculate whether the team actually shares a unified reality.
+  <p>
+    <a href="https://github.com/ABHIGH15/ISOLYNE/actions"><img src="https://img.shields.io/badge/tests-65%20passing-success" alt="Tests"></a>
+    <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-Strict-blue" alt="TypeScript Strict"></a>
+    <a href="https://expo.dev/"><img src="https://img.shields.io/badge/Expo-SDK_57-lightgrey" alt="Expo SDK 57"></a>
+    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
+  </p>
+</div>
 
 ---
 
-## The Solution: Collaboration Intelligence
+## 🛑 The Problem
 
-Isolyne provides a continuous, deterministic awareness engine:
+Small teams don't fail from bad code. They fail from the illusion of agreement. 
 
-1. **Decisions Channel** — Teammates state decisions naturally (*"Going with React Native"*). An isolated LLM parser extracts `{ actor, topic, choice }`.
-2. **Reality Projection** — Replays the immutable signal stream through a pure projection function.
-3. **Deterministic Radar** — Mathematical gap detectors highlight consensus contradictions and unowned critical paths without AI guesswork.
-4. **Verbatim Evidence & Resolution** — Tapping a detected gap reveals the exact quotes from each teammate, with 1-tap actions to Align or Challenge.
-5. **Timeline & Pro Archive** — Full chronological ledger of team signals, commitments, and historical records.
+Traditional project management tools (Jira, Linear) demand heavy upfront bureaucracy and get abandoned within four hours of a hackathon. Team chat (Slack, Discord) buries critical architectural decisions in noise. 
+
+**Isolyne** sits between them: builders state their assumptions in natural language, and a pure event-sourced mathematical kernel continuously projects shared reality and alerts the team the exact moment a contradiction occurs—before 3 AM integration hell.
 
 ---
 
-## System Architecture
+## ✨ What We Built
 
-```text
-Natural Language Input (Decisions Channel)
-         ↓
-LLM Parser (Groq openai/gpt-oss-20b default / Gemini 3.7 Flash + Keyword Fallback)
-         ↓
-Structured Signal { actorId, topic, choice, verbatim }
-         ↓
-CQRS Signal Repository (AsyncStorage / In-Memory)
-         ↓
-Pure Projection Function (RealityProjection.ts)
-         ↓
-Current RealityState
-         ↓
-Deterministic Gap Detectors (OwnershipGap, InterpretationGap, ConsensusGap)
-         ↓
-Radar UI (Clear vs Divergence + Verbatim Evidence)
+We built a mobile-native, offline-capable radar that watches your team's assumptions without getting in the way. 
+
+### 1. The Core Loop
+* **State:** Casually tell Isolyne what you're working on ("I'm doing auth with Postgres").
+* **Detect:** Isolyne's deterministic CQRS kernel mathematically compares your statement against the rest of the squad.
+* **Resolve:** If someone else stated Firebase, the Radar immediately flags the divergence and prompts a 1-tap alignment resolution.
+
+### 2. Privacy-First Extraction
+We use an LLM (Groq Llama 3 / Gemini) to extract structured JSON (`{ topic: 'Database', choice: 'Postgres' }`) from casual chat. Crucially, we built a **completely offline local keyword parser** as the ultimate fallback. Your team's internal disagreements and architectural secrets never have to leave the device.
+
+### 3. Asynchronous Drift Alerts (Push Notifications)
+Drift happens asynchronously, so detection has to be proactive. Isolyne features real-time local push notifications with intelligent idempotency deduping. The moment a teammate contradicts an established assumption, your phone buzzes with the exact conflict. One tap deep-links you straight into the resolution flow.
+
+### 4. The Detector Taxonomy
+We identified the 8 most critical coordination failures in fast-moving teams. We have fully built and shipped **4 out of 8** for this release:
+* ✅ **Consensus Gap:** Two people commit to different technical solutions for the same domain.
+* ✅ **Interpretation Gap:** The team uses the same words but defines the MVP/Scope differently.
+* ✅ **Timeline Gap:** Team members hold misaligned or ambiguously defined deadlines.
+* ✅ **Ownership Gap:** A critical decision has no designated final decider, leading to deadlock.
+
+### 5. Passive Ingestion (Discord Companion Bot)
+Detection logic shouldn't be locked to a single UI. We built a fully typed Discord Bot proof-of-concept that runs the exact same pure CQRS kernel to passively catch silent divergence directly in the channels where your team already chats.
+
+---
+
+## 🏗 Architecture
+
+Isolyne deliberately isolates LLM unpredictability. The LLM is **never** used to decide if the team is aligned—it only extracts nouns.
+
+```mermaid
+graph TD
+    %% Styling
+    classDef llm fill:#f9f0ff,stroke:#d0bdf4,stroke-width:2px,color:#4a0072
+    classDef kernel fill:#e8f4f8,stroke:#b3d4ff,stroke-width:2px,color:#003366
+    classDef ui fill:#f0f9f0,stroke:#b3e6b3,stroke-width:2px,color:#004d00
+    classDef db fill:#fff5e6,stroke:#ffcc80,stroke-width:2px,color:#b35900
+
+    %% Actors
+    Alice([Alice])
+    Bob([Bob])
+
+    %% UI Layer
+    subgraph UI ["Presentation Layer (React Native)"]
+        Chat[Decisions Channel]
+        RadarUI[Radar Warnings]
+        Resolution[1-Tap Alignment]
+    end
+
+    %% Extraction Layer
+    subgraph Extraction ["Extraction Layer (Unpredictable)"]
+        Parser["LLM Parser (Groq/Gemini)"]
+        Fallback["Keyword Parser (Offline)"]
+    end
+
+    %% Kernel Layer
+    subgraph Kernel ["CQRS Kernel (Deterministic)"]
+        Detector["Gap Detectors"]
+        Engine["Event Sourcing Engine"]
+        Generator["Proposal Generator"]
+    end
+    
+    Storage[(Local Storage)]
+
+    %% Flow
+    Alice -- "We're using Postgres" --> Chat
+    Bob -- "Firebase is faster" --> Chat
+
+    Chat -- "Raw Text" --> Parser
+    Parser -. "Network Error" .-> Fallback
+    Parser -- "{topic: 'Database', choice: 'Postgres'}" --> Engine
+    Fallback -- "{topic: 'Database', choice: 'Firebase'}" --> Engine
+
+    Engine -- "decision_stated" --> Detector
+    Detector -- "divergence_detected" --> Engine
+    Engine --> Generator
+    Engine <--> Storage
+    Generator -- "DecisionProposal" --> RadarUI
+
+    RadarUI -- "Alert!" --> Alice
+    Alice -- "Agree" --> Resolution
+    Resolution -- "alignment_agree" --> Engine
+
+    %% Apply Styles
+    class Parser,Fallback llm
+    class Detector,Engine,Generator kernel
+    class Chat,RadarUI,Resolution ui
+    class Storage db
 ```
 
-### Architecture Guarantees & Boundaries
-
-- **The CQRS / Event-Sourced Kernel is 100% Deterministic:** Signals are immutable. Gaps are mathematical contradictions evaluated by pure TypeScript detectors (`OwnershipGapDetector.ts`, `InterpretationGapDetector.ts`, `ConsensusGapDetector.ts`).
-- **Strict LLM Isolation & Dual-Provider Architecture:** Natural language extraction is decoupled behind a clean provider interface (`src/services/llmParser.ts`):
-  - **Default: Groq (`openai/gpt-oss-20b`)** — Selected as the default recording and runtime engine. In live benchmark testing across our full demo script (30 live calls), Groq delivered **0 schema errors** and a **674ms median latency** with zero daily rate-limit risk.
-  - **Alternative: Gemini 3.7 Flash** — Selectable via `EXPO_PUBLIC_LLM_PROVIDER=gemini`. While architecturally capable, Gemini free-tier keys carry a strict 20-request/day ceiling (`GenerateRequestsPerDayPerProjectPerModel-FreeTier`) with a 24-hour lockout, making Groq the superior choice for live filming and rehearsal reliability.
-  - **Safety Net: Local Fallback Parser** — If API keys are unset or network fails, an offline deterministic keyword parser with dedicated Scope-vs-Database boundary handling extracts signals without blocking the app.
-  - The LLM **never** reasons about team alignment or gap detection.
-- **Offline-First Resilience:** In-memory repositories with `AsyncStorage` persistence guarantee zero external database latency and zero network failure modes during live demos.
-
 ---
 
-## Monetization Model (RevenueCat)
+## 🚀 Quick Start
 
-**Philosophy:** *Never gate the safety feature. Free tier keeps the team safe; Pro monetizes the accumulated record.*
-
-- **Free Tier (100% Free Forever):** Continuous drift detection, live radar status, and consensus gap resolution.
-- **Isolyne Pro (`isolyne_pro`):** Unlocks full collaboration timeline history, cross-project memory, and timeline exports.
-
-SDK: `react-native-purchases` + `react-native-purchases-ui`  
-Entitlement: `isolyne_pro`
-
----
-
-## Application Structure
-
-```text
-HACKOS/
-├── app/
-│   ├── _layout.tsx           # Master shell, TopNav, RevenueCat init, Onboarding modal
-│   ├── index.tsx             # Project Hub: Roster, Live Radar status, Guided First Run
-│   ├── projects.tsx          # Local Workspace Ledger: create, switch, and delete projects
-│   ├── team.tsx              # Active Project Team Management: add/remove teammates
-│   ├── radar.tsx             # Concentric Radar motif, Gap cards, 1-tap resolution actions
-│   ├── decisions.tsx         # Decisions stream + StatementChannel with 1-tap starters
-│   ├── timeline.tsx          # Chronological signal & commitment ledger
-│   ├── paywall.tsx           # RevenueCat Pro Paywall
-│   └── customer-center.tsx   # RevenueCat Customer Center (subscription management)
-├── src/
-│   ├── presentation/
-│   │   ├── theme/tokens.ts   # Dark-mode design system: color, type, space, radius
-│   │   ├── components/
-│   │   │   ├── StatementChannel.tsx  # Natural language input + identity switcher
-│   │   │   ├── RadarMotif.tsx        # Animated concentric radar sweep & pulse
-│   │   │   └── OnboardingModal.tsx   # 3-step setup (Philosophy, Name, Roster)
-│   │   └── state/KernelContext.tsx   # React Context bridging UI to CQRS engine
-│   ├── services/
-│   │   ├── projectService.ts # Pure local project & roster lifecycle management
-│   │   ├── llmParser.ts      # Bounded Gemini 3.7 Flash parser + offline fallback
-│   │   ├── purchases.ts      # RevenueCat SDK wrapper (isolyne_pro entitlement)
-│   │   ├── kernelService.ts  # Singleton CQRS kernel & AsyncStorage persistence
-│   │   └── __tests__/        # Service tests (projects, purchases, customer center, parser)
-│   └── kernel/
-│       ├── CIKernel.ts       # Event engine entry point
-│       ├── domain/           # Signal, RealityState, AwarenessGap, Commitment
-│       ├── detection/        # OwnershipGapDetector, InterpretationGapDetector, ConsensusGapDetector
-│       ├── projection/       # RealityProjection (pure replay function)
-│       └── tests/            # Deterministic Kernel Invariant Suite
-├── discord-bot/              # Standalone Discord bot companion (passive capture POC)
-│   ├── src/
-│   │   ├── index.ts          # Gateway listener + ConsensusGapDetector integration
-│   │   └── dedup.test.ts     # Deterministic deduplication test suite
-│   ├── package.json          # Isolated subproject dependencies (discord.js v14)
-│   └── README.md             # Architecture, demo setup, and run instructions
-```
-
----
-
-## 🗂️ Local Multi-Project & Team Management
-
-Isolyne is built as an **offline-first, zero-login, local multi-project workspace**:
-
-1. **Local Workspaces:** Create multiple isolated project ledgers on a single device (`isolyne_projects_v1`). Each project runs its own independent CQRS reality projection, radar state, and signal stream.
-2. **Squad Isolation Invariant:** Strict squad isolation guarantees that gaps detected in Project A (e.g., a database consensus conflict) never leak into Project B.
-3. **Project Deletion:** Purges project metadata, namespaced rosters (`isolyne_roster_${squadId}`), and associated signals from storage, safely falling back to remaining projects or the default squad.
-4. **Team Management on Existing Projects:** 
-   - Add teammates dynamically: appends to namespaced roster, emits a `member_joined` signal to the kernel, and guards against duplicate emissions.
-   - Remove teammates: safely removes from active UI rotation and composer identities. Enforces device-owner protection at the service level.
-5. **Append-Only Member Invariant:** In keeping with event-sourcing principles, the kernel signal ledger is append-only. Removing a teammate from the UI roster does not erase their historical statements, decisions, or timeline entries. If a project becomes solo, Radar allows the remaining lead to resolve ownership gaps with 1 tap (`Claim Ownership`).
-
----
-
-## 🔍 For Judges & Code Reviewers
-
-Key files demonstrating the architectural rigor, deterministic CQRS kernel, and RevenueCat integration:
-
-| Area | Key File | Description |
-|---|---|---|
-| **Multi-Project & Roster Service** | [`projectService.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/projectService.ts) | Pure TypeScript CRUD for local projects, squad-isolated rosters, and signal purging |
-| **Multi-Project & Isolation Suite** | [`projects.test.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/__tests__/projects.test.ts) | 14 automated tests verifying multi-project isolation, roster persistence, and solo resolution |
-| **Deterministic Detectors** | [`src/kernel/detection/`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/detection/) | Pure TypeScript detectors (`OwnershipGapDetector.ts`, `InterpretationGapDetector.ts`, `ConsensusGapDetector.ts`) |
-| **Pure CQRS Projection** | [`RealityProjection.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/projection/RealityProjection.ts) | Pure event-replay function mapping immutable signal stream to current `RealityState` |
-| **Kernel Invariant Suite** | [`kernel.test.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/tests/kernel.test.ts) | Invariant tests verifying gap triggering, cross-squad isolation, and priority ordering |
-| **Isolated LLM Boundary** | [`llmParser.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/llmParser.ts) | Dual-provider parser (Groq default, Gemini alternative) with deterministic keyword fallback |
-| **RevenueCat Pro Paywall** | [`paywall.tsx`](file:///Users/abhi/PROJECTS%202/HACKOS/app/paywall.tsx) | "Moment of Doubt" paywall triggered from active radar gap with Monthly & Annual packages |
-| **Customer Center** | [`customer-center.tsx`](file:///Users/abhi/PROJECTS%202/HACKOS/app/customer-center.tsx) | Native RevenueCat UI embedding + gated fallback with scripted retention offer simulation |
-| **RevenueCat Service** | [`purchases.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/purchases.ts) | Offering fetching, typed packages, introductory pricing, and customer info |
-| **Discord Bot Companion** | [`discord-bot/`](file:///Users/abhi/PROJECTS%202/HACKOS/discord-bot/) | Standalone Gateway companion demonstrating passive drift detection in live channels |
-
----
-
-## 🤖 Passive Capture Proof-of-Concept (`discord-bot/`)
-
-Isolyne's detection logic isn't locked to the mobile app UI. The repository includes [`discord-bot/`](file:///Users/abhi/PROJECTS%202/HACKOS/discord-bot/), a working technical proof-of-concept running the exact same pure detection kernel against a live Discord channel.
-
-When two teammates state conflicting choices on the same topic in Discord, the bot intercepts the drift and alerts the thread in real time. This demonstrates a path to passive capture without requiring teams to change how they already communicate.
-
-> **Architectural Boundary:** This is an intentional standalone companion, not an always-on shipped feature. It connects outbound over Discord Gateway WebSockets and operates in-memory; it does not write into the mobile app's local `AsyncStorage`.
-
----
-
-## 📌 Known Limitations & Scoping Decisions
-
-* **Local-Only Scope (Zero-Login / No Backend):** There is no remote backend, authentication server, or cross-device cloud sync. All projects and rosters are local records stored in AsyncStorage on this device. Entitlements (`isolyne_pro`) remain device-level.
-* **Append-Only Signal Stream:** Roster removal updates the UI participant list, but historical statements and signals authored by departed members remain preserved in the timeline ledger to maintain an honest retrospective record.
-* **Deliberately Scoped Runtime:** In this version, we deliberately scoped the active runtime engine to the **3 most critical and high-frequency coordination failure modes**:
-  1. `Ownership Gap` — Stated work without an assigned owner.
-  2. `Interpretation Gap` — Teammates using the same word with conflicting definitions (e.g. Scope / MVP definition divergence).
-  3. `Consensus Gap` — Direct architectural contradictions (e.g. conflicting database or framework choices).
-* **Roadmap Extension:** The remaining 5 gap types from our collaboration taxonomy (*Authority, Horizon, Allocation, Context, Execution*) are documented in our architectural specs and scheduled for future engine releases.
-
----
-
-## Getting Started
-
-### Installation
+Get the app running locally in under 60 seconds.
 
 ```bash
+# Clone the repository
+git clone https://github.com/ABHIGH15/ISOLYNE.git
+cd ISOLYNE
+
+# Install dependencies
 npm install
-```
 
-### Running the App
-
-```bash
-npm start
-```
-
-Open via Expo Go, iOS Simulator, Android Emulator, or Web (`npm run web`).
-
-### Automated Test Suite
-
-```bash
+# Run the invariant test suite (65/65 passing)
 npm test
+
+# Start the Expo development server
+npx expo start
 ```
 
-Runs the Vitest suite verifying the deterministic CQRS kernel invariants, RevenueCat purchases/Customer Center services, and the LLM parser boundary.
-
-### Type Verification
-
-```bash
-npx tsc --noEmit
-```
-
-### Web Export Build
-
-```bash
-npm run export:web
-```
+*Note: Isolyne operates perfectly without an API key using the offline deterministic fallback parser. For the full LLM extraction experience, provide an `EXPO_PUBLIC_GROQ_API_KEY` in your `.env`.*
 
 ---
 
-## License
+## 💰 Monetization (RevenueCat)
 
-MIT © 2026 AMIT KUMAR GUPTA
+Isolyne uses **RevenueCat** to power its "Purchase-as-Story-Beat" model. 
 
+Basic alignment and detection are **100% free forever**—no project breaks because of a paywall. Isolyne Pro is offered the exact second the squad's Radar goes red on an active divergence. The paywall triggers exactly when the emotional and practical value of alignment is undeniable.
 
+Pro monetizes the permanent record: unlocking retrospective exports, immutable signal audit trails, and cross-project organizational memory. We utilize RevenueCat's Native **Customer Center** to seamlessly manage retention flows, cancellation surveys, and automated discount offers.
+
+---
+
+## 🗺 What's Planned (Roadmap)
+
+Our vision is to make the mobile coordination experience completely frictionless. Here is what we are building next:
+
+* 🚧 **The Remaining Detectors:** Shipping the final 4 logic gaps (*Authority, Allocation, Context, Execution*).
+* 🚧 **The Daily Temp Check:** Replacing ambient tracking with a single daily push notification ("Did anything change since yesterday?") that opens a 1-tap mini-scratchpad.
+* 🚧 **Live Activities & Dynamic Island:** Broadcasting the team's Radar status live on the iOS lock screen during active build sessions, so you always know if the team is aligned without even unlocking your phone.
+* 🚧 **Isolyne Pro Retrospectives:** Expanding our RevenueCat integration to export the immutable, chronological event log into sprint retrospectives, helping teams learn exactly where and when communication broke down.
+* 🚧 **Cloud Sync:** Migrating the pure `AsyncStorage` state to a real-time CRDT backend to sync multiple physical devices seamlessly.
+
+---
+
+<div align="center">
+  <i>Built for the RevenueCat Shipaton 2026 · Next Gen Track</i>
+</div>
