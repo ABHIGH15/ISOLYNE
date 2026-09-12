@@ -49,3 +49,8 @@ discord-bot/node_modules/
 .chrome-temp/
 .chrome-temp*
 
+.fake_home
+.claude
+.chrome-temp
+.expo_home
+archive/
