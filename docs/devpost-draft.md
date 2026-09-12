@@ -1,115 +1,61 @@
-# 🧭 Project Isolyne — Devpost Submission Draft
+# Isolyne
 
-> **Target Categories:**  
-> 🥇 **Next Gen Track** (Primary — Source code review + 90s demo video)  
-> 🥈 **HAMM Award** (Secondary — Creative RevenueCat monetization: purchase-as-story-beat & Moment of Doubt trigger)  
-> *(Note: Explicitly non-targeting Grand Prize / Design Award)*
+**The disagreement detector for teams that move too fast to argue.**
 
----
+<!-- TODO: Insert Hero Image/Screenshot showing the Postgres vs Firebase conflict -->
+![Isolyne Hero Placeholder](docs/assets/placeholder-devpost-hero.png)
 
-## 💡 Elevator Pitch
-**"Small, fast-moving teams don't fail because they can't code — they fail because Alice thinks they are using Postgres and Bob is setting up Firebase. Silence is a feature, until you drift."**
+## Inspiration: The Silent Drift
+Small teams don't fail from bad code. They fail from the illusion of agreement. 
 
-Isolyne is a deterministic alignment radar for temporary teams. It runs silently in the background, parses natural chat into immutable CQRS signals, and mathematically surfaces consensus, ownership, and interpretation gaps before they turn into 3 AM merge conflicts.
+Your teammate is building on Firebase. You're building on Postgres. Neither of you knows, and you won't find out until integration hell at 3 AM the night before the deadline. 
 
----
+Traditional project management tools demand heavy upfront bureaucracy and are abandoned within four hours of a hackathon. Team chat buries critical architectural decisions in noise. We built **Isolyne** to sit between them: an offline-first, deterministic collaboration radar that projects a shared reality and alerts the team the exact moment a contradiction occurs.
 
-## 🧗 The Problem: The "Silent Nod" Fallback
+## What it does
+Isolyne watches your team's assumptions and catches conflicts before they become blockers. The loop is three steps:
 
-Small, fast-moving teams during hackathons and crunch sprints face a universal coordination breakdown:
+1. **State:** You casually tell Isolyne what you're working on (e.g., *"I'm going with Postgres for the DB"*).
+2. **Detect:** Isolyne's kernel mathematically compares your statement against the rest of the squad's assumed reality.
+3. **Resolve:** If a gap is detected (e.g., Bob previously committed to Firebase), the Radar instantly flags the divergence and prompts a 1-tap alignment resolution.
 
-1. **The "Silent Nod" Fallback:** Polite silence is frequently mistaken for consensus. Teammates assume everyone agrees on the tech stack, API contracts, and MVP boundary until 3 AM integration emergencies.
-2. **The 3 AM Churn:** Teams waste critical hours in circular architectural debates while zero lines get pushed, or quietly build contradictory components (e.g. Alice builds for Postgres while Bob sets up Mongo).
-3. **The Unilateral Fear:** Builders hate feeling bureaucratic or micromanaged. Traditional project management tools (Jira, Linear) demand heavy upfront maintenance and get abandoned within four hours.
+## How we built it: Deterministic CQRS & Isolated LLMs
 
-Isolyne solves this by remaining 100% invisible until shared reality breaks.
+<!-- TODO: Insert Architecture Diagram -->
+![Architecture Diagram Placeholder](docs/assets/placeholder-architecture.png)
 
-### 💬 Why Isolyne Instead of General Chat (Slack/Discord)?
-* **5-Second Input vs. 3-Hour Rework:** Casual chat messages scroll away and get buried. In Isolyne, dropping a single line (*"Going with Postgres"*) takes 5 seconds, but immediately updates the team's shared reality projection and catches unspoken disagreement.
-* **Distraction-Free Dedicated Radar:** Isolyne is not another general messenger — it is an immutable alignment radar, consensus resolver, and retrospective ledger for temporary squads.
-* **Proven Channel-Agnostic Detection (Working Proof-of-Concept):** Isolyne's detection logic isn't locked to the mobile app UI. The codebase includes [`discord-bot/`](file:///Users/abhi/PROJECTS%202/HACKOS/discord-bot/), a working technical proof-of-concept running the exact same pure parser and consensus detection kernel against a live Discord channel. When two teammates post conflicting choices on the same topic, the bot intercepts the divergence and alerts the thread in real time. This proves the feasibility of passive capture without workflow disruption. It is deliberately a local prototype demonstrating algorithmic portability, not an always-on cloud service or live-synced mobile backend.
+We deliberately isolated LLM unpredictability away from the system's core logic. The LLM is **never** used to decide if the team is aligned or to detect gaps.
 
----
+* **Extraction Layer:** Parses casual chat into strict, structured JSON (`{ topic: 'Database', choice: 'Postgres' }`). We use Groq (Llama 3) for ultra-fast extraction, with Gemini as a fallback. Crucially, we built a **completely offline local keyword parser** as the ultimate fallback. This is a foundational privacy and trust feature: your team's internal disagreements and architectural secrets never have to leave the device.
+* **Evaluation Kernel (Deterministic TypeScript):** A pure mathematical CQRS event engine. It manages state via `decision_stated` and `divergence_detected` signals. 
+* **The Detector Taxonomy:** We identified 8 critical coordination failures in fast-moving teams. We have fully built and shipped **4 out of 8** for this release:
+  - ✅ **Consensus Gap:** Different technical solutions for the same domain.
+  - ✅ **Interpretation Gap:** The team uses the same words but defines the MVP differently.
+  - ✅ **Timeline Gap:** Misaligned or ambiguously defined deadlines.
+  - ✅ **Ownership Gap:** A critical decision has no designated final decider.
+  - 🚧 *(Designed, Not Built: Authority, Allocation, Context, Execution)*
 
-## 🛠️ System Architecture & Engineering Boundaries
+The mobile application is verified by **64 automated Vitest tests** covering the kernel, LLM parser boundary degradation paths, and our RevenueCat purchasing logic.
 
-Isolyne is built on an event-sourced, CQRS kernel running strictly on-device, paired with an isolated LLM extraction boundary:
+## Challenges we ran into
 
-```text
-Natural Language Input (Decisions Channel)
-         ↓
-Isolated LLM Parser (Groq openai/gpt-oss-20b default / Gemini 3.7 Flash)
-         ↓
-Structured Signal Stream (Signal.ts)
-         ↓
-Pure Projection Function (RealityProjection.ts)
-         ↓
-Current RealityState
-         ↓
-Deterministic Gap Detectors (OwnershipGap, InterpretationGap, ConsensusGap)
-         ↓
-Radar UI (Clear vs Divergence + Verbatim Evidence)
-```
+Building a pure event-sourced kernel that handles ambiguous human timelines resulted in some serious engineering war stories:
 
-### Architectural Guarantees & Verification
-* **100% Deterministic CQRS Kernel:** All signals (`member_joined`, `decision_stated`, `alignment_agree`) are immutable. Gap detection is performed by pure TypeScript evaluators ([`src/kernel/detection/`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/detection/)), eliminating non-deterministic LLM hallucination in safety-critical state evaluation.
-* **Strict LLM Isolation & Dual-Provider Architecture:** Natural language extraction ([`src/services/llmParser.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/llmParser.ts)) is strictly isolated behind a clean provider contract (`{ topic, choice }` JSON signals):
-  * **Default: Groq (`openai/gpt-oss-20b`)** — Selected as the default recording and runtime engine. In live benchmark testing across our full demo script (30 live calls), Groq delivered **0 schema errors** and a **674ms median latency** with zero daily rate-limit risk.
-  * **Alternative: Google Gemini 3.7 Flash** — Supported via `EXPO_PUBLIC_LLM_PROVIDER=gemini`. While architecturally capable, Gemini free-tier keys enforce a strict 20-request/day ceiling (`GenerateRequestsPerDayPerProjectPerModel-FreeTier`) with a 24-hour lockout, making Groq the reliable operational choice for recording takes and rehearsals.
-  * **Safety Net: Local Fallback Parser** — An offline deterministic keyword parser with dedicated Scope-vs-Database boundary handling ensures the app never crashes or blocks if API keys are missing or network drops.
-  * The LLM **never** decides whether the team is aligned or detects gaps.
-* **Deliberate Scoping & Known Limitations:** In this production release, we deliberately focused on the **3 highest-frequency coordination failures** (Ownership Gap, Interpretation Gap, and Consensus Gap) with rigorous invariant tests, rather than shallowly implementing our full 8-moment taxonomy. The remaining 5 gap types (Authority, Horizon, Allocation, Context, Execution) are fully architected in specs for subsequent iterations.
-* **Invariant Test Suite:** The mobile application is verified by **56 automated Vitest tests** across 6 test suites covering the kernel, multi-project services, dual LLM parser boundary (including Groq and Gemini degradation paths), paywall impact calculation, and RevenueCat purchasing/Customer Center logic ([`src/kernel/tests/kernel.test.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/tests/kernel.test.ts), [`src/services/__tests__/projects.test.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/__tests__/projects.test.ts), [`src/services/__tests__/llmParser.test.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/__tests__/llmParser.test.ts), [`src/services/__tests__/impactCalculator.test.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/__tests__/impactCalculator.test.ts), [`src/services/__tests__/purchases.test.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/__tests__/purchases.test.ts), [`src/services/__tests__/customerCenter.test.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/__tests__/customerCenter.test.ts)). Separately, the standalone Discord bot proof-of-concept includes its own 5-assertion scenario test verifying deduplication and gap detection in isolation ([`discord-bot/src/dedup.test.ts`](file:///Users/abhi/PROJECTS%202/HACKOS/discord-bot/src/dedup.test.ts)):
-  * Invariant: Conflicting database choices trigger `consensus_gap` ([`kernel.test.ts:L24-L30`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/tests/kernel.test.ts#L24-L30)).
-  * Invariant: Sequential decision updates supersede previous choices cleanly ([`kernel.test.ts:L32-L40`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/tests/kernel.test.ts#L32-L40)).
-  * Invariant: Conflicting scope/MVP definitions trigger `interpretation_gap` with `mode: 'definition'` ([`kernel.test.ts:L147-L165`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/tests/kernel.test.ts#L147-L165)).
-  * Invariant: Gap priority resolves in strict order: $\text{Ownership} \rightarrow \text{Interpretation} \rightarrow \text{Consensus}$ ([`kernel.test.ts:L167-L193`](file:///Users/abhi/PROJECTS%202/HACKOS/src/kernel/tests/kernel.test.ts#L167-L193)).
-  * Invariant: Subscription state transitions and preview fallbacks operate deterministically ([`purchases.test.ts:L1-L98`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/__tests__/purchases.test.ts#L1-L98), [`customerCenter.test.ts:L1-L54`](file:///Users/abhi/PROJECTS%202/HACKOS/src/services/__tests__/customerCenter.test.ts#L1-L54)).
+* **The Gemini Schema Regression:** When adding our Timeline detector, we updated our LLM schema to make the `timeline_choice` object optional. To do this, we removed the base `choice` string from the `required` array. This inadvertently caused the LLM to silently drop the `choice` field on *standard* categorical decisions, silently degrading our three most reliable detectors. We had to enforce strict conditional schema requirements to fix it.
+* **Anchor-Timestamp Forwarding:** To ensure our CQRS replay remained 100% deterministic, relative dates (like "Friday") couldn't be parsed based on wall-clock time. We had to meticulously thread `anchorTimestamp` properties all the way down through the LLM parser so that "Friday" always evaluates relative to the exact millisecond the message was originally sent.
+* **Temporal vs. String Deduplication:** In the UI, if Alice says "Friday", Bob says "3pm Friday", and Carol says "the 25th", the resolution chips initially showed three conflicting options. We had to rewrite the proposal generator's deduplication logic to bucket by *resolved ISO instant* and temporal granularity, rather than raw text, to accurately reflect that Alice and Carol were actually in agreement.
 
----
+## Monetization Philosophy & The HAMM Award
 
-## 💰 Monetization Philosophy & The HAMM Award
+Isolyne re-architects monetization around the user's emotional journey using **RevenueCat**:
+* **Free Tier Guarantees 100% Team Safety Forever:** Real-time drift detection and 1-tap consensus alignment are completely free. No project ever breaks because the team hit a paywall.
+* **The "Moment of Doubt" Paywall Trigger:** Isolyne Pro isn't sold in a settings menu. It's offered the exact second the squad's Radar goes red on an active divergence, when the emotional and practical value of alignment is undeniable.
+* **Pro Monetizes the Permanent Record:** Upgrading unlocks the complete retrospective export, immutable signal audit trail, and cross-project organizational memory via RevenueCat's Native Customer Center.
 
-### 1. The Purchase-as-Story-Beat: The "Moment of Doubt"
-Most B2B and developer tools bury their upgrade flow in a hidden settings menu or gate critical safety features behind arbitrary seat limits that penalize small teams.
+## What's next for Isolyne
+We plan to ship the remaining 4 gap detectors (Authority, Allocation, Context, Execution) and build out the Isolyne Pro retrospective export features. 
 
-**Isolyne re-architects monetization around the user's emotional journey:**
-* **Free Tier Guarantees 100% Team Safety Forever:** Real-time drift detection, radar sweeps, and 1-tap consensus alignment are completely free for all squad sizes. No project ever breaks because the team hit a paywall.
-* **The "Moment of Doubt" Paywall Trigger ([`app/radar.tsx:L140-L160`](file:///Users/abhi/PROJECTS%202/HACKOS/app/radar.tsx#L140-L160)):**
-  Isolyne Pro is offered the exact second the squad's Radar goes red on an active divergence, when the emotional and practical value of alignment is undeniable.
-  > *"Isolyne Pro isn't sold in a settings menu — it's offered the moment your team's Radar goes red, when the value of alignment is undeniable. Free forever: detection. Pro: the resolution history and evidence trail that prevents the next drift."*
-* **Pro Monetizes the Permanent Record (`isolyne_pro`):** Pro unlocks the complete retrospective export, immutable signal audit trail, and cross-project organizational memory.
-
-### 2. RevenueCat Offering & Two Packages
-* **Entitlement Identifier:** `isolyne_pro` via `react-native-purchases`.
-* **Offering Structure:** Configured with a `default` Offering containing two packages:
-  * **Monthly (`$rc_monthly`):** Flexible month-to-month subscription for single sprint projects.
-  * **Annual (`$rc_annual`):** Long-term squad subscription configured with an automated **Introductory Offer** (e.g. 50% discount on the first billing period) to remove initial friction for student teams.
-  *(Note: Figures in the current prototype represent illustrative baseline pricing configured in RevenueCat sandbox: $4.99/mo, $39.99/yr, $19.99 intro discount; final production pricing tiers to be tuned upon store launch).*
-
-### 3. Customer Center & Retention Management
-* **Native Architecture ([`node_modules/react-native-purchases-ui`](file:///Users/abhi/PROJECTS%202/HACKOS/node_modules/react-native-purchases-ui)):** Utilizes RevenueCat's `CustomerCenterView` where cancellation surveys, refund requests, and StoreKit promotional retention offers (e.g. 50% retention discount) are managed dynamically in the RevenueCat dashboard without requiring client app redeployment.
-* **Judge & Preview Simulation ([`app/customer-center.tsx:L88-L198`](file:///Users/abhi/PROJECTS%202/HACKOS/app/customer-center.tsx#L88-L198)):**
-  To allow hackathon judges and reviewers in Expo Go / Web to experience the retention flow without needing sandbox Apple/Google credentials, our fallback UI provides an offline scripted simulation of the survey and 50% retention discount offer, honestly labeled as a demo simulation.
-
-### 4. Financial Viability & Unit Economics
-* **Value-to-Cost Ratio:** A single unresolved divergence can easily cost a team dozens of hours of frantic rework during crunch time. A lightweight subscription easily justifies itself on the first avoided 3 AM architectural conflict.
-* **Near-Zero Marginal Inference Costs:** By isolating the LLM parser exclusively to natural-language string extraction (and falling back to local word-boundary regex when offline), Isolyne consumes fractions of a cent per active squad, providing exceptionally high gross margins.
-
----
-
-## 🔄 #BuildInPublic: The Real Pivot Story
-
-Our repository contains the honest history of our pivot in [`archive/pre-pivot-artifacts/`](file:///Users/abhi/PROJECTS%202/HACKOS/archive/pre-pivot-artifacts/README.md):
-
-1. **The Failed Prototype (SquadRadar v0.1):** We originally built a complex "radar of nearby teams" featuring 16 team composition patterns and multi-squad broadcast channels.
-2. **The Realization:** We realized that temporary teams don't fail from lack of awareness of *other* squads; they fail because their *own* team is running on unverified assumptions and the illusion of agreement.
-3. **The Radical Pivot:** We archived 25 pre-pivot specifications into [`archive/pre-pivot-artifacts/`](file:///Users/abhi/PROJECTS%202/HACKOS/archive/pre-pivot-artifacts/README.md), archived the multi-team scaffolding, and rebuilt from scratch around a lightweight CQRS event engine with a single-minded focus: **Collaboration Intelligence for the single active squad**.
-
----
-
-## 📦 Submission Deliverables
-
-* **Repository:** Public GitHub repository containing complete source code, test suites, and architecture specs.
-* **Demo Video (90s):** Full walkthrough following [`docs/demo-video-script.md`](file:///Users/abhi/PROJECTS%202/HACKOS/docs/demo-video-script.md), legible on mute within the first 5 seconds.
-* **Next Gen Eligibility:** Eligible student entry (Section 3 parental consent noted for final submission).
+But our true roadmap focuses on making the mobile experience completely frictionless:
+* **The Daily Temp Check:** Instead of ambient surveillance, a single daily push notification ("Did anything change since yesterday?") that opens a 1-tap mini-scratchpad.
+* **Passive Chat Ingestion:** Integrating our working Discord bot POC to ingest assumptions directly from team channels, eliminating explicit logging entirely.
+* **Live Activities & Dynamic Island:** Broadcasting the team's Radar status live on the lock screen during active build sessions, so you always know if the team is aligned without ever opening the app.

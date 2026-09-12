@@ -443,7 +443,7 @@ export default function PaywallScreen() {
 
 const s = StyleSheet.create({
   container: { flex: 1, backgroundColor: color.bg },
-  topBar: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: space.xl, paddingTop: space.md, paddingBottom: space.sm },
+  topBar: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: space.xl, paddingTop: space.xl, paddingBottom: space.lg },
   brandPill: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: color.accentDim, paddingHorizontal: space.md, paddingVertical: 4, borderRadius: radius.pill },
   brandText: { ...type.label, color: color.accent, fontSize: 10, letterSpacing: 1 },
   closeBtn: { padding: 4 },

@@ -1,5 +1,11 @@
 import assert from 'node:assert';
 import { interpretStatement } from '../../src/services/llmParser';
+function getChoiceString(choice: string | { raw_text: string } | any): string {
+  if (typeof choice === 'string') return choice;
+  if (choice && typeof choice === 'object' && 'raw_text' in choice) return choice.raw_text;
+  return String(choice);
+}
+
 import { ConsensusGapDetector } from '../../src/kernel/detection/ConsensusGapDetector';
 import type { RealityState } from '../../src/kernel/domain/RealityState';
 
@@ -17,7 +23,7 @@ function formatChoiceDisplay(choice: string, topic: string): string {
 interface InMemDecision {
   actorId: string;
   topic: string;
-  choice: string;
+  choice: any;
   verbatim: string;
   timestamp: number;
 }
@@ -58,7 +64,7 @@ async function testDeduplicationEngine() {
     const newDecision: InMemDecision = {
       actorId,
       topic: parsed.topic,
-      choice: parsed.choice,
+      choice: getChoiceString(parsed.choice),
       verbatim: textToParse,
       timestamp: Date.now(),
     };
@@ -88,15 +94,15 @@ async function testDeduplicationEngine() {
       const prevDecision = topicDecisions.find(
         (d) =>
           d.actorId.toLowerCase() !== actorId.toLowerCase() &&
-          d.choice.toLowerCase() !== parsed.choice.toLowerCase()
+          getChoiceString(d.choice).toLowerCase() !== getChoiceString(parsed.choice).toLowerCase()
       );
 
       if (prevDecision) {
-        const conflictKey = `${channelId}:${parsed.topic.toLowerCase()}:${[prevDecision.actorId, actorId].sort().join('-')}:${[prevDecision.choice, parsed.choice].sort().join('-')}`;
+        const conflictKey = `${channelId}:${parsed.topic.toLowerCase()}:${[prevDecision.actorId, actorId].sort().join('-')}:${[getChoiceString(prevDecision.choice), getChoiceString(parsed.choice)].sort().join('-')}`;
         if (!alertedConflicts.has(conflictKey)) {
           alertedConflicts.add(conflictKey);
-          const choiceA = formatChoiceDisplay(prevDecision.choice, parsed.topic);
-          const choiceB = formatChoiceDisplay(parsed.choice, parsed.topic);
+          const choiceA = formatChoiceDisplay(getChoiceString(prevDecision.choice), parsed.topic);
+          const choiceB = formatChoiceDisplay(getChoiceString(parsed.choice), parsed.topic);
           const reply = `Isolyne detected a gap: @${prevDecision.actorId} said ${choiceA}, @${actorId} said ${choiceB} — same topic (${parsed.topic.toLowerCase()}), different choices.\n> *Your team is running with different assumptions about ${parsed.topic.toLowerCase()}. Aligning now will save hours of rework.*`;
           dispatchedReplies.push(reply);
           console.log(`[ACTION: DISPATCHED] Key: ${conflictKey} -> "${reply}"`);

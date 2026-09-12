@@ -4,10 +4,11 @@ import * as Haptics from 'expo-haptics';
 import { color, space, type, radius } from '../theme/tokens';
 import { useKernel } from '../state/KernelContext';
 import { interpretStatement } from '../../services/llmParser';
+import { TimelineChoice, formatChoice } from '../../kernel/domain/Timeline';
 
 type CandidateSignal = {
   topic: string;
-  choice: string;
+  choice: string | TimelineChoice;
   isExistingTopic: boolean;
   verbatim: string;
 };
@@ -145,7 +146,7 @@ export function StatementChannel() {
             </View>
             <View style={s.candidateData}>
               <Text style={s.candidateTopic}>{candidate.topic}</Text>
-              <Text style={s.candidateValue}>{candidate.choice}</Text>
+              <Text style={s.candidateValue}>{typeof candidate.choice === "object" && candidate.choice !== null ? candidate.choice.raw_text : candidate.choice}</Text>
             </View>
             <View style={s.candidateActions}>
               <Pressable style={s.btnLock} onPress={handleLock} accessibilityRole="button" accessibilityLabel="Lock Decision">
@@ -266,8 +267,8 @@ const s = StyleSheet.create({
   starterPrompts: { marginBottom: space.md },
   starterPromptsLabel: { ...type.label, color: color.textMuted, marginBottom: space.xs, textTransform: 'uppercase' },
   starterChips: { flexDirection: 'row', gap: space.sm },
-  starterChip: { backgroundColor: color.bgElevated, borderWidth: 1, borderColor: color.lineStrong, paddingHorizontal: space.md, paddingVertical: space.sm, borderRadius: radius.pill },
-  starterChipText: { ...type.meta, color: color.accent },
+  starterChip: { backgroundColor: '#1A1D24', borderWidth: 0, paddingHorizontal: space.md, paddingVertical: space.sm, borderRadius: 6 },
+  starterChipText: { ...type.meta, color: color.textMuted },
 
   inputWrapper: { position: 'relative' },
   input: { ...type.body, color: color.text, backgroundColor: color.bgElevated, borderWidth: 1, borderColor: color.lineStrong, borderRadius: radius.md, padding: space.lg, paddingRight: 60, minHeight: 60, paddingTop: space.lg },

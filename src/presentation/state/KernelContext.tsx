@@ -1,3 +1,4 @@
+import { scheduleGapNotification } from '../../services/notificationService';
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { kernel, adapter, signalRepo, initializeKernelStorage, seedDemoDataIfNeeded } from '../../services/kernelService';
@@ -193,6 +194,16 @@ export function KernelProvider({ children }: { children: ReactNode }) {
     };
     const ev = await kernel.processSignal(scopedSignal);
     await updateStateForSquad(scopedSignal.squadId, ev);
+    
+    // Notification hook
+    if (ev.selectedGap) {
+      await scheduleGapNotification(
+        ev.selectedGap.id,
+        ev.selectedGap.topic || 'General',
+        ev.selectedGap.hiddenReality,
+        scopedSignal.actorId
+      );
+    }
   };
 
   const respondToProposal = async (actorId: string, response: 'agree' | 'challenge', proposalId: string, gapId: string, payload?: any) => {

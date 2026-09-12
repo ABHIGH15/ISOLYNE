@@ -3,6 +3,7 @@ import { RealityProjection } from '../projection/RealityProjection';
 import { OwnershipGapDetector } from '../detection/OwnershipGapDetector';
 import { InterpretationGapDetector } from '../detection/InterpretationGapDetector';
 import { ConsensusGapDetector } from '../detection/ConsensusGapDetector';
+import { TimelineGapDetector } from '../detection/TimelineGapDetector';
 import { EvaluatorPipeline } from '../detection/EvaluatorPipeline';
 import { ProposalGenerator } from '../reasoning/ProposalGenerator';
 import { GapPriorityPolicy } from '../reasoning/GapPriorityPolicy';

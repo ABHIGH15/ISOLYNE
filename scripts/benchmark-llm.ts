@@ -141,7 +141,7 @@ export const GROUND_TRUTH_DATA: GroundTruthItem[] = [
 
 function isMatch(
   item: GroundTruthItem,
-  result: { topic: string; choice: string } | null
+  result: any | null
 ): boolean {
   if (item.isCasual) {
     return result === null;
@@ -220,20 +220,22 @@ async function runBenchmark() {
     // 3 passes Gemini
     const geminiPasses: PassRecord[] = [];
     for (let pass = 1; pass <= 3; pass++) {
-      const inspection = await executeGeminiBenchmarkCall(item.statement, item.existingTopics);
+      const inspection = await executeGeminiBenchmarkCall(item.statement, item.existingTopics, new Date().toISOString());
       const correct = isMatch(item, inspection.result);
       geminiPasses.push({ inspection, isCorrect: correct });
-      process.stdout.write(`  Gemini Pass ${pass}: ${inspection.latencyMs}ms | ${inspection.result ? `${inspection.result.topic} -> ${inspection.result.choice}` : 'null (rejection)'} | strictJSON: ${inspection.isStrictJson} | correct: ${correct}\n`);
+      const c = inspection.result ? (typeof inspection.result.choice === 'object' ? inspection.result.choice.raw_text : inspection.result.choice) : '';
+      process.stdout.write(`  Gemini Pass ${pass}: ${inspection.latencyMs}ms | ${inspection.result ? `${inspection.result.topic} -> ${c}` : 'null (rejection)'} | strictJSON: ${inspection.isStrictJson} | correct: ${correct}\n`);
       await sleep(500);
     }
 
     // 3 passes Groq
     const groqPasses: PassRecord[] = [];
     for (let pass = 1; pass <= 3; pass++) {
-      const inspection = await executeGroqBenchmarkCall(item.statement, item.existingTopics);
+      const inspection = await executeGroqBenchmarkCall(item.statement, item.existingTopics, new Date().toISOString());
       const correct = isMatch(item, inspection.result);
       groqPasses.push({ inspection, isCorrect: correct });
-      process.stdout.write(`  Groq Pass ${pass}:   ${inspection.latencyMs}ms | ${inspection.result ? `${inspection.result.topic} -> ${inspection.result.choice}` : 'null (rejection)'} | strictJSON: ${inspection.isStrictJson} | correct: ${correct}\n`);
+      const c = inspection.result ? (typeof inspection.result.choice === 'object' ? inspection.result.choice.raw_text : inspection.result.choice) : '';
+      process.stdout.write(`  Groq Pass ${pass}:   ${inspection.latencyMs}ms | ${inspection.result ? `${inspection.result.topic} -> ${c}` : 'null (rejection)'} | strictJSON: ${inspection.isStrictJson} | correct: ${correct}\n`);
       await sleep(500);
     }
 

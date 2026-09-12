@@ -1,6 +1,6 @@
 # Isolyne Discord Bot Companion (Technical Proof-of-Concept)
 
-> **Silence is a feature, until you drift.**  
+> **The disagreement detector for teams that move too fast to argue.**  
 > A standalone proof-of-concept demonstrating Isolyne's deterministic alignment detection running live outside the mobile application.
 
 ---

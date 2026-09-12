@@ -35,6 +35,12 @@ export default function TimelineScreen() {
               {index !== timelineEvents.length - 1 && (
                 <View style={s.line} />
               )}
+              {/* Spine Dot */}
+              <View style={[
+                s.spineDot,
+                ev.type === 'divergence' && { backgroundColor: color.risk, borderColor: color.risk },
+                ev.type === 'resolution' && { backgroundColor: color.join, borderColor: color.join }
+              ]} />
               
               <Text style={s.timestamp}>{formatTime(ev.timestamp)}</Text>
               
@@ -79,10 +85,11 @@ const s = StyleSheet.create({
   emptyTitle: { ...type.title, color: color.text, marginBottom: space.sm },
   emptyDesc: { ...type.body, color: color.textMuted, textAlign: 'center' },
 
-  eventRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: space.xl, position: 'relative' },
-  line: { position: 'absolute', left: 24, top: 24, bottom: -space.xl, width: 1, backgroundColor: color.lineStrong },
+  eventRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: space.xl, position: 'relative', paddingLeft: 12 },
+  line: { position: 'absolute', left: 70, top: 24, bottom: -space.xl, width: 2, backgroundColor: color.lineStrong },
+  spineDot: { position: 'absolute', left: 67, top: 8, width: 8, height: 8, borderRadius: 4, backgroundColor: color.textMuted, zIndex: 2 },
   
-  timestamp: { ...type.meta, color: color.textMuted, width: 60, paddingTop: 4 },
+  timestamp: { ...type.meta, color: color.textMuted, width: 45, paddingTop: 2 },
   
   eventCard: { flex: 1, backgroundColor: color.bgQuiet, padding: space.md, borderRadius: radius.md, borderWidth: 1, borderColor: color.line },
   eventCardDivergence: { backgroundColor: color.riskSoft, borderColor: color.riskLine },

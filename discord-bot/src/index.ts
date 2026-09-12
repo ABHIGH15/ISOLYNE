@@ -1,4 +1,10 @@
 import { Client, GatewayIntentBits, Events } from 'discord.js';
+function getChoiceString(choice: string | { raw_text: string } | any): string {
+  if (typeof choice === 'string') return choice;
+  if (choice && typeof choice === 'object' && 'raw_text' in choice) return choice.raw_text;
+  return String(choice);
+}
+
 import dotenv from 'dotenv';
 import { interpretStatement } from '../../src/services/llmParser';
 import { ConsensusGapDetector } from '../../src/kernel/detection/ConsensusGapDetector';
@@ -27,7 +33,7 @@ const consensusDetector = new ConsensusGapDetector();
 interface InMemDecision {
   actorId: string;
   topic: string;
-  choice: string;
+  choice: any;
   verbatim: string;
   timestamp: number;
 }
@@ -55,7 +61,7 @@ client.once(Events.ClientReady, (readyClient) => {
   console.log(`[ISOLYNE] Connected as: ${readyClient.user.tag}`);
   console.log('[ISOLYNE] Engine: ConsensusGapDetector (Pure Domain Kernel)');
   console.log('[ISOLYNE] Monitoring: Discord Gateway (GuildMessages, MessageContent)');
-  console.log('[ISOLYNE] Status: Silence is a feature, until you drift.');
+  console.log('[ISOLYNE] Status: The disagreement detector for teams that move too fast to argue.');
   console.log('============================================================');
 });
 
@@ -104,7 +110,7 @@ client.on(Events.MessageCreate, async (message) => {
     return;
   }
 
-  console.log(`[STATEMENT PARSED] ${actorId}: topic="${parsed.topic}", choice="${parsed.choice}" (source: "${textToParse}")`);
+  console.log(`[STATEMENT PARSED] ${actorId}: topic="${parsed.topic}", choice="${getChoiceString(parsed.choice)}" (source: "${textToParse}")`);
 
   // Update or append this actor's latest decision for this topic
   const existingIndex = decisions.findIndex(
@@ -114,7 +120,7 @@ client.on(Events.MessageCreate, async (message) => {
   const newDecision: InMemDecision = {
     actorId,
     topic: parsed.topic,
-    choice: parsed.choice,
+    choice: getChoiceString(parsed.choice),
     verbatim: textToParse,
     timestamp: Date.now(),
   };
@@ -149,17 +155,17 @@ client.on(Events.MessageCreate, async (message) => {
     const prevDecision = topicDecisions.find(
       (d) =>
         d.actorId.toLowerCase() !== actorId.toLowerCase() &&
-        d.choice.toLowerCase() !== parsed.choice.toLowerCase()
+        getChoiceString(d.choice).toLowerCase() !== getChoiceString(parsed.choice).toLowerCase()
     );
 
     if (prevDecision) {
       // Deterministic conflict signature to avoid spamming the exact same alert
-      const conflictKey = `${channelId}:${parsed.topic.toLowerCase()}:${[prevDecision.actorId, actorId].sort().join('-')}:${[prevDecision.choice, parsed.choice].sort().join('-')}`;
+      const conflictKey = `${channelId}:${parsed.topic.toLowerCase()}:${[prevDecision.actorId, actorId].sort().join('-')}:${[getChoiceString(prevDecision.choice), getChoiceString(parsed.choice)].sort().join('-')}`;
       if (!alertedConflicts.has(conflictKey)) {
         alertedConflicts.add(conflictKey);
 
-        const choiceA = formatChoiceDisplay(prevDecision.choice, parsed.topic);
-        const choiceB = formatChoiceDisplay(parsed.choice, parsed.topic);
+        const choiceA = formatChoiceDisplay(getChoiceString(prevDecision.choice), parsed.topic);
+        const choiceB = formatChoiceDisplay(getChoiceString(parsed.choice), parsed.topic);
         const reply = `Isolyne detected a gap: @${prevDecision.actorId} said ${choiceA}, @${actorId} said ${choiceB} — same topic (${parsed.topic.toLowerCase()}), different choices.\n> *Your team is running with different assumptions about ${parsed.topic.toLowerCase()}. Aligning now will save hours of rework.*`;
 
         try {

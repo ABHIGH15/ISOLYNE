@@ -14,6 +14,8 @@ export class InterpretationGapDetector implements GapDetector {
     const scopeDecisions = new Map<string, Array<{ actorId: string; choice: string; verbatim?: string }>>();
 
     for (const dec of state.decisions) {
+      if (typeof dec.choice !== 'string') continue;
+      
       if (isScopeOrDefinition(dec.topic)) {
         if (!scopeDecisions.has(dec.topic)) {
           scopeDecisions.set(dec.topic, []);

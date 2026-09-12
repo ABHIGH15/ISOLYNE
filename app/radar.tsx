@@ -201,7 +201,7 @@ const s = StyleSheet.create({
   projectName: { ...type.label, color: color.textSecondary, letterSpacing: 1 },
   
   statusCenter: { alignItems: 'center', paddingHorizontal: space.xl },
-  statusTitle: { ...type.display, color: color.text, marginBottom: space.sm, letterSpacing: 2 },
+  statusTitle: { ...type.display, color: color.text, marginBottom: space.sm, letterSpacing: 4, fontFamily: 'Orbitron', fontSize: 40 },
   statusBody: { ...type.body, color: color.textSecondary, textAlign: 'center' },
 
   radarCenter: { width: '100%', maxWidth: 500, alignSelf: 'center' },

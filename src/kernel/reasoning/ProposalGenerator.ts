@@ -1,5 +1,6 @@
 import { AwarenessGap } from '../domain/AwarenessGap';
 import { DecisionProposal } from '../domain/DecisionProposal';
+import { formatChoice, getTimelineOptions } from '../domain/Timeline';
 
 export class ProposalGenerator {
   generate(gap: AwarenessGap): DecisionProposal {
@@ -14,7 +15,7 @@ export class ProposalGenerator {
         targetState: 'One person owns final decisions'
       };
     } else if (gap.type === 'interpretation_gap') {
-      const uniqueOptions = Array.from(new Set(gap.evidence.map(e => e.choice)));
+      const uniqueOptions = Array.from(new Set(gap.evidence.map(e => formatChoice(e.choice))));
       return {
         id: deterministicId,
         gapId: gap.id,
@@ -24,13 +25,23 @@ export class ProposalGenerator {
         options: uniqueOptions
       };
     } else if (gap.type === 'consensus_gap') {
-      const uniqueOptions = Array.from(new Set(gap.evidence.map(e => e.choice)));
+      const uniqueOptions = Array.from(new Set(gap.evidence.map(e => formatChoice(e.choice))));
       return {
         id: deterministicId,
         gapId: gap.id,
         mode: 'alignment',
         description: 'Let\'s align the squad. Which direction makes the most sense right now?',
         targetState: 'Team aligns on a single choice',
+        options: uniqueOptions
+      };
+    } else if (gap.type === 'timeline_gap' || gap.type === 'timeline_unresolved') {
+      const uniqueOptions = getTimelineOptions(gap.evidence);
+      return {
+        id: deterministicId,
+        gapId: gap.id,
+        mode: 'alignment',
+        description: gap.type === 'timeline_gap' ? 'When does the team actually need this by? Let\'s align our schedules.' : 'We have ambiguous timelines. Can we agree on an explicit date or time?',
+        targetState: 'Team commits to a unified timeline',
         options: uniqueOptions
       };
     } else if (gap.type === 'integration_gap') {

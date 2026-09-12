@@ -1,6 +1,9 @@
+import { TimelineChoice } from '../kernel/domain/Timeline';
+
 export type ParsedStatement = {
   topic: string;
-  choice: string;
+  choice: string | TimelineChoice;
+  gap_type?: 'timeline' | 'categorical';
 };
 
 // Fallback mock logic for graceful degradation
@@ -88,7 +91,8 @@ export type LLMCallInspection = {
 
 export async function executeGeminiBenchmarkCall(
   sanitizedInput: string,
-  recentTopics: string[]
+  recentTopics: string[],
+  anchorTimestamp: string
 ): Promise<LLMCallInspection> {
   const apiKey = process.env.EXPO_PUBLIC_GEMINI_API_KEY;
   if (!apiKey) {
@@ -111,6 +115,7 @@ export async function executeGeminiBenchmarkCall(
 
   const prompt = `Extract the decision. 
 Existing topics to reuse if applicable: [${recentTopics.join(', ')}]
+Anchor Timestamp: ${anchorTimestamp} (Use this to resolve relative dates!)
 
 Statement: "${sanitizedInput}"`;
 
@@ -132,13 +137,18 @@ Statement: "${sanitizedInput}"`;
           responseSchema: {
             type: "OBJECT",
             properties: {
-              topic: {
-                type: "STRING",
-                description: "The category or domain of the decision (e.g. Architecture, Database, CI/CD). Reuse an existing topic if it closely matches."
-              },
-              choice: {
-                type: "STRING",
-                description: "The specific option chosen by the user (e.g. Monolith, PostgreSQL, GitHub Actions)."
+              topic: { type: "STRING" },
+              gap_type: { type: "STRING" },
+              choice: { type: "STRING" },
+              timeline_choice: {
+                type: "OBJECT",
+                properties: {
+                  raw_text: { type: "STRING" },
+                  resolved_datetime: { type: "STRING" },
+                  granularity: { type: "STRING" },
+                  anchor_timestamp: { type: "STRING" },
+                  confidence: { type: "STRING" }
+                }
               }
             },
             required: ["topic", "choice"]
@@ -185,10 +195,16 @@ Statement: "${sanitizedInput}"`;
     }
     
     if (!parsed || typeof parsed !== 'object') throw new Error("Parsed result is not an object");
-    if (!parsed.topic || !parsed.choice) throw new Error("Missing required fields");
-    if (typeof parsed.topic !== 'string' || typeof parsed.choice !== 'string') throw new Error("Invalid field types");
+    if (!parsed.topic) throw new Error("Missing required field: topic");
     
-    if (parsed.topic.toUpperCase() === 'UNKNOWN' || parsed.choice.toUpperCase() === 'UNKNOWN') {
+    let resultChoice: any = parsed.choice;
+    if (parsed.gap_type === 'timeline' && parsed.timeline_choice) {
+      resultChoice = parsed.timeline_choice;
+    } else if (!resultChoice) {
+      throw new Error("Missing required field: choice");
+    }
+    
+    if (parsed.topic.toUpperCase() === 'UNKNOWN' || (typeof resultChoice === 'string' && resultChoice.toUpperCase() === 'UNKNOWN')) {
       return {
         provider: 'gemini',
         latencyMs,
@@ -203,7 +219,7 @@ Statement: "${sanitizedInput}"`;
       latencyMs,
       rawText: text,
       isStrictJson,
-      result: { topic: parsed.topic, choice: parsed.choice }
+      result: { topic: parsed.topic, gap_type: parsed.gap_type, choice: resultChoice }
     };
   } catch (err: any) {
     const latencyMs = Math.round(performance.now() - start);
@@ -219,14 +235,15 @@ Statement: "${sanitizedInput}"`;
   }
 }
 
-export async function interpretWithGemini(sanitizedInput: string, recentTopics: string[]): Promise<ParsedStatement | null> {
-  const inspection = await executeGeminiBenchmarkCall(sanitizedInput, recentTopics);
+export async function interpretWithGemini(sanitizedInput: string, recentTopics: string[], anchorTimestamp: string = new Date().toISOString()): Promise<ParsedStatement | null> {
+  const inspection = await executeGeminiBenchmarkCall(sanitizedInput, recentTopics, anchorTimestamp);
   return inspection.result;
 }
 
 export async function executeGroqBenchmarkCall(
   sanitizedInput: string,
-  recentTopics: string[]
+  recentTopics: string[],
+  anchorTimestamp: string
 ): Promise<LLMCallInspection> {
   const apiKey = process.env.EXPO_PUBLIC_GROQ_API_KEY;
   if (!apiKey) {
@@ -245,6 +262,7 @@ export async function executeGroqBenchmarkCall(
 
   const userContent = `Extract the decision. 
 Existing topics to reuse if applicable: [${recentTopics.join(', ')}]
+Anchor Timestamp: ${anchorTimestamp} (Use this to resolve relative dates!)
 
 Statement: "${sanitizedInput}"`;
 
@@ -292,10 +310,16 @@ Statement: "${sanitizedInput}"`;
     }
 
     if (!parsed || typeof parsed !== 'object') throw new Error("Parsed result is not an object");
-    if (!parsed.topic || !parsed.choice) throw new Error("Missing required fields");
-    if (typeof parsed.topic !== 'string' || typeof parsed.choice !== 'string') throw new Error("Invalid field types");
+    if (!parsed.topic) throw new Error("Missing required field: topic");
+    
+    let resultChoice: any = parsed.choice;
+    if (parsed.gap_type === 'timeline' && typeof parsed.choice === 'object') {
+      resultChoice = parsed.choice;
+    } else if (!resultChoice) {
+      throw new Error("Missing required field: choice");
+    }
 
-    if (parsed.topic.toUpperCase() === 'UNKNOWN' || parsed.choice.toUpperCase() === 'UNKNOWN') {
+    if (parsed.topic.toUpperCase() === 'UNKNOWN' || (typeof resultChoice === 'string' && resultChoice.toUpperCase() === 'UNKNOWN')) {
       return {
         provider: 'groq',
         latencyMs,
@@ -310,7 +334,7 @@ Statement: "${sanitizedInput}"`;
       latencyMs,
       rawText: content,
       isStrictJson,
-      result: { topic: parsed.topic, choice: parsed.choice }
+      result: { topic: parsed.topic, gap_type: parsed.gap_type, choice: resultChoice }
     };
   } catch (err: any) {
     const latencyMs = Math.round(performance.now() - start);
@@ -326,19 +350,19 @@ Statement: "${sanitizedInput}"`;
   }
 }
 
-export async function interpretWithGroq(sanitizedInput: string, recentTopics: string[]): Promise<ParsedStatement | null> {
-  const inspection = await executeGroqBenchmarkCall(sanitizedInput, recentTopics);
+export async function interpretWithGroq(sanitizedInput: string, recentTopics: string[], anchorTimestamp: string = new Date().toISOString()): Promise<ParsedStatement | null> {
+  const inspection = await executeGroqBenchmarkCall(sanitizedInput, recentTopics, anchorTimestamp);
   return inspection.result;
 }
 
-export async function interpretStatement(input: string, existingTopics: string[]): Promise<ParsedStatement | null> {
+export async function interpretStatement(input: string, existingTopics: string[], anchorTimestamp: string = new Date().toISOString()): Promise<ParsedStatement | null> {
   // Prevent absurdly long inputs for basic security & cost
   const sanitizedInput = input.slice(0, 500).replace(/[\n\r]/g, ' ');
   const recentTopics = existingTopics.slice(-10); // Bound the array
 
   const provider = (process.env.EXPO_PUBLIC_LLM_PROVIDER || 'groq').toLowerCase();
   if (provider === 'gemini') {
-    return interpretWithGemini(sanitizedInput, recentTopics);
+    return interpretWithGemini(sanitizedInput, recentTopics, anchorTimestamp);
   }
-  return interpretWithGroq(sanitizedInput, recentTopics);
+  return interpretWithGroq(sanitizedInput, recentTopics, anchorTimestamp);
 }

@@ -33,7 +33,7 @@ describe('RevenueCat Purchases Service & Offerings', () => {
 
   it('fetches an Offering containing both Monthly and Annual packages', async () => {
     const offering = await getIsolyneProOffering();
-    console.log('LOGGED_OFFERING_OBJECT:', JSON.stringify(offering, null, 2));
+
     expect(offering).not.toBeNull();
     expect(offering?.identifier).toBe('default');
     expect(offering?.availablePackages).toHaveLength(2);

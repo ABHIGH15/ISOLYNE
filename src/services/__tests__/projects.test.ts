@@ -156,16 +156,8 @@ describe('Runtime Parity Observation Test', () => {
     const signals = await signalRepo.getBySquad(activeId);
     const timelineEvents = KernelPresentationAdapter.toTimelineEvents(signals);
 
-    console.log("OBSERVED_PROJECTS:", JSON.stringify(projects));
-    console.log("OBSERVED_ACTIVE_ID:", activeId);
-    console.log("OBSERVED_ROSTER:", JSON.stringify(roster));
-    console.log("OBSERVED_RADAR_STATUS:", radarState.status);
-    console.log("OBSERVED_RADAR_TOPIC:", radarState.gap?.topic);
-    console.log("OBSERVED_RADAR_TYPE:", radarState.gap?.type);
-    console.log("OBSERVED_DECISIONS_COUNT:", decisions.length);
-    console.log("OBSERVED_DISPUTED_DECISION:", decisions.find(d => d.status === 'disputed')?.topic);
-    console.log("OBSERVED_TIMELINE_COUNT:", timelineEvents.length);
-    console.log("OBSERVED_DECISIONS_ARRAY:\n" + JSON.stringify(decisions, null, 2));
+
+
 
     expect(projects).toEqual([{ id: 'shipaton-2026', name: 'Shipaton 2026', createdAt: expect.any(String) }]);
     expect(activeId).toBe('shipaton-2026');

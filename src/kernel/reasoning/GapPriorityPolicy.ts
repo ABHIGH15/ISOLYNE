@@ -3,6 +3,8 @@ import { AwarenessGap } from '../domain/AwarenessGap';
 export class GapPriorityPolicy {
   private readonly priorityOrder = [
     'ownership_gap',
+    'timeline_gap',
+    'timeline_unresolved',
     'interpretation_gap',
     'consensus_gap',
     'integration_gap'

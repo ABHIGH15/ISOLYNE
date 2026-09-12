@@ -80,7 +80,7 @@ const s = StyleSheet.create({
   subtitle: { ...type.body, color: color.textSecondary },
   
   recordList: { flex: 1 },
-  recordListContent: { padding: space.xl, gap: space.xl, paddingBottom: 100 },
+  recordListContent: { padding: space.xl, gap: space.xl, paddingBottom: 260 },
   
   emptyState: { flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 80, paddingHorizontal: space.xl },
   emptyIconCircle: { width: 64, height: 64, borderRadius: 32, backgroundColor: color.bgElevated, borderWidth: 1, borderColor: color.lineStrong, alignItems: 'center', justifyContent: 'center', marginBottom: space.lg },

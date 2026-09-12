@@ -1,5 +1,6 @@
 import { RadarState, GapView, ProposalView, DecisionRecordView, TimelineEventView } from './types';
 import { Signal } from '../../kernel/domain/Signal';
+import { TimelineChoice, formatChoice } from '../../kernel/domain/Timeline';
 
 export class KernelPresentationAdapter {
   static toRadarState(evaluation: any): RadarState {
@@ -59,7 +60,7 @@ export class KernelPresentationAdapter {
       return {
         id: `dec_${d.topic}_${d.actorId}_${index}`,
         topic: d.topic,
-        choice: d.choice,
+        choice: typeof d.choice === 'object' && d.choice !== null ? d.choice.raw_text : d.choice,
         status,
         actorId: d.actorId,
         isTeamCommitment
@@ -76,7 +77,7 @@ export class KernelPresentationAdapter {
           id: sig.id,
           timestamp: sig.timestamp,
           type: 'statement',
-          description: `${sig.actorId} stated\n${sig.payload?.topic} → ${sig.payload?.choice}`
+          description: `${sig.actorId} stated\n${sig.payload?.topic} → ${formatChoice(sig.payload?.choice)}`
         });
       } else if (sig.type === 'divergence_detected') {
         events.push({
@@ -90,7 +91,7 @@ export class KernelPresentationAdapter {
           id: sig.id,
           timestamp: sig.timestamp,
           type: 'resolution',
-          description: `Team resolved\n${sig.payload?.topic} → ${sig.payload?.choice}`
+          description: `Team resolved\n${sig.payload?.topic} → ${formatChoice(sig.payload?.choice)}`
         });
       }
     }

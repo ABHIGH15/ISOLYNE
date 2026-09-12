@@ -59,7 +59,7 @@ export async function seedDemoDataIfNeeded(): Promise<void> {
     for (const sig of demoSignals) {
       await signalRepo.save(sig);
     }
-    console.log("Seeded demo data: 1 active gap created on 'database'.");
+    // Demo data seeded: 1 active gap on 'database' topic
   }
 }
 

@@ -70,12 +70,12 @@ export function OnboardingModal() {
             <RadarMotif status="clear" />
             <View style={s.content}>
               <Text style={s.stepBadge}>Step 1 of 3 · Philosophy</Text>
-              <Text style={s.title}>Silence is a Feature.</Text>
+              <Text style={s.title}>Too fast to argue.</Text>
               <Text style={s.body}>
-                Isolyne sits in the background of your team's workflow and tracks your shared assumptions.
+                Fast-moving teams don't argue — they just assume.
               </Text>
               <Text style={s.body}>
-                If you're aligned, it stays completely quiet. It only speaks when it detects a silent divergence in shared reality.
+                Isolyne sits in the background of your workflow and catches when your teammate states the opposite of what you're building, before it turns into a 3 AM integration conflict.
               </Text>
               
               <Pressable style={s.btn} onPress={handleNextStep}>

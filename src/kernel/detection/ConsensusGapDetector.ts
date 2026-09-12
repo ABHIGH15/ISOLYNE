@@ -7,6 +7,8 @@ export class ConsensusGapDetector implements GapDetector {
     const topicDecisions = new Map<string, Array<{actorId: string, choice: string, verbatim?: string}>>();
 
     for (const dec of state.decisions) {
+      if (typeof dec.choice !== 'string') continue;
+      
       if (!topicDecisions.has(dec.topic)) {
         topicDecisions.set(dec.topic, []);
       }

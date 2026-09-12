@@ -1,3 +1,4 @@
+import { useFonts, Orbitron_800ExtraBold } from '@expo-google-fonts/orbitron';
 import { useEffect } from 'react';
 import { Stack, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -21,9 +22,13 @@ function TopNav() {
 }
 
 export default function RootLayout() {
+  const [fontsLoaded] = useFonts({ Orbitron: Orbitron_800ExtraBold });
+
   useEffect(() => {
     initPurchases();
   }, []);
+
+  if (!fontsLoaded) return null;
 
   return (
     <KernelProvider>

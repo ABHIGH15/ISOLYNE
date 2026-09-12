@@ -1,84 +1,119 @@
-import React, { useEffect, useRef } from 'react';
-import { View, StyleSheet, Animated, Easing } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import Animated, { 
+  useSharedValue, 
+  useAnimatedStyle, 
+  withRepeat, 
+  withTiming, 
+  withSequence,
+  withSpring,
+  Easing,
+  cancelAnimation
+} from 'react-native-reanimated';
 import { color } from '../theme/tokens';
 
 export function RadarMotif({ status }: { status: 'clear' | 'alert' }) {
-  const pulseAnim = useRef(new Animated.Value(0)).current;
-  const rotateAnim = useRef(new Animated.Value(0)).current;
+  const rotation = useSharedValue(0);
+  const pulseScale = useSharedValue(0.5);
+  const pulseOpacity = useSharedValue(0);
+  const coreScale = useSharedValue(1);
 
   useEffect(() => {
     if (status === 'clear') {
-      Animated.loop(
-        Animated.timing(rotateAnim, {
-          toValue: 1,
-          duration: 4000,
+      cancelAnimation(pulseScale);
+      cancelAnimation(pulseOpacity);
+      
+      // Smooth reset transition
+      coreScale.value = withSpring(1);
+      
+      rotation.value = withRepeat(
+        withTiming(360, {
+          duration: 3000,
           easing: Easing.linear,
-          useNativeDriver: true,
-        })
-      ).start();
-      pulseAnim.setValue(0);
+        }),
+        -1, // infinite
+        false // no reverse
+      );
     } else {
-      rotateAnim.stopAnimation();
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(pulseAnim, {
-            toValue: 1,
-            duration: 1500,
-            easing: Easing.out(Easing.cubic),
-            useNativeDriver: true,
-          }),
-        ])
-      ).start();
+      cancelAnimation(rotation);
+      
+      // Climax transition: pop the core
+      coreScale.value = withSequence(
+        withTiming(1.5, { duration: 150 }),
+        withSpring(1)
+      );
+
+      // Violent pulse loop
+      pulseScale.value = 0.5;
+      pulseOpacity.value = 0.8;
+      
+      pulseScale.value = withRepeat(
+        withTiming(2.5, { duration: 1200, easing: Easing.out(Easing.cubic) }),
+        -1,
+        false
+      );
+      
+      pulseOpacity.value = withRepeat(
+        withTiming(0, { duration: 1200, easing: Easing.out(Easing.cubic) }),
+        -1,
+        false
+      );
     }
-  }, [status, pulseAnim, rotateAnim]);
+  }, [status]);
 
-  const spin = rotateAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
+  const animatedSweepStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${rotation.value}deg` }]
+    };
   });
 
-  const pulseScale = pulseAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0.5, 2],
+  const animatedPulseStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: pulseScale.value }],
+      opacity: pulseOpacity.value
+    };
   });
-
-  const pulseOpacity = pulseAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0.6, 0],
+  
+  const animatedCoreStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: coreScale.value }]
+    };
   });
 
   const motifColor = status === 'clear' ? color.join : color.risk;
-  const motifSoft = status === 'clear' ? color.joinSoft : color.riskSoft;
+  const motifSoft = status === 'clear' ? '#297353' : '#8A3245'; 
 
   return (
-    <View style={s.container}>
+    <View style={[s.container, { shadowColor: motifColor, shadowRadius: 30, shadowOpacity: 0.3, shadowOffset: { width: 0, height: 0 } }]}>
       {/* Concentric rings */}
       <View style={[s.ring, s.ring1, { borderColor: motifSoft }]} />
       <View style={[s.ring, s.ring2, { borderColor: motifSoft }]} />
       <View style={[s.ring, s.ring3, { borderColor: motifSoft }]} />
 
       {status === 'clear' && (
-        <Animated.View style={[s.sweepContainer, { transform: [{ rotate: spin }] }]}>
+        <Animated.View style={[s.sweepContainer, animatedSweepStyle]}>
           <LinearGradient
             colors={[`${motifColor}80`, 'transparent']}
-            start={{ x: 1, y: 0 }}
+            start={{ x: 1, y: 1 }}
             end={{ x: 0, y: 0 }}
             style={s.sweepGradient}
           />
-          <View style={[s.sweepLine, { backgroundColor: motifColor }]} />
+          <View style={[s.sweepLine, { 
+            backgroundColor: motifColor, 
+            shadowColor: motifColor, 
+            shadowRadius: 15, 
+            shadowOpacity: 1, 
+            shadowOffset: { width: -5, height: 0 } 
+          }]} />
         </Animated.View>
       )}
 
       {status === 'alert' && (
-        <Animated.View style={[s.pulse, { 
-          backgroundColor: motifColor, 
-          transform: [{ scale: pulseScale }], 
-          opacity: pulseOpacity 
-        }]} />
+        <Animated.View style={[s.pulse, { backgroundColor: motifColor }, animatedPulseStyle]} />
       )}
 
-      <View style={[s.core, { backgroundColor: motifColor }]} />
+      <Animated.View style={[s.core, { backgroundColor: motifColor }, animatedCoreStyle]} />
     </View>
   );
 }
@@ -94,16 +129,16 @@ const s = StyleSheet.create({
   },
   ring: {
     position: 'absolute',
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderRadius: 999,
   },
   ring1: { width: 80, height: 80 },
   ring2: { width: 140, height: 140 },
   ring3: { width: 200, height: 200 },
   core: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: 14,
+    height: 14,
+    borderRadius: 7,
     position: 'absolute',
   },
   pulse: {
@@ -132,6 +167,6 @@ const s = StyleSheet.create({
     width: 2,
     height: 100,
     top: 0,
-    opacity: 0.8,
+    opacity: 0.9,
   }
 });
