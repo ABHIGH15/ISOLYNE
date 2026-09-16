@@ -28,7 +28,7 @@ import { signalRepo } from '../kernelService';
 describe('Project Service (Real Production Code Tests)', () => {
   beforeEach(async () => {
     await AsyncStorage.clear();
-    signalRepo['signals'] = [];
+    (signalRepo as any).localRepo['signals'] = [];
   });
 
   it('loadOrCreateProjects: initializes default project (Shipaton 2026) when storage is empty', async () => {
@@ -277,8 +277,8 @@ describe('Dashboard Status Polling Safety (evaluateSquad as Read)', () => {
     const p2 = await createProjectRecord('Squad 2', 'Charlie', ['Dave']);
 
     // Record initial signals snapshot after project initialization
-    const snapshotBefore = JSON.stringify(signalRepo['signals']);
-    const countBefore = signalRepo['signals'].length;
+    const snapshotBefore = JSON.stringify((signalRepo as any).localRepo['signals']);
+    const countBefore = (signalRepo as any).localRepo['signals'].length;
 
     // Simulate opening dashboard 5 times in a row (evaluating every squad)
     for (let i = 0; i < 5; i++) {
@@ -288,8 +288,8 @@ describe('Dashboard Status Polling Safety (evaluateSquad as Read)', () => {
       expect(ev2.selectedGap).not.toBeNull();
     }
 
-    const snapshotAfter = JSON.stringify(signalRepo['signals']);
-    const countAfter = signalRepo['signals'].length;
+    const snapshotAfter = JSON.stringify((signalRepo as any).localRepo['signals']);
+    const countAfter = (signalRepo as any).localRepo['signals'].length;
 
     // Verify ZERO mutations occurred
     expect(countAfter).toBe(countBefore);

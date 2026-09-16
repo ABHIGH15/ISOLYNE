@@ -49,23 +49,27 @@ export type PurchasesOffering = {
 
 /** RevenueCat entitlement for Isolyne Pro. */
 export const ISOLYNE_PRO_ENTITLEMENT = 'isolyne_pro';
+export const ISOLYNE_EXPORT_ENTITLEMENT = 'isolyne_export';
 
 type PurchasesState = {
   ready: boolean;
   previewMode: boolean;
   demoUnlocked: boolean;
+  exportUnlocked: boolean;
 };
 
 const state: PurchasesState = {
   ready: false,
   previewMode: true,
   demoUnlocked: false,
+  exportUnlocked: false,
 };
 
 export function _resetPurchasesStateForTesting(): void {
   state.ready = false;
   state.previewMode = true;
   state.demoUnlocked = false;
+  state.exportUnlocked = false;
 }
 
 function apiKey(): string | undefined {
@@ -114,6 +118,21 @@ export async function hasIsolynePro(): Promise<boolean> {
   }
 }
 
+export async function hasReportExport(): Promise<boolean> {
+  if (!state.ready) await initPurchases();
+  if (state.previewMode) return state.demoUnlocked || state.exportUnlocked;
+
+  try {
+    const info = await Purchases.getCustomerInfo();
+    return (
+      typeof info.entitlements.active[ISOLYNE_PRO_ENTITLEMENT] !== 'undefined' ||
+      typeof info.entitlements.active[ISOLYNE_EXPORT_ENTITLEMENT] !== 'undefined'
+    );
+  } catch {
+    return state.demoUnlocked || state.exportUnlocked;
+  }
+}
+
 /**
  * Deterministic fallback Offering for preview mode / Expo Go / Web / offline testing.
  * Accurately models a RevenueCat Offering with Monthly and Annual packages,
@@ -131,6 +150,21 @@ export function getPreviewOffering(): PurchasesOffering {
       description: 'Full team alignment history & exports, billed monthly',
       price: 4.99,
       priceString: '$4.99',
+      currencyCode: 'USD',
+      introPrice: null,
+    },
+  };
+
+  const exportPkg: PurchasesPackage = {
+    identifier: '$rc_lifetime',
+    packageType: 'LIFETIME',
+    offeringIdentifier: 'default',
+    product: {
+      identifier: 'isolyne_report_export',
+      title: 'Share Alignment Report',
+      description: 'One-time unlock for timeline exports',
+      price: 2.99,
+      priceString: '$2.99',
       currencyCode: 'USD',
       introPrice: null,
     },
@@ -161,9 +195,10 @@ export function getPreviewOffering(): PurchasesOffering {
   return {
     identifier: 'default',
     serverDescription: 'Default Isolyne Pro Offering',
-    availablePackages: [monthlyPkg, annualPkg],
+    availablePackages: [monthlyPkg, annualPkg, exportPkg],
     monthly: monthlyPkg,
     annual: annualPkg,
+  lifetime: exportPkg,
   };
 }
 
@@ -187,6 +222,7 @@ export async function getIsolyneProOffering(): Promise<PurchasesOffering | null>
         availablePackages: currentOffering.availablePackages ?? [],
         monthly: currentOffering.monthly ?? currentOffering.availablePackages?.find((p: any) => p.packageType === 'MONTHLY' || p.identifier === '$rc_monthly') ?? null,
         annual: currentOffering.annual ?? currentOffering.availablePackages?.find((p: any) => p.packageType === 'ANNUAL' || p.identifier === '$rc_annual') ?? null,
+        lifetime: currentOffering.lifetime ?? currentOffering.availablePackages?.find((p: any) => p.packageType === 'LIFETIME' || p.identifier === '$rc_lifetime') ?? null,
       };
     }
     return getPreviewOffering();
@@ -202,19 +238,22 @@ export async function getIsolyneProOffering(): Promise<PurchasesOffering | null>
 export async function getIsolyneProPackages(): Promise<{
   monthly: PurchasesPackage | null;
   annual: PurchasesPackage | null;
+  lifetime: PurchasesPackage | null;
   all: PurchasesPackage[];
 }> {
   const offering = await getIsolyneProOffering();
   if (!offering) {
-    return { monthly: null, annual: null, all: [] };
+    return { monthly: null, annual: null, lifetime: null, all: [] };
   }
 
   const monthly = offering.monthly ?? offering.availablePackages.find(p => p.packageType === 'MONTHLY' || p.identifier === '$rc_monthly') ?? null;
   const annual = offering.annual ?? offering.availablePackages.find(p => p.packageType === 'ANNUAL' || p.identifier === '$rc_annual') ?? null;
+  const lifetime = offering.lifetime ?? offering.availablePackages.find(p => p.packageType === 'LIFETIME' || p.identifier === '$rc_lifetime') ?? null;
 
   return {
     monthly,
     annual,
+    lifetime,
     all: offering.availablePackages,
   };
 }
@@ -232,13 +271,13 @@ export async function purchasePackage(pkg: PurchasesPackage): Promise<{ ok: bool
   if (!state.ready) await initPurchases();
 
   if (state.previewMode || !Purchases) {
-    state.demoUnlocked = true;
+    if (pkg.packageType === 'LIFETIME') state.exportUnlocked = true; else state.demoUnlocked = true;
     return { ok: true, preview: true };
   }
 
   try {
     const { customerInfo } = await Purchases.purchasePackage(pkg);
-    const active = typeof customerInfo.entitlements.active[ISOLYNE_PRO_ENTITLEMENT] !== 'undefined';
+    const active = typeof customerInfo.entitlements.active[ISOLYNE_PRO_ENTITLEMENT] !== 'undefined' || typeof customerInfo.entitlements.active[ISOLYNE_EXPORT_ENTITLEMENT] !== 'undefined';
     return {
       ok: active,
       preview: false,

@@ -275,5 +275,5 @@ const s = StyleSheet.create({
   sendBtn: { position: 'absolute', right: space.md, top: space.md, bottom: space.md, justifyContent: 'center', alignItems: 'center', paddingHorizontal: space.md, backgroundColor: color.bgQuiet, borderRadius: radius.sm },
   sendBtnDisabled: { opacity: 0.3 },
   sendBtnText: { ...type.bodyStrong, color: color.text },
-  errorText: { ...type.meta, color: color.risk, marginTop: space.sm }
+  errorText: { ...type.meta, color: color.error, marginTop: space.sm }
 });

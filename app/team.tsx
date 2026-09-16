@@ -164,7 +164,7 @@ export default function TeamManagementScreen() {
                     accessibilityRole="button"
                     accessibilityLabel={`Remove ${member}`}
                   >
-                    <Feather name="user-x" size={16} color={color.risk} />
+                    <Feather name="user-x" size={16} color={color.error} />
                     <Text style={s.removeBtnText}>Remove</Text>
                   </Pressable>
                 )}
@@ -225,8 +225,8 @@ const s = StyleSheet.create({
   selfBadgeText: { ...type.label, color: color.join, fontSize: 9, fontWeight: '700' },
   memberMeta: { ...type.meta, color: color.textMuted, fontSize: 11, marginTop: 2 },
 
-  removeBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: space.sm, paddingVertical: 4, borderRadius: radius.sm, backgroundColor: color.riskSoft, borderWidth: 1, borderColor: color.riskLine },
-  removeBtnText: { ...type.meta, color: color.risk, fontSize: 11, fontWeight: '600' },
+  removeBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: space.sm, paddingVertical: 4, borderRadius: radius.sm, backgroundColor: color.errorSoft, borderWidth: 1, borderColor: color.errorLine },
+  removeBtnText: { ...type.meta, color: color.error, fontSize: 11, fontWeight: '600' },
 
   noticeCard: { flexDirection: 'row', gap: space.md, backgroundColor: color.bgQuiet, borderRadius: radius.md, borderWidth: 1, borderColor: color.lineStrong, padding: space.lg },
   noticeTitle: { ...type.bodyStrong, color: color.text, fontSize: 13, marginBottom: 2 },

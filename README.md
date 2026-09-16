@@ -7,7 +7,7 @@
   <p><i>Your teammate is building on Firebase. You're building on Postgres. Neither of you knows.</i></p>
 
   <p>
-    <a href="https://github.com/ABHIGH15/ISOLYNE/actions"><img src="https://img.shields.io/badge/tests-65%20passing-success" alt="Tests"></a>
+    <a href="https://github.com/ABHIGH15/ISOLYNE/actions"><img src="https://img.shields.io/badge/tests-71%20passing-success" alt="Tests"></a>
     <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-Strict-blue" alt="TypeScript Strict"></a>
     <a href="https://expo.dev/"><img src="https://img.shields.io/badge/Expo-SDK_57-lightgrey" alt="Expo SDK 57"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
@@ -22,28 +22,31 @@ Small teams don't fail from bad code. They fail from the illusion of agreement.
 
 Traditional project management tools (Jira, Linear) demand heavy upfront bureaucracy and get abandoned within four hours of a hackathon. Team chat (Slack, Discord) buries critical architectural decisions in noise. 
 
-**Isolyne** sits between them: builders state their assumptions in natural language, and a pure event-sourced mathematical kernel continuously projects shared reality and alerts the team the exact moment a contradiction occurs—before 3 AM integration hell.
+**Isolyne** sits between them: builders state their assumptions in natural language, and a pure, deterministically replayable event-sourced mathematical kernel continuously projects shared reality and alerts the team the exact moment a contradiction occurs—before 3 AM integration hell.
 
 ---
 
 ## ✨ What We Built
 
-We built a mobile-native, offline-capable radar that watches your team's assumptions without getting in the way. 
+We built a disagreement detector for hackathons. But crucially, **the mobile app is the demo harness, not the limit of the vision.** 
 
-### 1. The Core Loop
-* **State:** Casually tell Isolyne what you're working on ("I'm doing auth with Postgres").
-* **Detect:** Isolyne's deterministic CQRS kernel mathematically compares your statement against the rest of the squad.
-* **Resolve:** If someone else stated Firebase, the Radar immediately flags the divergence and prompts a 1-tap alignment resolution.
+### 1. Zero Double-Logging (The Discord + Mobile Pair)
+Hackathon teams don't update tickets; they chat in Discord, and they build. If we ask them to log decisions in a separate app, we've already failed. 
+
+That's why Isolyne operates as a dual-surface system:
+* **Passive Ingestion (Discord):** The Discord bot (`/discord-bot`) runs our pure CQRS kernel, silently reading `#general` and extracting assumptions as you naturally chat ("I'll set up Postgres"). **Zero double-logging.**
+* **Active Alerts (Mobile):** Why a mobile app? Because at 3 AM, a Discord ping gets lost in the noise. When a critical architectural divergence is detected, the Isolyne mobile app bypasses the chat noise with a high-urgency iOS push notification and haptic alert, forcing the team to resolve the conflict right on their phones.
 
 ### 2. Privacy-First Extraction
 We use an LLM (Groq Llama 3 / Gemini) to extract structured JSON (`{ topic: 'Database', choice: 'Postgres' }`) from casual chat. Crucially, we built a **completely offline local keyword parser** as the ultimate fallback. Your team's internal disagreements and architectural secrets never have to leave the device.
 
-### 3. Asynchronous Drift Alerts (Push Notifications)
-Drift happens asynchronously, so detection has to be proactive. Isolyne features real-time local push notifications with intelligent idempotency deduping. The moment a teammate contradicts an established assumption, your phone buzzes with the exact conflict. One tap deep-links you straight into the resolution flow.
+### 3. Asynchronous Drift Alerts (The "Why Mobile" Argument)
+Drift happens asynchronously, so detection has to be proactive. Isolyne features real-time local push notifications with intelligent idempotency deduping. The moment a teammate contradicts an established assumption, your phone buzzes with the exact conflict. One tap deep-links you straight into the resolution flow. Mobile exists because it is the only surface that guarantees attention during a chaotic hackathon sprint.
 
 ### 4. The Detector Taxonomy
-We identified the 8 most critical coordination failures in fast-moving teams. We have fully built and shipped **4 out of 8** for this release:
+We identified the 8 most critical coordination failures in fast-moving teams. We have fully built and shipped **5 out of 8** for this release:
 * ✅ **Consensus Gap:** Two people commit to different technical solutions for the same domain.
+* ✅ **Execution Gap (The "Stop Asking for Status Updates" Feature):** Catches silence and tracks progress seamlessly by extracting natural dev-status phrasing ("API is ready", "blocked on DB migration") directly from chat. You never have to ask your teammate "what's the status?" again.
 * ✅ **Interpretation Gap:** The team uses the same words but defines the MVP/Scope differently.
 * ✅ **Timeline Gap:** Team members hold misaligned or ambiguously defined deadlines.
 * ✅ **Ownership Gap:** A critical decision has no designated final decider, leading to deadlock.
@@ -131,7 +134,7 @@ cd ISOLYNE
 # Install dependencies
 npm install
 
-# Run the invariant test suite (65/65 passing)
+# Run the invariant test suite (71/71 passing)
 npm test
 
 # Start the Expo development server
@@ -142,13 +145,15 @@ npx expo start
 
 ---
 
-## 💰 Monetization (RevenueCat)
+## 💰 Monetization (RevenueCat & The HAMM Award)
 
-Isolyne uses **RevenueCat** to power its "Purchase-as-Story-Beat" model. 
+Isolyne uses **RevenueCat** to power its "Purchase-as-Story-Beat" model, designed explicitly for the HAMM Award rubric. 
 
-Basic alignment and detection are **100% free forever**—no project breaks because of a paywall. Isolyne Pro is offered the exact second the squad's Radar goes red on an active divergence. The paywall triggers exactly when the emotional and practical value of alignment is undeniable.
+* **Free Tier (Fail-Closed Safety):** Core alignment and drift detection are **100% free forever**—we never break a project with a paywall during an active emergency. 
+* **The Pro Gate (Moment of Doubt):** Isolyne Pro is organically offered the exact second the squad's Radar goes red on an active divergence. The paywall triggers exactly when the emotional and practical value of alignment is undeniable.
+* **The Export Purchase:** Pro monetizes the permanent record. We offer an explicit one-time purchase to "Export Alignment Report"—a hardened PDF audit trail of the team's decisions to hand off to judges or open-source contributors post-hackathon.
 
-Pro monetizes the permanent record: unlocking retrospective exports, immutable signal audit trails, and cross-project organizational memory. We utilize RevenueCat's Native **Customer Center** to seamlessly manage retention flows, cancellation surveys, and automated discount offers.
+We utilize RevenueCat's Native **Customer Center** to seamlessly manage retention flows, cancellation surveys, and automated discount offers.
 
 ---
 

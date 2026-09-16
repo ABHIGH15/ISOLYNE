@@ -76,8 +76,8 @@ export default function ProjectHomeScreen() {
                   onPress={handleSimulateConflict}
                   disabled={isReceiving}
                 >
-                  <Feather name="zap" size={14} color={color.risk} />
-                  <Text style={[s.stepActionBtnText, { color: color.risk }]}>
+                  <Feather name="zap" size={14} color={color.error} />
+                  <Text style={[s.stepActionBtnText, { color: color.error }]}>
                     {isReceiving ? 'Simulating incoming...' : 'Trigger Teammate Conflict'}
                   </Text>
                 </Pressable>

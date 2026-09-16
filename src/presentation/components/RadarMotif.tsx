@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { 
   useSharedValue, 
-  useAnimatedStyle, 
+  useAnimatedStyle,
+  useAnimatedProps, 
   withRepeat, 
   withTiming, 
   withSequence,
@@ -14,15 +16,21 @@ import Animated, {
 import { color } from '../theme/tokens';
 
 export function RadarMotif({ status }: { status: 'clear' | 'alert' }) {
+  const AnimatedPath = Animated.createAnimatedComponent(Path);
+
   const rotation = useSharedValue(0);
   const pulseScale = useSharedValue(0.5);
   const pulseOpacity = useSharedValue(0);
   const coreScale = useSharedValue(1);
+  const faultProgress = useSharedValue(1);
+  const faultOpacity = useSharedValue(0);
 
   useEffect(() => {
     if (status === 'clear') {
       cancelAnimation(pulseScale);
       cancelAnimation(pulseOpacity);
+      
+      faultOpacity.value = withTiming(0, { duration: 600 });
       
       // Smooth reset transition
       coreScale.value = withSpring(1);
@@ -43,6 +51,11 @@ export function RadarMotif({ status }: { status: 'clear' | 'alert' }) {
         withTiming(1.5, { duration: 150 }),
         withSpring(1)
       );
+
+      // Fault line rupture
+      faultProgress.value = 1;
+      faultOpacity.value = 1;
+      faultProgress.value = withTiming(0, { duration: 300, easing: Easing.out(Easing.cubic) });
 
       // Violent pulse loop
       pulseScale.value = 0.5;
@@ -82,7 +95,14 @@ export function RadarMotif({ status }: { status: 'clear' | 'alert' }) {
   });
 
   const motifColor = status === 'clear' ? color.join : color.risk;
-  const motifSoft = status === 'clear' ? '#297353' : '#8A3245'; 
+  const motifSoft = status === 'clear' ? color.joinLine : color.riskLine;
+
+  const animatedFaultProps = useAnimatedProps(() => {
+    return {
+      strokeDashoffset: faultProgress.value * 250,
+      strokeOpacity: faultOpacity.value
+    };
+  }); 
 
   return (
     <View style={[s.container, { shadowColor: motifColor, shadowRadius: 30, shadowOpacity: 0.3, shadowOffset: { width: 0, height: 0 } }]}>
@@ -112,6 +132,26 @@ export function RadarMotif({ status }: { status: 'clear' | 'alert' }) {
       {status === 'alert' && (
         <Animated.View style={[s.pulse, { backgroundColor: motifColor }, animatedPulseStyle]} />
       )}
+
+      {/* Topographical Fault Line */}
+      <Svg height="200" width="200" style={StyleSheet.absoluteFill}>
+        <AnimatedPath
+          d="M 100 100 L 125 115 L 120 145 L 155 160 L 150 185 L 195 200"
+          stroke={color.risk}
+          strokeWidth="3"
+          fill="none"
+          strokeDasharray="250"
+          animatedProps={animatedFaultProps}
+        />
+        <AnimatedPath
+          d="M 100 100 L 85 70 L 60 75 L 50 40 L 25 35 L 5 0"
+          stroke={color.risk}
+          strokeWidth="3"
+          fill="none"
+          strokeDasharray="250"
+          animatedProps={animatedFaultProps}
+        />
+      </Svg>
 
       <Animated.View style={[s.core, { backgroundColor: motifColor }, animatedCoreStyle]} />
     </View>

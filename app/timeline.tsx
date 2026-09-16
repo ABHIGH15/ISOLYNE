@@ -1,4 +1,7 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useState, useCallback } from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable, Share, ActivityIndicator, Alert } from 'react-native';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { hasIsolynePro, hasReportExport, getIsolyneProPackages, purchasePackage } from '../src/services/purchases';
 import { Feather } from '@expo/vector-icons';
 import { color, space, type, radius } from '../src/presentation/theme/tokens';
 import { useKernel } from '../src/presentation/state/KernelContext';
@@ -6,6 +9,74 @@ import { TimelineEventView } from '../src/presentation/contracts/types';
 
 export default function TimelineScreen() {
   const { timelineEvents } = useKernel();
+  const router = useRouter();
+  const [isPro, setIsPro] = useState<boolean | null>(null);
+  const [canExport, setCanExport] = useState<boolean>(false);
+  const [exporting, setExporting] = useState<boolean>(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      hasIsolynePro().then(setIsPro).catch(() => setIsPro(false));
+      hasReportExport().then(setCanExport).catch(() => setCanExport(false));
+    }, [])
+  );
+
+  const handleExport = async () => {
+    if (exporting) return;
+    
+    if (canExport || isPro) {
+      // Actually share the report
+      const reportContent = timelineEvents.map(ev => 
+        `[${new Date(ev.timestamp).toLocaleTimeString()}] ${ev.type.toUpperCase()}: ${ev.description}`
+      ).join('\n\n');
+      
+      const fullReport = `ISOLYNE ALIGNMENT REPORT\n\n${reportContent}`;
+      
+      try {
+        await Share.share({
+          message: fullReport,
+          title: 'Isolyne Alignment Report'
+        });
+      } catch (err) {}
+      return;
+    }
+
+    // Prompt one-time purchase
+    try {
+      setExporting(true);
+      const pkgs = await getIsolyneProPackages();
+      const lifetime = (pkgs as any).lifetime; // Type was updated but ts may complain if not built, casting to any is safe
+      
+      if (!lifetime) {
+        Alert.alert("Export Unavailable", "One-time export unlock is currently unavailable.");
+        setExporting(false);
+        return;
+      }
+      
+      Alert.alert(
+        "Share Alignment Report",
+        `Unlock unlimited timeline exports to share with your team for a one-time purchase of ${lifetime.product.priceString}.`,
+        [
+          { text: "Cancel", style: "cancel", onPress: () => setExporting(false) },
+          { text: `Purchase ${lifetime.product.priceString}`, onPress: async () => {
+            const res = await purchasePackage(lifetime);
+            if (res.ok) {
+              setCanExport(true);
+              Alert.alert("Success", "Export unlocked! Tap again to share.");
+            } else if (res.message) {
+              Alert.alert("Purchase Failed", res.message);
+            }
+            setExporting(false);
+          }}
+        ]
+      );
+    } catch (e) {
+      setExporting(false);
+    }
+  };
+
+  const visibleEvents = isPro === true ? timelineEvents : timelineEvents.slice(0, 3);
+  const isGated = isPro === false && timelineEvents.length > 3;
 
   const formatTime = (isoStr: string) => {
     const d = new Date(isoStr);
@@ -15,12 +86,24 @@ export default function TimelineScreen() {
   return (
     <View style={s.root}>
       <View style={s.header}>
-        <Text style={s.title}>Timeline</Text>
-        <Text style={s.subtitle}>How did we get here?</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={s.title}>Timeline</Text>
+          <Text style={s.subtitle}>How did we get here?</Text>
+        </View>
+        <Pressable style={s.exportBtn} onPress={handleExport} disabled={exporting}>
+          {exporting ? (
+            <ActivityIndicator size="small" color={color.text} />
+          ) : (
+            <>
+              <Feather name={canExport || isPro ? "share" : "lock"} size={14} color={color.text} />
+              <Text style={s.exportBtnText}>{canExport || isPro ? 'Export' : 'Export ($2.99)'}</Text>
+            </>
+          )}
+        </Pressable>
       </View>
 
       <ScrollView style={s.timelineList} contentContainerStyle={s.timelineContent}>
-        {timelineEvents.length === 0 ? (
+        {isPro === null ? null : timelineEvents.length === 0 ? (
           <View style={s.emptyState}>
             <View style={s.emptyIconCircle}>
               <Feather name="clock" size={24} color={color.textSecondary} />
@@ -29,10 +112,10 @@ export default function TimelineScreen() {
             <Text style={s.emptyDesc}>As your team locks in choices, Isolyne builds a shared history of exactly how the project evolved.</Text>
           </View>
         ) : (
-          timelineEvents.map((ev, index) => (
+          visibleEvents.map((ev, index) => (
             <View key={ev.id} style={s.eventRow}>
               {/* Timeline Connector Line */}
-              {index !== timelineEvents.length - 1 && (
+              {index !== visibleEvents.length - 1 && (
                 <View style={s.line} />
               )}
               {/* Spine Dot */}
@@ -65,6 +148,15 @@ export default function TimelineScreen() {
             </View>
           ))
         )}
+        {isGated && (
+          <View style={s.gateContainer}>
+            <View style={s.lineExtender} />
+            <Pressable style={s.gateBanner} onPress={() => router.push('/paywall')}>
+              <Feather name="lock" size={16} color={color.textSecondary} />
+              <Text style={s.gateText}>Unlock full alignment history → Isolyne Pro</Text>
+            </Pressable>
+          </View>
+        )}
       </ScrollView>
     </View>
   );
@@ -72,7 +164,9 @@ export default function TimelineScreen() {
 
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: color.bg },
-  header: { padding: space.xl, borderBottomWidth: 1, borderColor: color.line },
+  header: { padding: space.xl, borderBottomWidth: 1, borderColor: color.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  exportBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: color.bgElevated, paddingHorizontal: space.md, paddingVertical: space.sm, borderRadius: radius.pill, borderWidth: 1, borderColor: color.lineStrong },
+  exportBtnText: { ...type.label, color: color.text },
   title: { ...type.display, color: color.text, marginBottom: space.sm },
   subtitle: { ...type.body, color: color.textSecondary },
   
@@ -98,4 +192,9 @@ const s = StyleSheet.create({
   eventText: { ...type.body, color: color.textSecondary },
   eventTextDivergence: { color: color.risk },
   eventTextResolution: { color: color.join },
+
+  gateContainer: { alignItems: 'center', marginTop: space.xl, position: 'relative' },
+  lineExtender: { position: 'absolute', left: 70, top: -space.xl, height: space.xl, width: 2, backgroundColor: color.lineStrong, zIndex: -1 },
+  gateBanner: { flexDirection: 'row', alignItems: 'center', backgroundColor: color.bgElevated, paddingHorizontal: space.lg, paddingVertical: space.md, borderRadius: radius.lg, borderWidth: 1, borderColor: color.lineStrong, gap: 8 },
+  gateText: { ...type.body, color: color.textSecondary },
 });

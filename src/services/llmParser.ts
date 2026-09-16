@@ -109,7 +109,7 @@ export async function executeGeminiBenchmarkCall(
 
   const systemInstruction = {
     parts: [{ 
-      text: "You are a precise data extraction engine for a team decision tracker. Extract the core architectural, product scope, technical, or organizational decision from the statement. For statements defining project scope, MVP boundary, or prototype definition (e.g., 'let\\'s just do a mock login for demo', 'we need full auth and database for MVP'), use topic 'Scope'. If the statement is casual chat, unparseable, or not a decision, you MUST return 'UNKNOWN' for both topic and choice."
+      text: "You are a precise data extraction engine for a team decision tracker. Extract the core architectural, product scope, technical, or organizational decision from the statement. CRITICALLY, you must also extract development status updates (e.g., 'API is ready', 'still working on auth', 'blocked on DB migration'). For these, set the topic to the feature being worked on (e.g., 'API', 'Auth', 'DB Migration') and the choice to the status (e.g., 'Ready', 'In Progress', 'Blocked'). For statements defining project scope, MVP boundary, or prototype definition, use topic 'Scope'. If the statement is casual chat, unparseable, or not a decision or status update, you MUST return 'UNKNOWN' for both topic and choice."
     }]
   };
 
@@ -258,7 +258,7 @@ export async function executeGroqBenchmarkCall(
     };
   }
 
-  const systemContent = "You are a precise data extraction engine for a team decision tracker. Extract the core domain or category of the decision (e.g., Database, Architecture, Frontend, Scope, CI/CD) and the specific choice made. For statements defining project scope, MVP boundary, or prototype definition (e.g., 'let\\'s just do a mock login for demo', 'we need full auth and database for MVP'), use topic 'Scope'. If the statement is casual chat, unparseable, or not a decision, you MUST return 'UNKNOWN' for both topic and choice. You must respond strictly with a valid JSON object containing exactly two keys: 'topic' and 'choice'.";
+  const systemContent = "You are a precise data extraction engine for a team decision tracker. Extract the core domain or category of the decision (e.g., Database, Architecture, Frontend, Scope, CI/CD) and the specific choice made. CRITICALLY, you must also extract development status updates (e.g., 'API is ready', 'still working on auth', 'blocked on DB migration'). For these, set the topic to the feature being worked on (e.g., 'API', 'Auth', 'DB Migration') and the choice to the status (e.g., 'Ready', 'In Progress', 'Blocked'). For statements defining project scope, MVP boundary, or prototype definition, use topic 'Scope'. If the statement is casual chat, unparseable, or not a decision or status update, you MUST return 'UNKNOWN' for both topic and choice. You must respond strictly with a valid JSON object containing exactly two keys: 'topic' and 'choice'.";
 
   const userContent = `Extract the decision. 
 Existing topics to reuse if applicable: [${recentTopics.join(', ')}]

@@ -6,7 +6,8 @@ export type GapType =
   | 'consensus_gap'
   | 'integration_gap'
   | 'timeline_gap'
-  | 'timeline_unresolved';
+  | 'timeline_unresolved'
+  | 'execution_gap';
 
 export interface AwarenessGap {
   id: string;

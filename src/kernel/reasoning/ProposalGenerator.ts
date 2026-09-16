@@ -44,6 +44,15 @@ export class ProposalGenerator {
         targetState: 'Team commits to a unified timeline',
         options: uniqueOptions
       };
+    } else if (gap.type === 'execution_gap') {
+      return {
+        id: deterministicId,
+        gapId: gap.id,
+        mode: 'alignment',
+        description: `The deadline for ${gap.topic} has passed. Is this still on track, or has the plan changed?`,
+        targetState: 'Team aligns on current execution status',
+        options: ['Still on track — just delayed', 'Plan changed', 'Done — forgot to update']
+      };
     } else if (gap.type === 'integration_gap') {
       return {
         id: deterministicId,

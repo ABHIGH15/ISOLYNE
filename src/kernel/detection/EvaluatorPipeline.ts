@@ -5,11 +5,11 @@ import { GapDetector } from './GapDetector';
 export class EvaluatorPipeline {
   constructor(private detectors: GapDetector[]) {}
 
-  evaluate(state: RealityState): AwarenessGap[] {
+  evaluate(state: RealityState, now?: string): AwarenessGap[] {
     const allGaps: AwarenessGap[] = [];
     
     for (const detector of this.detectors) {
-      const result = detector.detect(state);
+      const result = detector.detect(state, now);
       if (result) {
         if (Array.isArray(result)) {
           allGaps.push(...result);

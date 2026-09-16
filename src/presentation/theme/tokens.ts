@@ -19,13 +19,18 @@ export const color = {
   accentSoft: '#E4E0FF',
   accentDim: '#2A2750',
 
-  risk: '#FF6B7A',
-  riskSoft: '#3A1820',
-  riskLine: '#5C2430',
+  risk: '#f97316',
+  riskSoft: '#431407',
+  riskLine: '#c2410c',
 
-  join: '#3DDC97',
-  joinSoft: '#123528',
-  joinLine: '#1F5A40',
+  error: '#FF6B7A',
+  errorSoft: '#3A1820',
+  errorLine: '#5C2430',
+
+
+  join: '#0f766e',
+  joinSoft: '#042f2e',
+  joinLine: '#115e59',
 
   caution: '#F0C14A',
   cautionSoft: '#2E2710',

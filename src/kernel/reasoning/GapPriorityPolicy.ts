@@ -5,6 +5,7 @@ export class GapPriorityPolicy {
     'ownership_gap',
     'timeline_gap',
     'timeline_unresolved',
+    'execution_gap',
     'interpretation_gap',
     'consensus_gap',
     'integration_gap'

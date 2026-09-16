@@ -54,3 +54,5 @@ discord-bot/node_modules/
 .chrome-temp
 .expo_home
 archive/
+.env.backup
+task.md

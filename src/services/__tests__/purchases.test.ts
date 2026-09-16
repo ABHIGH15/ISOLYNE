@@ -31,12 +31,12 @@ describe('RevenueCat Purchases Service & Offerings', () => {
     expect(hasProInitially).toBe(false);
   });
 
-  it('fetches an Offering containing both Monthly and Annual packages', async () => {
+  it('fetches an Offering containing Monthly, Annual, and Lifetime packages', async () => {
     const offering = await getIsolyneProOffering();
 
     expect(offering).not.toBeNull();
     expect(offering?.identifier).toBe('default');
-    expect(offering?.availablePackages).toHaveLength(2);
+    expect(offering?.availablePackages).toHaveLength(3);
 
     expect(offering?.monthly?.identifier).toBe('$rc_monthly');
     expect(offering?.monthly?.packageType).toBe('MONTHLY');

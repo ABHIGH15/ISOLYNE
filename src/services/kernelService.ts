@@ -10,25 +10,37 @@ import {
   InMemoryMemoryRepository,
 } from '../kernel/repositories/in-memory/InMemoryRepositories';
 import { Signal } from '../kernel/domain/Signal';
+import { SyncSignalRepository } from '../kernel/repositories/sync/SyncSignalRepository';
+import { WebSocketSyncAdapter } from '../kernel/repositories/sync/WebSocketSyncAdapter';
 
 const SIGNALS_KEY = 'isolyne-signals';
 
 // Create repos
-const signalRepo = new InMemorySignalRepository();
+const inMemorySignalRepo = new InMemorySignalRepository();
 const realityRepo = new InMemoryRealityRepository();
 const gapRepo = new InMemoryGapRepository();
 const proposalRepo = new InMemoryProposalRepository();
 const commitmentRepo = new InMemoryCommitmentRepository();
 const memoryRepo = new InMemoryMemoryRepository();
 
-// Inject a save hook into the signal repo for the demo
-const originalSave = signalRepo.save.bind(signalRepo);
-signalRepo.save = async (signal: Signal) => {
+// Inject a save hook into the base signal repo for local persistence
+const originalSave = inMemorySignalRepo.save.bind(inMemorySignalRepo);
+inMemorySignalRepo.save = async (signal: Signal) => {
   await originalSave(signal);
   // Persist all signals
-  const all = signalRepo['signals'];
+  const all = inMemorySignalRepo['signals'];
   await AsyncStorage.setItem(SIGNALS_KEY, JSON.stringify(all)).catch(() => {});
 };
+
+// Initialize WebSocket Sync
+import { Platform } from 'react-native';
+const wsHost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+const wsUrl = process.env.EXPO_PUBLIC_SYNC_URL || `ws://${wsHost}:8080`;
+export const syncAdapter = new WebSocketSyncAdapter(wsUrl);
+
+// Wrap base repo with Sync repo
+export const signalRepo = new SyncSignalRepository(inMemorySignalRepo, syncAdapter);
+
 
 // Load existing signals on boot
 export async function initializeKernelStorage(): Promise<void> {
@@ -36,7 +48,7 @@ export async function initializeKernelStorage(): Promise<void> {
     const raw = await AsyncStorage.getItem(SIGNALS_KEY);
     if (raw) {
       const signals: Signal[] = JSON.parse(raw);
-      signalRepo['signals'] = signals;
+      inMemorySignalRepo['signals'] = signals;
     }
   } catch (e) {
     console.warn("Failed to load signals from AsyncStorage", e);
@@ -76,5 +88,5 @@ export const kernel = new PersistentCIKernel(
 export const adapter = new KernelUIAdapter(kernel);
 
 // Expose signal repo for replay / profile generation
-export { signalRepo };
+
 

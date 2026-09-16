@@ -47,6 +47,7 @@ type KernelContextType = {
   isReady: boolean;
   isReceiving: boolean;
   simulateIncomingBob: (topic?: string, choice?: string, statement?: string) => void;
+  refreshActiveSquad: () => Promise<void>;
 };
 
 export const KernelContext = createContext<KernelContextType | null>(null);
@@ -84,6 +85,24 @@ export function KernelProvider({ children }: { children: ReactNode }) {
     setActiveActor(currentUserName);
     await refreshSquad(squadId);
   }, [refreshSquad]);
+
+  useEffect(() => {
+    if (signalRepo && 'onRemoteSignal' in signalRepo) {
+      (signalRepo as any).onRemoteSignal(async (squadId: string) => {
+        // When a remote signal arrives for our active project, refresh the UI
+        setRefreshTrigger(prev => prev + 1); 
+      });
+    }
+  }, []);
+
+  // Use this state just to force the refresh block below
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  useEffect(() => {
+    if (refreshTrigger > 0 && activeProjectId) {
+      refreshSquad(activeProjectId);
+    }
+  }, [refreshTrigger, activeProjectId, refreshSquad]);
 
   useEffect(() => {
     const boot = async () => {
@@ -186,6 +205,12 @@ export function KernelProvider({ children }: { children: ReactNode }) {
     await AsyncStorage.setItem(`${ROSTER_PREFIX}${activeProjectId}`, JSON.stringify(newRoster));
   };
 
+  const refreshActiveSquad = useCallback(async () => {
+    if (activeProjectId) {
+      await refreshSquad(activeProjectId);
+    }
+  }, [activeProjectId, refreshSquad]);
+
   const processSignal = async (signal: Signal) => {
     // Ensure signal is scoped to active project if omitted or using legacy constant
     const scopedSignal: Signal = {
@@ -263,7 +288,8 @@ export function KernelProvider({ children }: { children: ReactNode }) {
       setActiveActor, 
       isReady, 
       isReceiving, 
-      simulateIncomingBob 
+      simulateIncomingBob,
+      refreshActiveSquad 
     }}>
       {isReady ? children : null}
     </KernelContext.Provider>

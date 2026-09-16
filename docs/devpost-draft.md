@@ -6,56 +6,62 @@
 ![Isolyne Hero Placeholder](docs/assets/placeholder-devpost-hero.png)
 
 ## Inspiration: The Silent Drift
-Small teams don't fail from bad code. They fail from the illusion of agreement. 
+Hackathon teams don't fail from bad code. They fail from the illusion of agreement. 
 
-Your teammate is building on Firebase. You're building on Postgres. Neither of you knows, and you won't find out until integration hell at 3 AM the night before the deadline. 
+Your teammate went to sleep assuming you were building the backend on Firebase. You woke up and started building it in Postgres. Neither of you knows, and you won't find out until integration hell at 3 AM on Sunday. 
 
-Traditional project management tools demand heavy upfront bureaucracy and are abandoned within four hours of a hackathon. Team chat buries critical architectural decisions in noise. We built **Isolyne** to sit between them: an offline-first, deterministic collaboration radar that projects a shared reality and alerts the team the exact moment a contradiction occurs.
+Traditional PM tools demand heavy upfront bureaucracy and are abandoned within four hours of a hackathon. Team chat buries critical architectural decisions in noise. We built **Isolyne** for the people building right next to us: an offline-first, deterministic collaboration radar that projects a shared reality and alerts the team the exact moment a contradiction occurs.
 
 ## What it does
 Isolyne watches your team's assumptions and catches conflicts before they become blockers. The loop is three steps:
 
-1. **State:** You casually tell Isolyne what you're working on (e.g., *"I'm going with Postgres for the DB"*).
+1. **State:** You casually log what you're working on (e.g., *"I'm going with Postgres for the DB"*).
 2. **Detect:** Isolyne's kernel mathematically compares your statement against the rest of the squad's assumed reality.
-3. **Resolve:** If a gap is detected (e.g., Bob previously committed to Firebase), the Radar instantly flags the divergence and prompts a 1-tap alignment resolution.
+3. **Resolve:** If a gap is detected, the Radar physically ruptures with a haptic fault-line alert. Tapping a resolution chip fires a 4-step pipeline: the engine records the team's choice, generates a typed team commitment, auto-resolves the gap, and extracts a collaboration memory. The Radar physically heals — the crack fades, the terrain smooths, and a haptic success pulse confirms the team is realigned.
+
+**The Vision: Zero "Double-Logging" (Discord + Mobile)**
+Hackathon teams don't update tickets; they chat in Discord, and they build. If we ask them to log decisions in a separate app, we've already failed. 
+* **Passive Ingestion:** The Discord bot (`/discord-bot`) runs our pure CQRS kernel, silently reading your team chat and extracting assumptions naturally. Zero double-logging.
+* **Active Alerts (Why Mobile?):** A Discord ping gets lost in the noise at 3 AM. The mobile app exists as our high-urgency alert surface. When a critical divergence is detected, the app bypasses chat noise with a targeted iOS push notification and haptic alert, forcing the team to resolve the conflict right on their phones before they write another line of code.
+
+## The Experience
+
+* **First Run Onboarding:** A guided 3-step modal introduces the philosophy ("Too fast to argue"), captures your identity, and sets up your squad roster before you ever see the main UI.
+* **The Ledger:** An append-only, deterministically replayable event log. The exact same signals, replayed in the exact same order, always produce the identical reality state.
 
 ## How we built it: Deterministic CQRS & Isolated LLMs
 
 <!-- TODO: Insert Architecture Diagram -->
 ![Architecture Diagram Placeholder](docs/assets/placeholder-architecture.png)
 
-We deliberately isolated LLM unpredictability away from the system's core logic. The LLM is **never** used to decide if the team is aligned or to detect gaps.
+We deliberately isolated LLM unpredictability away from the system's core logic. The LLM is **never** used to decide if the team is aligned.
 
-* **Extraction Layer:** Parses casual chat into strict, structured JSON (`{ topic: 'Database', choice: 'Postgres' }`). We use Groq (Llama 3) for ultra-fast extraction, with Gemini as a fallback. Crucially, we built a **completely offline local keyword parser** as the ultimate fallback. This is a foundational privacy and trust feature: your team's internal disagreements and architectural secrets never have to leave the device.
-* **Evaluation Kernel (Deterministic TypeScript):** A pure mathematical CQRS event engine. It manages state via `decision_stated` and `divergence_detected` signals. 
-* **The Detector Taxonomy:** We identified 8 critical coordination failures in fast-moving teams. We have fully built and shipped **4 out of 8** for this release:
-  - ✅ **Consensus Gap:** Different technical solutions for the same domain.
-  - ✅ **Interpretation Gap:** The team uses the same words but defines the MVP differently.
-  - ✅ **Timeline Gap:** Misaligned or ambiguously defined deadlines.
-  - ✅ **Ownership Gap:** A critical decision has no designated final decider.
-  - 🚧 *(Designed, Not Built: Authority, Allocation, Context, Execution)*
+* **Extraction Layer:** Parses casual chat into strict JSON (`{ topic: 'Database', choice: 'Postgres' }`). We use Groq (Llama 3) for ultra-fast extraction, with Gemini as a fallback. Crucially, we built a **completely offline local keyword parser** as the ultimate fallback. Your team's architectural secrets never have to leave the device.
+* **Evaluation Kernel:** A pure mathematical CQRS event engine in strict-mode TypeScript.
+* **The Hero Detectors:** We built a taxonomy of 5 gap detectors, driven by two flagships:
+  - ✅ **Consensus Gap:** Catches active contradictions (e.g., Postgres vs. Firebase).
+  - ✅ **Execution Gap (The "Stop Asking for Status Updates" Feature):** Catches silence and tracks progress seamlessly. By explicitly extracting natural dev-status phrasing ("API is ready", "blocked on DB migration") from chat, Isolyne knows exactly where a feature stands. If a deadline passes without an update, the kernel flags the stale commitment. You never have to ask your teammate "what's the status?" again.
+  - *(Also shipped: Interpretation, Timeline, and Ownership gaps).*
 
-The mobile application is verified by **64 automated Vitest tests** covering the kernel, LLM parser boundary degradation paths, and our RevenueCat purchasing logic.
+The mobile application is verified by **71 automated Vitest tests** covering the kernel determinism, LLM degradation paths, timeline granularity, and our RevenueCat purchasing logic.
 
 ## Challenges we ran into
 
-Building a pure event-sourced kernel that handles ambiguous human timelines resulted in some serious engineering war stories:
+* **The Gemini Schema Regression:** When adding our Timeline detector, we removed the base `choice` string from the `required` array. This inadvertently caused the LLM to silently drop the `choice` field on *standard* categorical decisions. We had to enforce strict conditional schema requirements to fix it.
+* **Anchor-Timestamp Forwarding:** To ensure our CQRS replay remained 100% deterministic, relative dates ("Friday") couldn't be parsed based on wall-clock time. We had to thread `anchorTimestamp` properties down through the LLM parser so "Friday" always evaluates relative to the exact millisecond the message was sent.
 
-* **The Gemini Schema Regression:** When adding our Timeline detector, we updated our LLM schema to make the `timeline_choice` object optional. To do this, we removed the base `choice` string from the `required` array. This inadvertently caused the LLM to silently drop the `choice` field on *standard* categorical decisions, silently degrading our three most reliable detectors. We had to enforce strict conditional schema requirements to fix it.
-* **Anchor-Timestamp Forwarding:** To ensure our CQRS replay remained 100% deterministic, relative dates (like "Friday") couldn't be parsed based on wall-clock time. We had to meticulously thread `anchorTimestamp` properties all the way down through the LLM parser so that "Friday" always evaluates relative to the exact millisecond the message was originally sent.
-* **Temporal vs. String Deduplication:** In the UI, if Alice says "Friday", Bob says "3pm Friday", and Carol says "the 25th", the resolution chips initially showed three conflicting options. We had to rewrite the proposal generator's deduplication logic to bucket by *resolved ISO instant* and temporal granularity, rather than raw text, to accurately reflect that Alice and Carol were actually in agreement.
+## Monetization Philosophy (RevenueCat HAMM Award)
 
-## Monetization Philosophy & The HAMM Award
-
-Isolyne re-architects monetization around the user's emotional journey using **RevenueCat**:
-* **Free Tier Guarantees 100% Team Safety Forever:** Real-time drift detection and 1-tap consensus alignment are completely free. No project ever breaks because the team hit a paywall.
-* **The "Moment of Doubt" Paywall Trigger:** Isolyne Pro isn't sold in a settings menu. It's offered the exact second the squad's Radar goes red on an active divergence, when the emotional and practical value of alignment is undeniable.
-* **Pro Monetizes the Permanent Record:** Upgrading unlocks the complete retrospective export, immutable signal audit trail, and cross-project organizational memory via RevenueCat's Native Customer Center.
+Isolyne re-architects monetization around the user's emotional journey:
+* **Free Tier Guarantees Safety:** Real-time drift detection is 100% free. No project breaks because the team hit a paywall.
+* **The "Moment of Doubt" Paywall Trigger:** Isolyne Pro isn't sold in a settings menu. It's offered the exact second the squad's Radar goes red on an active divergence, when the value of alignment is undeniable.
+* **Custom Interactive Paywall:** Our paywall features a live ROI calculator. Input your team size and hours/week, and it calculates exactly how few hours of prevented drift it takes to recoup the subscription cost.
+* **Hybrid Revenue Model:** 
+  - **Subscriptions** ($4.99/mo, $39.99/yr, $19.99 intro) unlock the complete retrospective timeline and immutable audit trail.
+  - **One-Time Purchase** ($2.99) unlocks a single "Share Alignment Report" export — the raw text artifact a PM takes back to their standup, without needing a recurring subscription.
 
 ## What's next for Isolyne
-We plan to ship the remaining 4 gap detectors (Authority, Allocation, Context, Execution) and build out the Isolyne Pro retrospective export features. 
-
-But our true roadmap focuses on making the mobile experience completely frictionless:
-* **The Daily Temp Check:** Instead of ambient surveillance, a single daily push notification ("Did anything change since yesterday?") that opens a 1-tap mini-scratchpad.
-* **Passive Chat Ingestion:** Integrating our working Discord bot POC to ingest assumptions directly from team channels, eliminating explicit logging entirely.
+* **Expanding beyond Hackathons:** Hackathons are the perfect crucible for silent drift, but the core kernel is built to scale. We plan to adapt the ambient ingestion engine for early-stage startups and asynchronous remote teams.
+* **Expanding the Taxonomy:** Shipping the remaining 3 gap detectors (Authority, Allocation, Context). 
 * **Live Activities & Dynamic Island:** Broadcasting the team's Radar status live on the lock screen during active build sessions, so you always know if the team is aligned without ever opening the app.
+EOF

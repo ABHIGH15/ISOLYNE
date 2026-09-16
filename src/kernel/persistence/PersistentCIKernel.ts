@@ -4,6 +4,7 @@ import { OwnershipGapDetector } from '../detection/OwnershipGapDetector';
 import { InterpretationGapDetector } from '../detection/InterpretationGapDetector';
 import { ConsensusGapDetector } from '../detection/ConsensusGapDetector';
 import { TimelineGapDetector } from '../detection/TimelineGapDetector';
+import { ExecutionGapDetector } from '../detection/ExecutionGapDetector';
 import { EvaluatorPipeline } from '../detection/EvaluatorPipeline';
 import { ProposalGenerator } from '../reasoning/ProposalGenerator';
 import { GapPriorityPolicy } from '../reasoning/GapPriorityPolicy';
@@ -23,6 +24,8 @@ export class PersistentCIKernel {
     new OwnershipGapDetector(),
     new InterpretationGapDetector(),
     new ConsensusGapDetector(),
+    new TimelineGapDetector(),
+    new ExecutionGapDetector(),
   ]);
   private priorityPolicy = new GapPriorityPolicy();
   private proposalGenerator = new ProposalGenerator();
@@ -44,7 +47,7 @@ export class PersistentCIKernel {
     const state = RealityProjection.replay(signals);
     await this.realityRepo.save(squadId, state);
 
-    const gaps = this.pipeline.evaluate(state);
+    const gaps = this.pipeline.evaluate(state, new Date().toISOString());
     const activeBefore = await this.gapRepo.getActive(squadId);
 
     // Auto-resolve evaporated gaps

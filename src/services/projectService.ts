@@ -101,8 +101,8 @@ export async function deleteProjectRecord(
   await AsyncStorage.removeItem(`${ROSTER_PREFIX}${projectId}`);
 
   // Purge squad signals
-  signalRepo['signals'] = signalRepo['signals'].filter((s: Signal) => s.squadId !== projectId);
-  await AsyncStorage.setItem(SIGNALS_KEY, JSON.stringify(signalRepo['signals'])).catch(() => {});
+  (signalRepo as any).localRepo['signals'] = (signalRepo as any).localRepo['signals'].filter((s: Signal) => s.squadId !== projectId);
+  await AsyncStorage.setItem(SIGNALS_KEY, JSON.stringify((signalRepo as any).localRepo['signals'])).catch(() => {});
 
   let nextActiveId = currentActiveId;
   if (currentActiveId === projectId) {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Animated, LayoutAnimation, Platform, UIManager, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
+import { useCallback } from 'react';
 import * as Haptics from 'expo-haptics';
 import { Feather } from '@expo/vector-icons';
 import { color, space, type, radius } from '../src/presentation/theme/tokens';
@@ -16,8 +17,22 @@ if (Platform.OS === 'android') {
 
 export default function RadarScreen() {
   const router = useRouter();
-  const { radarState, respondToProposal, activeActor, simulateIncomingBob, roster, userName } = useKernel();
+  const { radarState, respondToProposal, activeActor, simulateIncomingBob, roster, userName, refreshActiveSquad } = useKernel();
   const [showEvidence, setShowEvidence] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      refreshActiveSquad();
+    }, [refreshActiveSquad])
+  );
+
+  React.useEffect(() => {
+    if (radarState.status === 'attention') {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    } else if (radarState.status === 'clear') {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    }
+  }, [radarState.status]);
 
   const handleResolve = (choice: string) => {
     if (!radarState.proposal || !radarState.gap || !radarState.gap.topic) return;

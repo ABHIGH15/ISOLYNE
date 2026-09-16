@@ -24,8 +24,8 @@
 
 | Time | Visual / Screen | Action / Interaction | On-Screen Caption |
 |---|---|---|---|
-| **0:15** | Project Home (`/`) | Pan over clean dark-mode UI. Title displays active workspace: **Shipaton 2026**. | **ISOLYNE**<br>*The disagreement detector for teams that move too fast to argue.* |
-| **0:22** | Projects Ledger (`/projects`) | Shows isolated squad workspaces (*Shipaton 2026*, *HackMIT*). Tap back to active workspace. | *Offline-first local workspaces. Zero login required.* |
+| **0:15** | First-Run Onboarding | App launches to a clean 3-step philosophy & setup modal. User enters identity. | **NO SETUP BURDEN**<br>*Zero login required. Just tell us who you are.* |
+| **0:22** | Project Home (`/`) | Modal clears. Pan over active workspace: **Shipaton 2026**. | **ISOLYNE**<br>*The disagreement detector for teams that move too fast to argue.* |
 | **0:28** | Decisions Feed (`/decisions`) | Feed displays the exact statements Alice and Bob just made. | *No tickets to file. Just state what you're building in plain English.* |
 
 ---
@@ -34,9 +34,10 @@
 
 | Time | Visual / Screen | Action / Interaction | On-Screen Caption |
 |---|---|---|---|
-| **0:35** | Statement Channel | Tap Send (`↑`) on a new statement: `"Let's stick to full CRUD for MVP"`. | *A bounded LLM extracts the assumption in 700ms...* |
-| **0:43** | Candidate Card | Card appears: **SCOPE** → **Full CRUD**. Tap **"Lock decision"**. | *...but the deterministic CQRS kernel makes the alignment math.* |
-| **0:48** | Radar Screen (`/radar`) | Pulse continues on the Database conflict. Tap **"View Evidence"**. | **VERBATIM EVIDENCE**<br>*Always trace the conflict back to exactly what was said.* |
+| **0:35** | Statement Channel | Switch to Alice. Tap Send (`↑`) on a new statement: `"Let's stick to full CRUD for MVP"`. | *A bounded LLM extracts the assumption in 700ms...* |
+| **0:40** | Candidate Card | Card appears: **SCOPE** → **Full CRUD**. Tap **"Lock decision"**. | *...but the deterministic CQRS kernel makes the alignment math.* |
+| **0:44** | Statement Channel | Switch to Bob. Send: `"We are just doing a mock login for demo"`. | *Another gap detected: Interpretation Gap.* |
+| **0:48** | Radar Screen (`/radar`) | Radar now pulses red for two gaps. Tap **"View Evidence"** on Database. | **VERBATIM EVIDENCE**<br>*Always trace the conflict back to exactly what was said.* |
 
 ---
 
@@ -55,13 +56,13 @@
 | Time | Visual / Screen | Action / Interaction | On-Screen Caption |
 |---|---|---|---|
 | **1:15** | Timeline Screen (`/timeline`) | Scroll chronological event ledger. | *Safety and drift detection are 100% free forever.* |
-| **1:20** | Home → Pro Upgrade | Tap **"Upgrade to Isolyne Pro"**. Native RevenueCat Paywall slides up cleanly. | **REVENUECAT INTEGRATION**<br>*Pro monetizes the permanent collaboration record.* |
+| **1:20** | Home → Pro Upgrade | Tap **"Upgrade to Isolyne Pro"**. Native RevenueCat Paywall slides up cleanly, showing Subscriptions and a one-time "Export Alignment Report" purchase. | **REVENUECAT INTEGRATION**<br>*Pro monetizes the permanent collaboration record.* |
 | **1:26** | Dismiss / End Card | Dismiss Paywall back to Home. Screen fades to branded closing frame. | **Isolyne**<br>*The disagreement detector for teams that move too fast to argue.* |
 
 ---
 
-## 🎁 Optional Bonus Beat: Passive Capture Proof-of-Concept (Discord Bot)
-> *Technical proof-of-concept / future direction — not a shipped mobile app feature.*
+## 🎁 Critical Beat: No Double-Logging (Discord Bot)
+> *The standalone Discord companion proves the exact same pure kernel catches drift natively where teams already chat.*
 
 | Time | Visual / Screen | Action / Interaction | On-Screen Caption |
 |---|---|---|---|
