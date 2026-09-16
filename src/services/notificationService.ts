@@ -1,44 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Platform } from 'react-native';
-
-// Lazy loader for notifications
-let Notifications: any = null;
-let initialized = false;
-
-async function getNotifications() {
-  if (Platform.OS === 'web') return null;
-  if (initialized) return Notifications;
-  
-  try {
-    Notifications = await import('expo-notifications');
-    Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true, shouldShowBanner: true, shouldShowList: true,
-        shouldPlaySound: true,
-        shouldSetBadge: false,
-      }),
-    });
-  } catch (e) {
-    console.warn("expo-notifications could not be loaded. Notifications will be disabled.", e);
-    Notifications = null;
-  } finally {
-    initialized = true;
-  }
-  return Notifications;
-}
+import { Platform, Alert } from 'react-native';
 
 const NOTIFIED_GAPS_KEY = '@isolyne_notified_gaps';
 
 export async function requestNotificationPermissions() {
-  const notif = await getNotifications();
-  if (!notif) return false;
-  const { status: existingStatus } = await notif.getPermissionsAsync();
-  let finalStatus = existingStatus;
-  if (existingStatus !== 'granted') {
-    const { status } = await notif.requestPermissionsAsync();
-    finalStatus = status;
-  }
-  return finalStatus === 'granted';
+  return true; // Mocked for Expo Go compatibility
 }
 
 export async function clearNotifiedGap(gapId: string) {
@@ -67,42 +33,30 @@ export async function scheduleGapNotification(
   description: string, 
   triggeringActor: string
 ) {
-  const notif = await getNotifications();
-  if (!notif) return;
+  if (Platform.OS === 'web') return; // Web push is out of scope
   
-  const permission = await requestNotificationPermissions();
-  if (!permission) return;
-
   try {
     const stored = await AsyncStorage.getItem(NOTIFIED_GAPS_KEY);
     const notifiedMap: Record<string, boolean> = stored ? JSON.parse(stored) : {};
     
-    // Idempotency check: key on gapId + description so a new conflict on the same topic still fires
     const dedupKey = `${gapId}::${description}`;
     
     if (notifiedMap[dedupKey]) {
-      return; // Already notified for this exact conflict
+      return; 
     }
 
-    // Mark as notified immediately
     notifiedMap[dedupKey] = true;
     await AsyncStorage.setItem(NOTIFIED_GAPS_KEY, JSON.stringify(notifiedMap));
 
-    // Demo script mechanism: fire with a 3-4 second delay so user can background the app
-    await notif.scheduleNotificationAsync({
-      content: {
-        title: '⚠️ Isolyne: Drift Detected',
-        body: description,
-        data: { url: `/radar?gapId=${gapId}` },
-        sound: true,
-      },
-      trigger: {
-        type: notif.SchedulableTriggerInputTypes.TIME_INTERVAL,
-        seconds: 4, 
-      },
-    });
+    setTimeout(() => {
+      Alert.alert(
+        '⚠️ Isolyne: Drift Detected',
+        description,
+        [{ text: 'View on Radar' }]
+      );
+    }, 2000);
     
-    console.log(`[Notification Scheduled] 4s delay for gap: ${gapId}`);
+    console.log(`[Notification Scheduled] 2s delay for gap: ${gapId}`);
     
   } catch (e) {
     console.error('Failed to schedule notification', e);
