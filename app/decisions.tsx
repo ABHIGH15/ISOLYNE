@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { color, space, type, radius } from '../src/presentation/theme/tokens';
 import { StatementChannel } from '../src/presentation/components/StatementChannel';
@@ -83,22 +83,22 @@ const s = StyleSheet.create({
   recordListContent: { padding: space.xl, gap: space.xl, paddingBottom: 260 },
   
   emptyState: { flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 80, paddingHorizontal: space.xl },
-  emptyIconCircle: { width: 64, height: 64, borderRadius: 32, backgroundColor: color.bgElevated, borderWidth: 1, borderColor: color.lineStrong, alignItems: 'center', justifyContent: 'center', marginBottom: space.lg },
+  emptyIconCircle: { width: 64, height: 64, borderRadius: 32, backgroundColor: color.glass, borderWidth: 1, borderColor: color.lineStrong, alignItems: 'center', justifyContent: 'center', marginBottom: space.lg },
   emptyIcon: { fontSize: 24 },
-  emptyTitle: { ...type.title, color: color.text, marginBottom: space.sm },
+  emptyTitle: { ...type.title, color: color.text, marginBottom: space.sm, fontFamily: 'Orbitron' },
   emptyDesc: { ...type.body, color: color.textMuted, textAlign: 'center' },
   
-  topicCard: { backgroundColor: color.bgElevated, borderWidth: 1, borderColor: color.line, borderRadius: radius.md, padding: space.lg },
-  topicCardDisputed: { borderColor: color.risk, backgroundColor: color.riskSoft },
+  topicCard: { paddingLeft: space.lg, borderLeftWidth: 2, borderColor: color.lineStrong, marginBottom: space.md },
+  topicCardDisputed: { borderColor: color.risk },
   
-  topicHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: space.lg },
+  topicHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: space.md },
   topicTitle: { ...type.label, color: color.textSecondary, textTransform: 'uppercase', letterSpacing: 1 },
   topicTitleDisputed: { color: color.risk },
   disputedBadge: { ...type.meta, color: color.risk, borderWidth: 1, borderColor: color.risk, paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4 },
 
   decisionRow: { marginBottom: space.md },
   decisionInfo: { flexDirection: 'column' },
-  decisionChoice: { ...type.bodyStrong, color: color.text, marginBottom: 2 },
+  decisionChoice: { ...type.bodyStrong, color: color.text, marginBottom: 2, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace' },
   decisionChoiceDisputed: { color: color.risk },
   decisionActor: { ...type.meta, color: color.textMuted }
 });

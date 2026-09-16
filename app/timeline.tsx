@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Share, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Share, ActivityIndicator, Alert, Platform } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { hasIsolynePro, hasReportExport, getIsolyneProPackages, purchasePackage } from '../src/services/purchases';
 import { Feather } from '@expo/vector-icons';
@@ -164,30 +164,30 @@ export default function TimelineScreen() {
 
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: color.bg },
-  header: { padding: space.xl, borderBottomWidth: 1, borderColor: color.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  exportBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: color.bgElevated, paddingHorizontal: space.md, paddingVertical: space.sm, borderRadius: radius.pill, borderWidth: 1, borderColor: color.lineStrong },
+  header: { padding: space.xl, borderBottomWidth: 1, borderColor: color.lineStrong, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: color.bgQuiet },
+  exportBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: color.glass, paddingHorizontal: space.md, paddingVertical: space.sm, borderRadius: radius.pill, borderWidth: 1, borderColor: color.lineStrong },
   exportBtnText: { ...type.label, color: color.text },
-  title: { ...type.display, color: color.text, marginBottom: space.sm },
+  title: { ...type.display, color: color.text, marginBottom: space.sm, fontFamily: 'Orbitron' },
   subtitle: { ...type.body, color: color.textSecondary },
   
   timelineList: { flex: 1 },
   timelineContent: { padding: space.xl, paddingBottom: 100 },
   
   emptyState: { flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 100, paddingHorizontal: space.xl },
-  emptyIconCircle: { width: 64, height: 64, borderRadius: 32, backgroundColor: color.bgElevated, borderWidth: 1, borderColor: color.lineStrong, alignItems: 'center', justifyContent: 'center', marginBottom: space.lg },
+  emptyIconCircle: { width: 64, height: 64, borderRadius: 32, backgroundColor: color.glass, borderWidth: 1, borderColor: color.lineStrong, alignItems: 'center', justifyContent: 'center', marginBottom: space.lg },
   emptyIcon: { fontSize: 24 },
-  emptyTitle: { ...type.title, color: color.text, marginBottom: space.sm },
+  emptyTitle: { ...type.title, color: color.text, marginBottom: space.sm, fontFamily: 'Orbitron' },
   emptyDesc: { ...type.body, color: color.textMuted, textAlign: 'center' },
 
   eventRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: space.xl, position: 'relative', paddingLeft: 12 },
   line: { position: 'absolute', left: 70, top: 24, bottom: -space.xl, width: 2, backgroundColor: color.lineStrong },
   spineDot: { position: 'absolute', left: 67, top: 8, width: 8, height: 8, borderRadius: 4, backgroundColor: color.textMuted, zIndex: 2 },
   
-  timestamp: { ...type.meta, color: color.textMuted, width: 45, paddingTop: 2 },
+  timestamp: { ...type.meta, color: color.textMuted, width: 45, paddingTop: 2, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace' },
   
-  eventCard: { flex: 1, backgroundColor: color.bgQuiet, padding: space.md, borderRadius: radius.md, borderWidth: 1, borderColor: color.line },
-  eventCardDivergence: { backgroundColor: color.riskSoft, borderColor: color.riskLine },
-  eventCardResolution: { backgroundColor: color.joinSoft, borderColor: color.joinLine },
+  eventCard: { flex: 1, backgroundColor: color.glass, padding: space.md, borderRadius: radius.md, borderWidth: 1, borderColor: color.line },
+  eventCardDivergence: { backgroundColor: 'transparent', borderColor: color.riskLine },
+  eventCardResolution: { backgroundColor: 'transparent', borderColor: color.joinLine },
 
   eventText: { ...type.body, color: color.textSecondary },
   eventTextDivergence: { color: color.risk },
@@ -195,6 +195,6 @@ const s = StyleSheet.create({
 
   gateContainer: { alignItems: 'center', marginTop: space.xl, position: 'relative' },
   lineExtender: { position: 'absolute', left: 70, top: -space.xl, height: space.xl, width: 2, backgroundColor: color.lineStrong, zIndex: -1 },
-  gateBanner: { flexDirection: 'row', alignItems: 'center', backgroundColor: color.bgElevated, paddingHorizontal: space.lg, paddingVertical: space.md, borderRadius: radius.lg, borderWidth: 1, borderColor: color.lineStrong, gap: 8 },
+  gateBanner: { flexDirection: 'row', alignItems: 'center', backgroundColor: color.glass, paddingHorizontal: space.lg, paddingVertical: space.md, borderRadius: radius.lg, borderWidth: 1, borderColor: color.lineHighlight, gap: 8 },
   gateText: { ...type.body, color: color.textSecondary },
 });

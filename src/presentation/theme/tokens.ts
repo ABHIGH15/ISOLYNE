@@ -4,11 +4,14 @@
  */
 
 export const color = {
-  bg: '#07080F',
-  bgElevated: '#10121C',
-  bgQuiet: '#0C0E16',
-  line: '#1E2130',
-  lineStrong: '#2A2F42',
+  bg: '#04050A',
+  bgElevated: '#0C0E16',
+  bgQuiet: '#080A10',
+  glass: 'rgba(12, 14, 22, 0.65)',
+  glassStrong: 'rgba(12, 14, 22, 0.85)',
+  line: 'rgba(255, 255, 255, 0.04)',
+  lineStrong: 'rgba(255, 255, 255, 0.08)',
+  lineHighlight: 'rgba(255, 255, 255, 0.15)',
 
   text: '#F4F2FB',
   textSecondary: '#9A95AB',

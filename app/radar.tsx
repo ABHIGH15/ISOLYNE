@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Animated, LayoutAnimation, Platform, UIManager,
 import { useRouter, useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
 import * as Haptics from 'expo-haptics';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 import { color, space, type, radius } from '../src/presentation/theme/tokens';
 import { useKernel } from '../src/presentation/state/KernelContext';
@@ -129,6 +130,13 @@ export default function RadarScreen() {
 
   return (
     <View style={s.root}>
+      {/* HUD Backdrop */}
+      <LinearGradient
+        colors={[color.bgElevated, color.bg]}
+        style={StyleSheet.absoluteFill}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 0.4 }}
+      />
       <Pressable 
         style={s.topBar}
         onLongPress={handleMagicTrigger}
@@ -284,16 +292,16 @@ const s = StyleSheet.create({
   radarCenter: { width: '100%', maxWidth: 500, alignSelf: 'center' },
   radarTitle: { ...type.risk, color: color.risk, marginBottom: space.lg, letterSpacing: 1, textAlign: 'center' },
   
-  radarCard: { backgroundColor: color.bgElevated, borderWidth: 1, borderColor: color.riskLine, borderRadius: radius.lg, padding: space.xl, width: '100%' },
-  gapTopic: { ...type.meta, color: color.textSecondary, marginBottom: space.md, textTransform: 'uppercase', letterSpacing: 1 },
+  radarCard: { backgroundColor: color.glass, borderWidth: 1, borderColor: color.riskLine, borderRadius: radius.xl, padding: space.xl, width: '100%', shadowColor: color.risk, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 20 },
+  gapTopic: { ...type.meta, color: color.textSecondary, marginBottom: space.md, textTransform: 'uppercase', letterSpacing: 1, fontFamily: 'Orbitron' },
   gapBody: { ...type.body, color: color.risk, marginBottom: space.md },
   
   evidenceToggle: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', paddingVertical: space.sm, marginBottom: space.sm, gap: 4 },
   evidenceToggleText: { ...type.meta, color: color.accent },
   
-  evidenceList: { marginBottom: space.xl, gap: space.md, backgroundColor: color.bgQuiet, padding: space.md, borderRadius: radius.sm, borderWidth: 1, borderColor: color.lineStrong },
-  evidenceRow: { flexDirection: 'row', alignItems: 'flex-start', gap: space.md },
-  evidenceActor: { ...type.label, color: color.textSecondary, width: 80, marginTop: 2 },
+  evidenceList: { marginBottom: space.xl, gap: space.md, backgroundColor: 'transparent', padding: space.md, borderRadius: radius.sm, borderWidth: 1, borderColor: color.lineStrong },
+  evidenceRow: { flexDirection: 'row', alignItems: 'flex-start', gap: space.md, paddingBottom: space.md, borderBottomWidth: 1, borderColor: color.line },
+  evidenceActor: { ...type.label, color: color.textSecondary, width: 80, marginTop: 2, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace' },
   evidenceContent: { flex: 1, gap: 4 },
   evidenceVerbatim: { ...type.body, color: color.text, fontStyle: 'italic' },
   evidenceChoice: { ...type.meta, color: color.textSecondary, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 11 },
@@ -302,7 +310,7 @@ const s = StyleSheet.create({
   proposalDesc: { ...type.meta, color: color.textSecondary, marginBottom: space.md },
   
   optionsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
-  btnResolve: { backgroundColor: color.riskSoft, borderWidth: 1, borderColor: color.risk, paddingHorizontal: space.lg, paddingVertical: space.md, borderRadius: radius.md, alignItems: 'center' },
+  btnResolve: { backgroundColor: color.glass, borderWidth: 1, borderColor: color.risk, paddingHorizontal: space.lg, paddingVertical: space.md, borderRadius: radius.md, alignItems: 'center' },
   btnResolveText: { ...type.button, color: color.risk },
   
   btnDiscuss: { backgroundColor: 'transparent', borderWidth: 1, borderColor: color.lineStrong, paddingHorizontal: space.lg, paddingVertical: space.md, borderRadius: radius.md, alignItems: 'center' },
@@ -312,11 +320,11 @@ const s = StyleSheet.create({
   momentOfDoubtText: { ...type.meta, color: color.textSecondary, fontSize: 11, flex: 1 },
   momentOfDoubtLink: { color: color.caution, fontWeight: '700' },
 
-  lessonCard: { backgroundColor: color.bgElevated, borderWidth: 1, borderColor: color.joinLine, borderRadius: radius.lg, padding: space.xl, width: '100%' },
+  lessonCard: { backgroundColor: color.glass, borderWidth: 1, borderColor: color.joinLine, borderRadius: radius.xl, padding: space.xl, width: '100%', shadowColor: color.join, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 20 },
   lessonHeaderRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginBottom: space.md },
-  lessonTitle: { ...type.meta, color: color.join, fontWeight: '700', letterSpacing: 1 },
+  lessonTitle: { ...type.meta, color: color.join, fontWeight: '700', letterSpacing: 1, fontFamily: 'Orbitron' },
   lessonCommitment: { ...type.body, color: color.text, marginBottom: space.lg },
-  lessonBox: { backgroundColor: color.bgQuiet, padding: space.md, borderRadius: radius.sm, borderWidth: 1, borderColor: color.lineStrong, marginBottom: space.xl },
+  lessonBox: { backgroundColor: 'transparent', padding: space.md, borderRadius: radius.sm, borderWidth: 1, borderColor: color.lineStrong, marginBottom: space.xl },
   lessonLabel: { ...type.meta, color: color.textSecondary, marginBottom: 4 },
   lessonText: { ...type.body, color: color.text, fontStyle: 'italic' },
   

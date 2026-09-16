@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, Pressable, ActivityIndicator, KeyboardAvoidingView, Platform, Animated, ScrollView } from 'react-native';
 import * as Haptics from 'expo-haptics';
+import { BlurView } from 'expo-blur';
 import { color, space, type, radius } from '../theme/tokens';
 import { useKernel } from '../state/KernelContext';
 import { interpretStatement } from '../../services/llmParser';
@@ -97,7 +98,7 @@ export function StatementChannel() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
     >
-      <View style={s.inputContainer}>
+      <BlurView intensity={80} tint="dark" style={s.inputContainer}>
         {isReceiving && (
           <View style={s.incomingToast}>
             <View style={s.avatarPill}>
@@ -209,19 +210,19 @@ export function StatementChannel() {
             </View>
           </>
         )}
-      </View>
+      </BlurView>
     </KeyboardAvoidingView>
   );
 }
 
 const s = StyleSheet.create({
-  container: { width: '100%', borderTopWidth: 1, borderColor: color.line },
+  container: { width: '100%', borderTopWidth: 1, borderColor: color.lineStrong, position: 'absolute', bottom: 0, zIndex: 10 },
 
   incomingToast: { 
     flexDirection: 'row', 
     alignItems: 'center', 
     gap: space.md, 
-    backgroundColor: color.bgElevated, 
+    backgroundColor: color.glass, 
     paddingVertical: space.sm, 
     paddingHorizontal: space.lg, 
     borderRadius: 999, 
@@ -242,12 +243,12 @@ const s = StyleSheet.create({
   actorSwitchRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginBottom: space.md },
   actorSwitchLabel: { ...type.meta, color: color.textMuted },
   actorPills: { flexDirection: 'row', gap: space.xs },
-  actorPill: { paddingHorizontal: space.md, paddingVertical: 4, borderRadius: radius.pill, backgroundColor: color.bgElevated, borderWidth: 1, borderColor: color.line },
+  actorPill: { paddingHorizontal: space.md, paddingVertical: 4, borderRadius: radius.pill, backgroundColor: color.glass, borderWidth: 1, borderColor: color.line },
   actorPillActive: { backgroundColor: color.accentDim, borderColor: color.accent },
   actorPillText: { ...type.meta, color: color.textSecondary },
   actorPillTextActive: { color: color.accent, fontWeight: '700' },
 
-  inputContainer: { padding: space.xl, backgroundColor: color.bg },
+  inputContainer: { padding: space.xl, paddingTop: space.lg, backgroundColor: 'transparent' },
   statusRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginBottom: space.md },
   statusText: { ...type.meta, color: color.accent },
 
