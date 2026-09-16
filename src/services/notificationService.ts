@@ -1,23 +1,41 @@
-import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true, shouldShowBanner: true, shouldShowList: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
+// Lazy loader for notifications
+let Notifications: any = null;
+let initialized = false;
+
+async function getNotifications() {
+  if (Platform.OS === 'web') return null;
+  if (initialized) return Notifications;
+  
+  try {
+    Notifications = await import('expo-notifications');
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true, shouldShowBanner: true, shouldShowList: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+      }),
+    });
+  } catch (e) {
+    console.warn("expo-notifications could not be loaded. Notifications will be disabled.", e);
+    Notifications = null;
+  } finally {
+    initialized = true;
+  }
+  return Notifications;
+}
 
 const NOTIFIED_GAPS_KEY = '@isolyne_notified_gaps';
 
 export async function requestNotificationPermissions() {
-  if (Platform.OS === 'web') return false;
-  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  const notif = await getNotifications();
+  if (!notif) return false;
+  const { status: existingStatus } = await notif.getPermissionsAsync();
   let finalStatus = existingStatus;
   if (existingStatus !== 'granted') {
-    const { status } = await Notifications.requestPermissionsAsync();
+    const { status } = await notif.requestPermissionsAsync();
     finalStatus = status;
   }
   return finalStatus === 'granted';
@@ -49,9 +67,9 @@ export async function scheduleGapNotification(
   description: string, 
   triggeringActor: string
 ) {
-  if (Platform.OS === 'web') return; // Web push is out of scope
+  const notif = await getNotifications();
+  if (!notif) return;
   
-    
   const permission = await requestNotificationPermissions();
   if (!permission) return;
 
@@ -71,7 +89,7 @@ export async function scheduleGapNotification(
     await AsyncStorage.setItem(NOTIFIED_GAPS_KEY, JSON.stringify(notifiedMap));
 
     // Demo script mechanism: fire with a 3-4 second delay so user can background the app
-    await Notifications.scheduleNotificationAsync({
+    await notif.scheduleNotificationAsync({
       content: {
         title: '⚠️ Isolyne: Drift Detected',
         body: description,
@@ -79,7 +97,7 @@ export async function scheduleGapNotification(
         sound: true,
       },
       trigger: {
-        type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+        type: notif.SchedulableTriggerInputTypes.TIME_INTERVAL,
         seconds: 4, 
       },
     });
