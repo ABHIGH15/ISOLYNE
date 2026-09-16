@@ -15,7 +15,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { color } from '../theme/tokens';
 
-export function RadarMotif({ status }: { status: 'clear' | 'alert' }) {
+export function RadarMotif({ status }: { status: 'clear' | 'alert' | 'resolving' }) {
   const AnimatedPath = Animated.createAnimatedComponent(Path);
 
   const rotation = useSharedValue(0);
@@ -42,6 +42,22 @@ export function RadarMotif({ status }: { status: 'clear' | 'alert' }) {
         }),
         -1, // infinite
         false // no reverse
+      );
+    } else if (status === 'resolving') {
+      cancelAnimation(pulseScale);
+      cancelAnimation(pulseOpacity);
+      cancelAnimation(rotation);
+
+      pulseOpacity.value = withTiming(0, { duration: 300 });
+
+      // Healing fault lines (reverse)
+      faultProgress.value = withTiming(1, { duration: 600, easing: Easing.inOut(Easing.cubic) });
+      faultOpacity.value = withTiming(0, { duration: 600 });
+
+      // Celebration bounce
+      coreScale.value = withSequence(
+        withTiming(1.8, { duration: 200 }),
+        withSpring(1)
       );
     } else {
       cancelAnimation(rotation);
@@ -94,8 +110,8 @@ export function RadarMotif({ status }: { status: 'clear' | 'alert' }) {
     };
   });
 
-  const motifColor = status === 'clear' ? color.join : color.risk;
-  const motifSoft = status === 'clear' ? color.joinLine : color.riskLine;
+  const motifColor = status === 'alert' ? color.risk : color.join;
+  const motifSoft = status === 'alert' ? color.riskLine : color.joinLine;
 
   const animatedFaultProps = useAnimatedProps(() => {
     return {

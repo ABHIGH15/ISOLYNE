@@ -8,6 +8,10 @@ export class MemoryExtractor {
       'ownership_gap': 'Temporary teams require explicit ownership signals.',
       'consensus_gap': 'Implicit decisions lead to silent divergence. Force explicit alignment.',
       'integration_gap': 'System interfaces require explicit contracts. Implicit assumptions cause integration failure.',
+      'interpretation_gap': 'Same words, different meanings. Define scope explicitly before building.',
+      'timeline_gap': 'Misaligned deadlines cause silent waste. Confirm dates out loud.',
+      'timeline_unresolved': 'Ambiguous timelines breed false confidence. Pin down specifics.',
+      'execution_gap': 'Silence after a deadline is its own signal. Check in before assuming.'
     };
 
     return {

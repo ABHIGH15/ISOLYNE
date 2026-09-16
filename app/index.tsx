@@ -8,7 +8,7 @@ import { useKernel } from '../src/presentation/state/KernelContext';
 
 export default function ProjectHomeScreen() {
   const router = useRouter();
-  const { radarState, roster, userName, simulateIncomingBob, isReceiving, activeProject } = useKernel();
+  const { radarState, roster, userName, simulateIncomingBob, isReceiving, activeProject, decisions, timelineEvents } = useKernel();
   const [guideDismissed, setGuideDismissed] = React.useState(false);
 
   const handleSimulateConflict = () => {
@@ -114,6 +114,15 @@ export default function ProjectHomeScreen() {
           <Text style={s.widgetBtnText}>Open Radar</Text>
           <Feather name="arrow-right" size={16} color={color.textOnAccent} />
         </Pressable>
+
+        <View style={s.statsRow}>
+          <Text style={s.statsText}>
+            <Text style={{ fontWeight: '700', color: color.text }}>{decisions.length}</Text> decisions tracked · <Text style={{ fontWeight: '700', color: color.text }}>{timelineEvents.filter(e => e.type === 'resolution').length}</Text> conflicts resolved
+          </Text>
+          <Text style={s.statsAlignment}>
+            Team alignment: <Text style={{ fontWeight: '700', color: radarState.status === 'clear' ? color.join : color.risk }}>{radarState.status === 'clear' ? '100%' : 'Drifting'}</Text>
+          </Text>
+        </View>
       </View>
 
       <View style={s.grid}>
@@ -205,6 +214,10 @@ const s = StyleSheet.create({
   widgetDesc: { ...type.body, color: color.textSecondary, marginBottom: space.lg },
   widgetBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: space.sm, backgroundColor: color.accent, paddingVertical: space.md, borderRadius: radius.pill },
   widgetBtnText: { ...type.button, color: color.textOnAccent },
+
+  statsRow: { marginTop: space.lg, paddingTop: space.md, borderTopWidth: 1, borderColor: color.lineStrong, gap: 4 },
+  statsText: { ...type.meta, color: color.textSecondary, fontSize: 11, textAlign: 'center' },
+  statsAlignment: { ...type.meta, color: color.textSecondary, fontSize: 11, textAlign: 'center' },
 
   grid: { flexDirection: 'row', gap: space.md },
   gridCard: { flex: 1, backgroundColor: color.bgQuiet, padding: space.lg, borderRadius: radius.md, borderWidth: 1, borderColor: color.line },
