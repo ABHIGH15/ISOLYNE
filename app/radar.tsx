@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Animated, LayoutAnimation, Platform, UIManager, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform, ScrollView } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
 import * as Haptics from 'expo-haptics';
@@ -8,192 +7,67 @@ import { Feather } from '@expo/vector-icons';
 import { color, space, type, radius } from '../src/presentation/theme/tokens';
 import { useKernel } from '../src/presentation/state/KernelContext';
 import { RadarMotif } from '../src/presentation/components/RadarMotif';
-import { AnimatedPressable } from '../src/presentation/components/AnimatedPressable';
-
-if (Platform.OS === 'android') {
-  if (UIManager.setLayoutAnimationEnabledExperimental) {
-    UIManager.setLayoutAnimationEnabledExperimental(true);
-  }
-}
-
-const lessons: Record<string, string> = {
-  'ownership_gap': 'Temporary teams require explicit ownership signals.',
-  'consensus_gap': 'Implicit decisions lead to silent divergence. Force explicit alignment.',
-  'integration_gap': 'System interfaces require explicit contracts. Implicit assumptions cause integration failure.',
-  'interpretation_gap': 'Same words, different meanings. Define scope explicitly before building.',
-  'timeline_gap': 'Misaligned deadlines cause silent waste. Confirm dates out loud.',
-  'timeline_unresolved': 'Ambiguous timelines breed false confidence. Pin down specifics.',
-  'execution_gap': 'Silence after a deadline is its own signal. Check in before assuming.'
-};
+import Animated, { FadeInUp, FadeIn } from 'react-native-reanimated';
+import { InteractiveCard } from '../src/presentation/components/InteractiveCard';
 
 export default function RadarScreen() {
   const router = useRouter();
-  const { radarState, respondToProposal, activeActor, simulateIncomingBob, roster, userName, refreshActiveSquad } = useKernel();
-  const [showEvidence, setShowEvidence] = useState(false);
-  const [resolvedGap, setResolvedGap] = useState<any>(null);
-  const [resolvedChoice, setResolvedChoice] = useState<string>('');
-  const [showLesson, setShowLesson] = useState(false);
+  const { radarState, respondToProposal, roster, userName } = useKernel();
 
   useFocusEffect(
     useCallback(() => {
-      refreshActiveSquad();
-      setShowLesson(false);
-      setResolvedGap(null);
-    }, [refreshActiveSquad])
+    }, [])
   );
 
-  React.useEffect(() => {
-    if (showLesson) {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    } else if (radarState.status === 'attention') {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-    } else if (radarState.status === 'clear') {
-      // only trigger success haptic if we didn't just show a lesson (which already triggered it)
-      if (!showLesson) {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      }
-    }
-  }, [radarState.status, showLesson]);
-
   const handleResolve = (choice: string) => {
-    if (!radarState.proposal || !radarState.gap || !radarState.gap.topic) return;
-    
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    
-    const gapCopy = radarState.gap;
-    setResolvedGap(gapCopy);
-    setResolvedChoice(choice);
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setShowLesson(true);
-
-    respondToProposal(
-      activeActor, 
-      'agree', 
-      radarState.proposal.id, 
-      gapCopy.id, 
-      { type: 'consensus', topic: gapCopy.topic, choice }
-    );
+    if (radarState.proposal && radarState.gap) {
+      respondToProposal(userName, 'agree', radarState.proposal.id, radarState.gap.id, choice);
+    }
   };
 
-  const handleAssignOwner = (ownerId: string) => {
-    if (!radarState.proposal || !radarState.gap) return;
-    
+  const handleAssignOwner = (member: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    
-    const gapCopy = radarState.gap;
-    setResolvedGap(gapCopy);
-    setResolvedChoice(ownerId);
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setShowLesson(true);
-    
-    respondToProposal(
-      activeActor, 
-      'agree', 
-      radarState.proposal.id, 
-      gapCopy.id, 
-      { type: 'ownership', ownerId }
-    );
+    if (radarState.proposal && radarState.gap) {
+      respondToProposal(userName, 'agree', radarState.proposal.id, radarState.gap.id, member);
+    }
   };
 
   const handleDiscuss = () => {
-    if (!radarState.proposal || !radarState.gap) return;
-    
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    
-    respondToProposal(
-      activeActor,
-      'challenge',
-      radarState.proposal.id,
-      radarState.gap.id
-    );
-  };
-
-  const toggleEvidence = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setShowEvidence(!showEvidence);
+    router.push('/decisions');
   };
-
-  const handleMagicTrigger = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    simulateIncomingBob();
-  };
-
-  const handleContinue = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setShowLesson(false);
-    setResolvedGap(null);
-  };
-
-  const motifStatus = showLesson ? 'resolving' : (radarState.status === 'clear' ? 'clear' : 'alert');
 
   return (
     <View style={s.root}>
-      {/* HUD Backdrop */}
       <LinearGradient
         colors={[color.bgElevated, color.bg]}
         style={StyleSheet.absoluteFill}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 0.4 }}
       />
-      <Pressable 
-        style={s.topBar}
-        onLongPress={handleMagicTrigger}
-        delayLongPress={1500}
-      >
-        <Text style={s.projectName}>ISOLYNE</Text>
-      </Pressable>
+      
+      <Animated.View entering={FadeIn.duration(800)} style={s.topBar}>
+        <Text style={s.projectName}>PROJECT: ISOLYNE</Text>
+      </Animated.View>
 
-      <RadarMotif status={motifStatus} />
+      <RadarMotif status={radarState.status as any} />
 
-      {showLesson && resolvedGap ? (
-        <View style={s.radarCenter}>
-          <View style={s.lessonCard}>
-            <View style={s.lessonHeaderRow}>
-              <Feather name="check-circle" size={18} color={color.join} />
-              <Text style={s.lessonTitle}>ALIGNMENT RESTORED</Text>
-            </View>
-            <Text style={s.lessonCommitment}>Team aligned on {resolvedGap.topic || 'ownership'} → {resolvedChoice}</Text>
-            
-            <View style={s.lessonBox}>
-              <Text style={s.lessonLabel}>💡 Lesson:</Text>
-              <Text style={s.lessonText}>
-                "{lessons[resolvedGap.type] || 'Unknown reality gap resolved.'}"
-              </Text>
-            </View>
-
-            <AnimatedPressable style={s.btnContinue} onPress={handleContinue}>
-              <Text style={s.btnContinueText}>Continue</Text>
-            </AnimatedPressable>
-          </View>
-        </View>
-      ) : radarState.status === 'clear' ? (
-        <View style={s.statusCenter}>
+      {radarState.status === 'clear' ? (
+        <Animated.View entering={FadeInUp.duration(600).delay(200).springify()} style={s.statusCenter}>
           <Text style={s.statusTitle}>ALL CLEAR</Text>
-          <Text style={s.statusBody}>Isolyne is watching your team's decisions silently. Nothing needs your attention.</Text>
-        </View>
+          <Text style={s.statusBody}>No architectural drift detected.</Text>
+        </Animated.View>
       ) : (
-        <View style={s.radarCenter}>
-          <Text style={s.radarTitle}>{radarState.gap?.title}</Text>
-          
+        <Animated.View entering={FadeInUp.duration(600).springify()} style={s.radarCenter}>
+          <Text style={s.radarTitle}>DRIFT DETECTED</Text>
           <View style={s.radarCard}>
+            
             <Text style={s.gapTopic}>{radarState.gap?.topic}</Text>
-            
             <Text style={s.gapBody}>{radarState.gap?.description}</Text>
-            
-            <Pressable 
-              style={s.evidenceToggle} 
-              onPress={toggleEvidence}
-              accessibilityRole="button"
-              accessibilityLabel={showEvidence ? 'Hide Evidence' : 'View Evidence'}
-            >
-              <Feather name={showEvidence ? "chevron-up" : "chevron-down"} size={16} color={color.accent} />
-              <Text style={s.evidenceToggleText}>{showEvidence ? 'Hide Evidence' : 'View Evidence'}</Text>
-            </Pressable>
-            
-            {showEvidence && (
-              <View style={s.evidenceList} accessible={true} accessibilityLabel="Evidence details">
+
+            {radarState.gap?.evidence && radarState.gap.evidence.length > 0 && (
+              <View style={s.evidenceList}>
                 {radarState.gap?.evidence?.map((ev, i) => (
                   <View key={i} style={s.evidenceRow}>
                     <Text style={s.evidenceActor}>{ev.actorId}</Text>
@@ -214,7 +88,7 @@ export default function RadarScreen() {
                 <View style={s.optionsRow}>
                   {radarState.gap?.type === 'ownership_gap' ? (
                     (roster.length > 0 ? roster : [userName]).map((member, i) => (
-                      <AnimatedPressable 
+                      <InteractiveCard 
                         key={i} 
                         style={s.btnResolve} 
                         onPress={() => handleAssignOwner(member)}
@@ -224,11 +98,11 @@ export default function RadarScreen() {
                         <Text style={s.btnResolveText}>
                           {member === userName ? `Claim (${member})` : `Assign ${member}`}
                         </Text>
-                      </AnimatedPressable>
+                      </InteractiveCard>
                     ))
                   ) : (
                     radarState.proposal.options?.map((opt, i) => (
-                      <AnimatedPressable 
+                      <InteractiveCard 
                         key={i} 
                         style={s.btnResolve} 
                         onPress={() => handleResolve(opt)}
@@ -236,26 +110,24 @@ export default function RadarScreen() {
                         accessibilityLabel={`Resolve by choosing ${opt}`}
                       >
                         <Text style={s.btnResolveText}>{opt}</Text>
-                      </AnimatedPressable>
+                      </InteractiveCard>
                     ))
                   )}
-                  <AnimatedPressable 
+                  <InteractiveCard 
                     style={s.btnDiscuss} 
                     onPress={handleDiscuss}
                     accessibilityRole="button"
                     accessibilityLabel="Discuss this gap"
                   >
                     <Text style={s.btnDiscussText}>Discuss</Text>
-                  </AnimatedPressable>
+                  </InteractiveCard>
                 </View>
               </View>
             )}
 
-            {/* Moment of Doubt Pro Anchor */}
-            <Pressable 
+            <InteractiveCard 
               style={s.momentOfDoubtBox}
               onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                 router.push({
                   pathname: '/paywall',
                   params: { 
@@ -271,10 +143,10 @@ export default function RadarScreen() {
               <Text style={s.momentOfDoubtText}>
                 Free forever: drift detection. <Text style={s.momentOfDoubtLink}>Preserve this evidence trail in Pro →</Text>
               </Text>
-            </Pressable>
+            </InteractiveCard>
 
           </View>
-        </View>
+        </Animated.View>
       )}
     </View>
   );
@@ -282,22 +154,19 @@ export default function RadarScreen() {
 
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: color.bg, padding: space.xl, justifyContent: 'center', alignItems: 'center' },
-  topBar: { position: 'absolute', top: space.xl, left: space.xl, right: space.xl, flexDirection: 'row', justifyContent: 'center' },
+  topBar: { position: 'absolute', top: Platform.OS === 'ios' ? 60 : 40, left: space.xl, right: space.xl, flexDirection: 'row', justifyContent: 'center', zIndex: 10 },
   projectName: { ...type.label, color: color.textSecondary, letterSpacing: 1 },
   
-  statusCenter: { alignItems: 'center', paddingHorizontal: space.xl },
-  statusTitle: { ...type.display, color: color.text, marginBottom: space.sm, letterSpacing: 4, fontFamily: 'Orbitron', fontSize: 40 },
+  statusCenter: { alignItems: 'center', paddingHorizontal: space.xl, position: 'absolute', zIndex: 5 },
+  statusTitle: { ...type.display, color: color.text, marginBottom: space.sm, letterSpacing: 4, fontFamily: 'Orbitron', fontSize: 32 },
   statusBody: { ...type.body, color: color.textSecondary, textAlign: 'center' },
 
-  radarCenter: { width: '100%', maxWidth: 500, alignSelf: 'center' },
+  radarCenter: { width: '100%', maxWidth: 500, alignSelf: 'center', position: 'absolute', bottom: Platform.OS === 'ios' ? 120 : 100, zIndex: 20 },
   radarTitle: { ...type.risk, color: color.risk, marginBottom: space.lg, letterSpacing: 1, textAlign: 'center' },
   
   radarCard: { backgroundColor: color.glass, borderWidth: 1, borderColor: color.riskLine, borderRadius: radius.xl, padding: space.xl, width: '100%', shadowColor: color.risk, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 20 },
   gapTopic: { ...type.meta, color: color.textSecondary, marginBottom: space.md, textTransform: 'uppercase', letterSpacing: 1, fontFamily: 'Orbitron' },
   gapBody: { ...type.body, color: color.risk, marginBottom: space.md },
-  
-  evidenceToggle: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', paddingVertical: space.sm, marginBottom: space.sm, gap: 4 },
-  evidenceToggleText: { ...type.meta, color: color.accent },
   
   evidenceList: { marginBottom: space.xl, gap: space.md, backgroundColor: 'transparent', padding: space.md, borderRadius: radius.sm, borderWidth: 1, borderColor: color.lineStrong },
   evidenceRow: { flexDirection: 'row', alignItems: 'flex-start', gap: space.md, paddingBottom: space.md, borderBottomWidth: 1, borderColor: color.line },
@@ -319,15 +188,4 @@ const s = StyleSheet.create({
   momentOfDoubtBox: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginTop: space.lg, paddingTop: space.md, borderTopWidth: 1, borderColor: color.lineStrong },
   momentOfDoubtText: { ...type.meta, color: color.textSecondary, fontSize: 11, flex: 1 },
   momentOfDoubtLink: { color: color.caution, fontWeight: '700' },
-
-  lessonCard: { backgroundColor: color.glass, borderWidth: 1, borderColor: color.joinLine, borderRadius: radius.xl, padding: space.xl, width: '100%', shadowColor: color.join, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 20 },
-  lessonHeaderRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginBottom: space.md },
-  lessonTitle: { ...type.meta, color: color.join, fontWeight: '700', letterSpacing: 1, fontFamily: 'Orbitron' },
-  lessonCommitment: { ...type.body, color: color.text, marginBottom: space.lg },
-  lessonBox: { backgroundColor: 'transparent', padding: space.md, borderRadius: radius.sm, borderWidth: 1, borderColor: color.lineStrong, marginBottom: space.xl },
-  lessonLabel: { ...type.meta, color: color.textSecondary, marginBottom: 4 },
-  lessonText: { ...type.body, color: color.text, fontStyle: 'italic' },
-  
-  btnContinue: { backgroundColor: color.join, paddingHorizontal: space.lg, paddingVertical: space.md, borderRadius: radius.pill, alignItems: 'center', alignSelf: 'stretch' },
-  btnContinueText: { ...type.button, color: color.bgElevated }
 });

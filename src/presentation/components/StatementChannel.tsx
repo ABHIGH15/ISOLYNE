@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, Pressable, ActivityIndicator, KeyboardAvoidingView, Platform, Animated, ScrollView } from 'react-native';
+import { View, TextInput, Text, StyleSheet, Pressable, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { BlurView } from 'expo-blur';
 import { color, space, type, radius } from '../theme/tokens';
 import { useKernel } from '../state/KernelContext';
 import { interpretStatement } from '../../services/llmParser';
 import { TimelineChoice, formatChoice } from '../../kernel/domain/Timeline';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 type CandidateSignal = {
   topic: string;
@@ -94,11 +95,12 @@ export function StatementChannel() {
 
   return (
     <KeyboardAvoidingView 
-      style={s.container} 
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+      style={s.container}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
     >
-      <BlurView intensity={80} tint="dark" style={s.inputContainer}>
+      <Animated.View entering={FadeInDown.duration(800).delay(300)}>
+        <BlurView intensity={80} tint="dark" style={s.inputContainer}>
         {isReceiving && (
           <View style={s.incomingToast}>
             <View style={s.avatarPill}>
@@ -211,6 +213,7 @@ export function StatementChannel() {
           </>
         )}
       </BlurView>
+      </Animated.View>
     </KeyboardAvoidingView>
   );
 }
@@ -248,7 +251,7 @@ const s = StyleSheet.create({
   actorPillText: { ...type.meta, color: color.textSecondary },
   actorPillTextActive: { color: color.accent, fontWeight: '700' },
 
-  inputContainer: { padding: space.xl, paddingTop: space.lg, backgroundColor: 'transparent' },
+  inputContainer: { padding: space.xl, paddingTop: space.lg, paddingBottom: Platform.OS === 'ios' ? 120 : 100, backgroundColor: 'transparent' },
   statusRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginBottom: space.md },
   statusText: { ...type.meta, color: color.accent },
 

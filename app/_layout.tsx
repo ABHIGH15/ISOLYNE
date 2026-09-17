@@ -1,23 +1,47 @@
 import { useFonts, Orbitron_800ExtraBold } from '@expo-google-fonts/orbitron';
 import { useEffect } from 'react';
-import { Stack, router } from 'expo-router';
+import { Stack, router, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, Pressable, Text, StyleSheet } from 'react-native';
-import { color, space, type } from '../src/presentation/theme/tokens';
+import { View, Pressable, Text, StyleSheet, Platform } from 'react-native';
+import { BlurView } from 'expo-blur';
+import { color, space, type, radius } from '../src/presentation/theme/tokens';
 import { KernelProvider } from '../src/presentation/state/KernelContext';
 import { initPurchases } from '../src/services/purchases';
 import { OnboardingModal } from '../src/presentation/components/OnboardingModal';
+import * as Haptics from 'expo-haptics';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
-// Minimal v3 navigation wrapper
-function TopNav() {
+function GlassNav() {
+  const pathname = usePathname();
+  
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Radar', path: '/radar' },
+    { name: 'Timeline', path: '/timeline' },
+    { name: 'Decisions', path: '/decisions' },
+    { name: 'Projects', path: '/projects' },
+  ];
+
   return (
-    <View style={s.nav}>
-      <Pressable onPress={() => router.replace('/')}><Text style={s.navLink}>Home</Text></Pressable>
-      <Pressable onPress={() => router.replace('/projects')}><Text style={s.navLink}>Projects</Text></Pressable>
-      <Pressable onPress={() => router.replace('/decisions')}><Text style={s.navLink}>Decisions</Text></Pressable>
-      <Pressable onPress={() => router.replace('/radar')}><Text style={s.navLink}>Radar</Text></Pressable>
-      <Pressable onPress={() => router.replace('/timeline')}><Text style={s.navLink}>Timeline</Text></Pressable>
-    </View>
+    <Animated.View entering={FadeInDown.duration(800).delay(200)} style={s.navContainer}>
+      <BlurView intensity={80} tint="dark" style={s.navBlur}>
+        {navItems.map((item) => {
+          const isActive = pathname === item.path;
+          return (
+            <Pressable 
+              key={item.path}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                router.replace(item.path as any);
+              }}
+              style={[s.navItem, isActive && s.navItemActive]}
+            >
+              <Text style={[s.navText, isActive && s.navTextActive]}>{item.name}</Text>
+            </Pressable>
+          );
+        })}
+      </BlurView>
+    </Animated.View>
   );
 }
 
@@ -34,14 +58,14 @@ export default function RootLayout() {
     <KernelProvider>
       <View style={s.root}>
         <StatusBar style="light" />
-        <TopNav />
         <Stack
           screenOptions={{
             headerShown: false,
             contentStyle: { backgroundColor: color.bg },
-            animation: 'none', // Snap transitions for raw utility feel
+            animation: 'fade', // Smooth crossfade transitions
           }}
         />
+        <GlassNav />
         <OnboardingModal />
       </View>
     </KernelProvider>
@@ -50,14 +74,40 @@ export default function RootLayout() {
 
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: color.bg },
-  nav: { 
-    flexDirection: 'row', 
-    gap: space.lg, 
-    paddingHorizontal: space.xl, 
-    paddingTop: space.heroAir, 
-    paddingBottom: space.md,
-    borderBottomWidth: 1,
-    borderColor: color.line
+  navContainer: {
+    position: 'absolute',
+    bottom: Platform.OS === 'ios' ? 40 : 20,
+    alignSelf: 'center',
+    borderRadius: radius.pill,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.5,
+    shadowRadius: 20,
+    elevation: 10,
   },
-  navLink: { ...type.meta, color: color.accent }
+  navBlur: {
+    flexDirection: 'row',
+    padding: 6,
+    gap: 4,
+  },
+  navItem: {
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: radius.pill,
+  },
+  navItemActive: {
+    backgroundColor: 'rgba(255,255,255,0.15)',
+  },
+  navText: {
+    ...type.meta,
+    color: color.textMuted,
+    fontSize: 12,
+  },
+  navTextActive: {
+    color: color.text,
+    fontWeight: '700',
+  }
 });

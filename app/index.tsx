@@ -1,22 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
-import * as Haptics from 'expo-haptics';
-import { LinearGradient } from 'expo-linear-gradient';
-import { color, space, type, radius } from '../src/presentation/theme/tokens';
+import { View, Text, StyleSheet, ScrollView, Pressable, Platform } from 'react-native';
 import { useKernel } from '../src/presentation/state/KernelContext';
+import { color, space, type, radius } from '../src/presentation/theme/tokens';
+import { Feather } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { InteractiveCard } from '../src/presentation/components/InteractiveCard';
+import Animated, { FadeInUp } from 'react-native-reanimated';
 
-export default function ProjectHomeScreen() {
+export default function HomeScreen() {
   const router = useRouter();
-  const { radarState, roster, userName, simulateIncomingBob, isReceiving, activeProject, decisions, timelineEvents } = useKernel();
-  const [guideDismissed, setGuideDismissed] = React.useState(false);
-
-  const handleSimulateConflict = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    simulateIncomingBob('Database', 'MongoDB', `Let's use Mongo for the prototype database.`);
-  };
-
+  const { radarState, roster, userName, decisions, timelineEvents } = useKernel();
+  
   return (
     <View style={s.root}>
       {/* HUD Backdrop */}
@@ -27,101 +21,73 @@ export default function ProjectHomeScreen() {
         end={{ x: 0, y: 0.4 }}
       />
       
-      <ScrollView style={s.scroll} contentContainerStyle={s.content}>
+      <ScrollView style={s.scroll} contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
         
-        <View style={s.header}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-            <View style={{ flex: 1 }}>
-              <Text style={s.title}>{activeProject?.name || 'Shipaton 2026'}</Text>
-              <Text style={s.subtitle}>MISSION CONTROL</Text>
-            </View>
-            <Pressable 
-              style={s.projectsPill} 
-              onPress={() => router.push('/projects')}
-              hitSlop={8}
-            >
-              <Feather name="folder" size={13} color={color.accent} />
-              <Text style={s.projectsPillText}>Projects</Text>
-            </Pressable>
-          </View>
+      <Animated.View entering={FadeInUp.duration(600).delay(100).springify()} style={s.header}>
+        <View style={s.projectsPill}>
+          <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: color.join }} />
+          <Text style={s.projectsPillText}>Project: ISOLYNE</Text>
         </View>
+        <Text style={s.title}>MISSION CONTROL</Text>
+        <Text style={s.subtitle}>Zero Double-Logging Sync Engine</Text>
+      </Animated.View>
 
-      {/* §3.5 Guided First-Decision Walkthrough */}
-      {!guideDismissed && (
-        <View style={s.guideCard}>
+      {/* Guide section */}
+      {decisions.length === 0 && (
+        <Animated.View entering={FadeInUp.duration(600).delay(150).springify()} style={s.guideCard}>
           <View style={s.guideHeader}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Feather name="compass" size={18} color={color.accent} />
-              <Text style={s.guideTitle}>Guided First Run · Experience the Catch</Text>
-            </View>
-            <Pressable onPress={() => setGuideDismissed(true)} hitSlop={8}>
-              <Feather name="x" size={16} color={color.textMuted} />
-            </Pressable>
+            <Text style={s.guideTitle}>INITIALIZATION PROTOCOL</Text>
+            <Feather name="info" size={16} color={color.accent} />
           </View>
           <Text style={s.guideBody}>
-            Isolyne watches for silent misalignment across your team. Try the 3-step loop:
+            Isolyne analyzes your team's intent in the background. Complete the following to establish a sync baseline.
           </Text>
-
+          
           <View style={s.guideSteps}>
             <View style={s.guideStepRow}>
               <View style={s.stepNum}><Text style={s.stepNumText}>1</Text></View>
-              <View style={{ flex: 1 }}>
-                <Text style={s.stepHeading}>Log an assumption</Text>
-                <Text style={s.stepDesc}>State what you are building in plain English.</Text>
-                <Pressable style={s.stepActionBtn} onPress={() => router.push('/decisions')}>
-                  <Text style={s.stepActionBtnText}>Go to Decisions Channel →</Text>
-                </Pressable>
+              <View style={{flex: 1}}>
+                <Text style={s.stepHeading}>Log a Technical Decision</Text>
+                <Text style={s.stepDesc}>State a fact about your stack or architecture.</Text>
+                <InteractiveCard style={s.stepActionBtn} onPress={() => router.push('/decisions')}>
+                  <Text style={s.stepActionBtnText}>Open Terminal →</Text>
+                </InteractiveCard>
               </View>
             </View>
-
             <View style={s.guideStepRow}>
               <View style={s.stepNum}><Text style={s.stepNumText}>2</Text></View>
-              <View style={{ flex: 1 }}>
-                <Text style={s.stepHeading}>Simulate teammate disagreement</Text>
-                <Text style={s.stepDesc}>Trigger an incoming teammate decision on the same topic.</Text>
-                <Pressable 
-                  style={[s.stepActionBtn, isReceiving && { opacity: 0.5 }]} 
-                  onPress={handleSimulateConflict}
-                  disabled={isReceiving}
-                >
-                  <Feather name="zap" size={14} color={color.error} />
-                  <Text style={[s.stepActionBtnText, { color: color.error }]}>
-                    {isReceiving ? 'Simulating incoming...' : 'Trigger Teammate Conflict'}
-                  </Text>
-                </Pressable>
-              </View>
-            </View>
-
-            <View style={s.guideStepRow}>
-              <View style={s.stepNum}><Text style={s.stepNumText}>3</Text></View>
-              <View style={{ flex: 1 }}>
-                <Text style={s.stepHeading}>Watch the Radar catch it</Text>
-                <Text style={s.stepDesc}>Inspect the verbatim evidence and align in one tap.</Text>
-                <Pressable style={s.stepActionBtn} onPress={() => router.push('/radar')}>
-                  <Text style={s.stepActionBtnText}>View Radar Status →</Text>
-                </Pressable>
+              <View style={{flex: 1}}>
+                <Text style={s.stepHeading}>Invite a Teammate</Text>
+                <Text style={s.stepDesc}>Add a second perspective to form a reality consensus.</Text>
+                <InteractiveCard style={s.stepActionBtn} onPress={() => router.push('/team')}>
+                  <Text style={s.stepActionBtnText}>Manage Roster →</Text>
+                </InteractiveCard>
               </View>
             </View>
           </View>
-        </View>
+        </Animated.View>
       )}
 
-      <View style={s.statusWidget}>
+      <Animated.View entering={FadeInUp.duration(600).delay(200).springify()} style={s.statusWidget}>
         <View style={s.statusHeader}>
-          <Text style={s.widgetTitle}>Radar Status</Text>
+          <Text style={s.widgetTitle}>System Alignment</Text>
           <View style={[s.badge, radarState.status === 'clear' ? s.badgeClear : s.badgeAlert]}>
-            <Text style={s.badgeText}>{radarState.status === 'clear' ? 'ALL CLEAR' : 'DRIFT DETECTED'}</Text>
+            <Text style={s.badgeText}>
+              {radarState.status === 'clear' ? 'ALL CLEAR' : 'DRIFT DETECTED'}
+            </Text>
           </View>
         </View>
+        
         <Text style={s.widgetDesc}>
           {radarState.status === 'clear' 
-            ? "Your team's shared reality is perfectly aligned." 
-            : radarState.gap?.title || "A silent divergence needs your attention."}
+            ? "Your team is fully aligned. All structural constraints match across branches."
+            : `A gap was detected in ${radarState.gap?.topic}. Immediate resolution required to unblock sync.`}
         </Text>
-        <Pressable style={s.widgetBtn} onPress={() => router.push('/radar')}>
+
+        <InteractiveCard style={s.widgetBtn} onPress={() => router.push('/radar')}>
           <Text style={s.widgetBtnText}>Open Radar</Text>
           <Feather name="arrow-right" size={16} color={color.textOnAccent} />
-        </Pressable>
+        </InteractiveCard>
 
         <View style={s.statsRow}>
           <Text style={s.statsText}>
@@ -131,35 +97,33 @@ export default function ProjectHomeScreen() {
             Team alignment: <Text style={{ fontWeight: '700', color: radarState.status === 'clear' ? color.join : color.risk }}>{radarState.status === 'clear' ? '100%' : 'Drifting'}</Text>
           </Text>
         </View>
-      </View>
+      </Animated.View>
 
-      <View style={s.grid}>
-        
-        <Pressable style={s.gridCard} onPress={() => router.push('/decisions')}>
+      <Animated.View entering={FadeInUp.duration(600).delay(300).springify()} style={s.grid}>
+        <InteractiveCard style={s.gridCard} onPress={() => router.push('/decisions')}>
           <Feather name="message-square" size={24} color={color.accent} style={s.cardIcon} />
           <Text style={s.cardTitle}>Decisions</Text>
           <Text style={s.cardDesc}>Log assumptions and choices in natural language.</Text>
-        </Pressable>
+        </InteractiveCard>
         
-        <Pressable style={s.gridCard} onPress={() => router.push('/timeline')}>
+        <InteractiveCard style={s.gridCard} onPress={() => router.push('/timeline')}>
           <Feather name="clock" size={24} color={color.accent} style={s.cardIcon} />
           <Text style={s.cardTitle}>Timeline</Text>
           <Text style={s.cardDesc}>The shared history of how we built this.</Text>
-        </Pressable>
+        </InteractiveCard>
+      </Animated.View>
 
-      </View>
-
-      <View style={s.rosterWidget}>
+      <Animated.View entering={FadeInUp.duration(600).delay(400).springify()} style={s.rosterWidget}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={s.widgetTitle}>Active Roster</Text>
-          <Pressable 
+          <InteractiveCard 
             onPress={() => router.push('/team')}
             hitSlop={8}
             accessibilityRole="button"
             accessibilityLabel="Manage Team"
           >
             <Text style={s.manageTeamLink}>Manage Team →</Text>
-          </Pressable>
+          </InteractiveCard>
         </View>
         <Text style={s.rosterCount}>{roster.length} Members</Text>
         <View style={s.rosterList}>
@@ -172,18 +136,20 @@ export default function ProjectHomeScreen() {
             </View>
           ))}
         </View>
-      </View>
+      </Animated.View>
 
-      <View style={s.proWidget}>
+      <Animated.View entering={FadeInUp.duration(600).delay(500).springify()} style={s.proWidget}>
          <Feather name="unlock" size={16} color={color.caution} />
          <View style={{flex: 1}}>
            <Text style={s.proTitle}>Upgrade to Isolyne Pro</Text>
            <Text style={s.proDesc}>Unlock your full collaboration history — because knowing how you shipped is as valuable as what you shipped.</Text>
          </View>
-         <Pressable style={s.proBtn} onPress={() => router.push('/paywall')}>
+         <InteractiveCard style={s.proBtn} onPress={() => router.push('/paywall')}>
            <Text style={s.proBtnText}>Upgrade</Text>
-         </Pressable>
-      </View>
+         </InteractiveCard>
+      </Animated.View>
+
+      <View style={{ height: 100 }} />
 
       </ScrollView>
     </View>
@@ -220,7 +186,7 @@ const s = StyleSheet.create({
   badge: { paddingHorizontal: space.sm, paddingVertical: 4, borderRadius: radius.pill },
   badgeClear: { backgroundColor: color.joinSoft },
   badgeAlert: { backgroundColor: color.riskSoft },
-  badgeText: { ...type.label, color: color.text },
+  badgeText: { ...type.label, color: color.text, fontWeight: '700' },
   widgetDesc: { ...type.body, color: color.textSecondary, marginBottom: space.lg },
   widgetBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: space.sm, backgroundColor: color.text, paddingVertical: space.md, borderRadius: radius.pill },
   widgetBtnText: { ...type.button, color: color.bg },
