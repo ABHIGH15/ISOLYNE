@@ -43,11 +43,11 @@ export class WebSocketSyncAdapter implements SyncAdapter {
       };
 
       this.ws.onerror = (e) => {
-        console.warn('[SYNC] WebSocket error:', e);
+        console.debug('[SYNC] WebSocket error:', e);
         // Will close and trigger reconnect automatically
       };
     } catch (err) {
-      console.warn('[SYNC] Error creating WebSocket', err);
+      console.debug('[SYNC] Error creating WebSocket', err);
       this.scheduleReconnect();
     }
   }
@@ -72,10 +72,10 @@ export class WebSocketSyncAdapter implements SyncAdapter {
       try {
         this.ws.send(JSON.stringify(signal));
       } catch (err) {
-        console.warn('[SYNC] Failed to send signal', err);
+        console.debug('[SYNC] Failed to send signal', err);
       }
     } else {
-      console.warn('[SYNC] Cannot send signal, WebSocket is not OPEN');
+      console.debug('[SYNC] Cannot send signal, WebSocket is not OPEN');
     }
   }
 
