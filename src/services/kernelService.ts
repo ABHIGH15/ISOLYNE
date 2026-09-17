@@ -34,8 +34,8 @@ inMemorySignalRepo.save = async (signal: Signal) => {
 
 // Initialize WebSocket Sync
 import { Platform } from 'react-native';
-const wsHost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
-const wsUrl = process.env.EXPO_PUBLIC_SYNC_URL || `ws://${wsHost}:8080`;
+const wsHost = process.env.EXPO_PUBLIC_SYNC_HOST || '10.31.24.102';
+const wsUrl = `ws://${wsHost}:3000`;
 export const syncAdapter = new WebSocketSyncAdapter(wsUrl);
 
 // Wrap base repo with Sync repo
