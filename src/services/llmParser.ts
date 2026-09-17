@@ -41,7 +41,8 @@ async function fetchWithRetry(url: string, options: any, maxRetries = 2): Promis
   let attempt = 0;
   while (attempt <= maxRetries) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    const timeoutId = setTimeout(() => controller.abort(), 2000); // Fast timeout for flawless live demos
+
     
     try {
       const res = await fetch(url, { ...options, signal: controller.signal });
