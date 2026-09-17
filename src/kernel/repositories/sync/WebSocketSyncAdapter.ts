@@ -33,7 +33,7 @@ export class WebSocketSyncAdapter implements SyncAdapter {
             this.callback(signal);
           }
         } catch (err) {
-          console.warn('[SYNC] Failed to parse incoming signal', err);
+          console.debug('[SYNC] Failed to parse incoming signal', err);
         }
       };
 

@@ -227,7 +227,7 @@ export async function getIsolyneProOffering(): Promise<PurchasesOffering | null>
     }
     return getPreviewOffering();
   } catch (err) {
-    console.warn('Failed to fetch RevenueCat offerings, using preview offering:', err);
+    console.debug('Failed to fetch RevenueCat offerings, using preview offering:', err);
     return getPreviewOffering();
   }
 }
@@ -338,7 +338,7 @@ export async function presentCustomerCenter(callbacks?: any): Promise<{ ok: bool
       return { ok: true, preview: false };
     }
   } catch (e) {
-    console.warn('Failed to present native Customer Center:', e);
+    console.debug('Failed to present native Customer Center:', e);
   }
   return { ok: true, preview: true };
 }

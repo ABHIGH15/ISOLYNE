@@ -59,7 +59,7 @@ export function StatementChannel() {
         });
       }
     } catch (err) {
-      console.warn(err);
+      console.debug(err);
       setParseError("Something went wrong interpreting that.");
     } finally {
       setInferencePhase('idle');

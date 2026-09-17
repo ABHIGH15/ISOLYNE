@@ -96,7 +96,7 @@ export async function executeGeminiBenchmarkCall(
 ): Promise<LLMCallInspection> {
   const apiKey = process.env.EXPO_PUBLIC_GEMINI_API_KEY;
   if (!apiKey) {
-    console.warn("No EXPO_PUBLIC_GEMINI_API_KEY found. Falling back to keyword parser.");
+    console.debug("No EXPO_PUBLIC_GEMINI_API_KEY found. Falling back to keyword parser.");
     return {
       provider: 'gemini',
       latencyMs: 0,
@@ -167,7 +167,7 @@ Statement: "${sanitizedInput}"`;
     
     // Check for safety blocks
     if (data.promptFeedback?.blockReason || data.candidates?.[0]?.finishReason === 'SAFETY' || data.candidates?.[0]?.finishReason === 'RECITATION' || data.candidates?.[0]?.finishReason === 'BLOCKLIST') {
-      console.warn("LLM prompt blocked for safety");
+      console.debug("LLM prompt blocked for safety");
       return {
         provider: 'gemini',
         latencyMs,
@@ -223,7 +223,7 @@ Statement: "${sanitizedInput}"`;
     };
   } catch (err: any) {
     const latencyMs = Math.round(performance.now() - start);
-    console.warn("LLM Parsing failed, falling back.", err);
+    console.debug("LLM Parsing failed, falling back.", err);
     return {
       provider: 'gemini',
       latencyMs,
@@ -247,7 +247,7 @@ export async function executeGroqBenchmarkCall(
 ): Promise<LLMCallInspection> {
   const apiKey = process.env.EXPO_PUBLIC_GROQ_API_KEY;
   if (!apiKey) {
-    console.warn("No EXPO_PUBLIC_GROQ_API_KEY found. Falling back to keyword parser.");
+    console.debug("No EXPO_PUBLIC_GROQ_API_KEY found. Falling back to keyword parser.");
     return {
       provider: 'groq',
       latencyMs: 0,
@@ -338,7 +338,7 @@ Statement: "${sanitizedInput}"`;
     };
   } catch (err: any) {
     const latencyMs = Math.round(performance.now() - start);
-    console.warn("Groq Parsing failed, falling back.", err);
+    console.debug("Groq Parsing failed, falling back.", err);
     return {
       provider: 'groq',
       latencyMs,

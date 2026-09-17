@@ -51,7 +51,7 @@ export async function initializeKernelStorage(): Promise<void> {
       inMemorySignalRepo['signals'] = signals;
     }
   } catch (e) {
-    console.warn("Failed to load signals from AsyncStorage", e);
+    console.debug("Failed to load signals from AsyncStorage", e);
   }
 }
 

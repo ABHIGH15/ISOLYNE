@@ -37,7 +37,7 @@ export default function ProjectsScreen() {
       }
       setProjectStatuses(statuses);
     } catch (e) {
-      console.warn('Failed to load project statuses', e);
+      console.debug('Failed to load project statuses', e);
     } finally {
       setLoadingStatuses(false);
     }

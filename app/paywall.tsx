@@ -38,7 +38,7 @@ export default function PaywallScreen() {
         const pkgs = await getIsolyneProPackages();
         setPackages(pkgs);
       } catch (err) {
-        console.warn('Error loading packages:', err);
+        console.debug('Error loading packages:', err);
       } finally {
         setLoading(false);
       }
