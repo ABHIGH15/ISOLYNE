@@ -9,22 +9,22 @@ import { KernelProvider } from '../src/presentation/state/KernelContext';
 import { initPurchases } from '../src/services/purchases';
 import { OnboardingModal } from '../src/presentation/components/OnboardingModal';
 import * as Haptics from 'expo-haptics';
-import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 function GlassNav() {
   const pathname = usePathname();
   
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Radar', path: '/radar' },
-    { name: 'Timeline', path: '/timeline' },
-    { name: 'Decisions', path: '/decisions' },
-    { name: 'Projects', path: '/projects' },
+    { name: 'SYS', path: '/' },
+    { name: 'RDR', path: '/radar' },
+    { name: 'TML', path: '/timeline' },
+    { name: 'LOG', path: '/decisions' },
+    { name: 'NET', path: '/projects' },
   ];
 
   return (
     <Animated.View entering={FadeInDown.duration(800).delay(200)} style={s.navContainer}>
-      <BlurView intensity={80} tint="dark" style={s.navBlur}>
+      <BlurView intensity={90} tint="dark" style={s.navBlur}>
         {navItems.map((item) => {
           const isActive = pathname === item.path;
           return (
@@ -61,7 +61,7 @@ export default function RootLayout() {
         <Stack
           screenOptions={{
             headerShown: false,
-            contentStyle: { backgroundColor: color.bg },
+            contentStyle: { backgroundColor: '#050505' },
             animation: 'fade', // Smooth crossfade transitions
           }}
         />
@@ -73,41 +73,36 @@ export default function RootLayout() {
 }
 
 const s = StyleSheet.create({
-  root: { flex: 1, backgroundColor: color.bg },
+  root: { flex: 1, backgroundColor: '#050505' },
   navContainer: {
     position: 'absolute',
     bottom: Platform.OS === 'ios' ? 40 : 20,
     alignSelf: 'center',
-    borderRadius: radius.pill,
+    borderRadius: 2,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.5,
-    shadowRadius: 20,
-    elevation: 10,
+    borderColor: 'rgba(255,255,255,0.15)',
   },
   navBlur: {
     flexDirection: 'row',
-    padding: 6,
-    gap: 4,
+    padding: 2,
+    gap: 2,
   },
   navItem: {
     paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: radius.pill,
+    paddingVertical: 12,
   },
   navItemActive: {
-    backgroundColor: 'rgba(255,255,255,0.15)',
+    backgroundColor: 'rgba(255,255,255,0.1)',
   },
   navText: {
     ...type.meta,
     color: color.textMuted,
-    fontSize: 12,
+    fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+    fontSize: 10,
+    letterSpacing: 2,
   },
   navTextActive: {
     color: color.text,
-    fontWeight: '700',
   }
 });

@@ -22,28 +22,24 @@ export default function DecisionsScreen() {
   return (
     <View style={s.root}>
       <LinearGradient
-        colors={[color.bgElevated, color.bg]}
+        colors={['transparent', color.bg, color.bg]}
         style={StyleSheet.absoluteFill}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 0.4 }}
+        locations={[0, 0.4, 1]}
       />
       
-      {/* Floating Header */}
+      {/* Brutalist Header */}
       <BlurView intensity={90} tint="dark" style={s.header}>
-        <Animated.View entering={FadeIn.duration(500)} style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 40 : 20 }}>
-          <Text style={s.title}>Decisions</Text>
-          <Text style={s.subtitle}>What does the team currently believe?</Text>
+        <Animated.View entering={FadeIn.duration(500)} style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 50 : 30 }}>
+          <Text style={s.title}>[01] DECISION LOG</Text>
+          <Text style={s.subtitle}>// WHAT DOES THE TEAM BELIEVE?</Text>
         </Animated.View>
       </BlurView>
 
       <ScrollView style={s.recordList} contentContainerStyle={s.recordListContent} showsVerticalScrollIndicator={false}>
         {topics.length === 0 ? (
           <Animated.View entering={FadeInUp.duration(600).delay(200)} style={s.emptyState}>
-            <View style={s.emptyIconCircle}>
-              <Feather name="folder" size={24} color={color.textSecondary} />
-            </View>
-            <Text style={s.emptyTitle}>No Assumptions Yet</Text>
-            <Text style={s.emptyDesc}>Use the channel below to state what you are working on. Isolyne builds a shared record from natural conversation.</Text>
+            <Text style={s.emptyTitle}>NO DATA</Text>
+            <Text style={s.emptyDesc}>Use the terminal below to log assumptions.</Text>
           </Animated.View>
         ) : (
           topics.map((topic, index) => {
@@ -63,14 +59,12 @@ export default function DecisionsScreen() {
 
                 {topicDecisions.map(d => (
                   <View key={d.id} style={s.decisionRow}>
-                    <View style={s.decisionInfo}>
-                      <Text style={[s.decisionChoice, isDisputed && s.decisionChoiceDisputed]}>
-                        {d.choice}
-                      </Text>
-                      <Text style={s.decisionActor}>
-                        {d.isTeamCommitment ? 'Team commitment' : d.actorId}
-                      </Text>
-                    </View>
+                    <Text style={s.decisionActor}>
+                      [{d.isTeamCommitment ? 'SYSTEM' : d.actorId}]
+                    </Text>
+                    <Text style={[s.decisionChoice, isDisputed && s.decisionChoiceDisputed]}>
+                      {d.choice}
+                    </Text>
                   </View>
                 ))}
               </Animated.View>
@@ -85,38 +79,36 @@ export default function DecisionsScreen() {
 }
 
 const s = StyleSheet.create({
-  root: { flex: 1, backgroundColor: color.bg },
+  root: { flex: 1, backgroundColor: '#050505' },
   header: {
     padding: space.xl,
     paddingBottom: space.md,
     borderBottomWidth: 1,
-    borderColor: 'rgba(255,255,255,0.05)',
+    borderColor: 'rgba(255,255,255,0.1)',
     position: 'absolute',
     top: 0, left: 0, right: 0,
     zIndex: 100
   },
-  title: { ...type.display, color: color.text, marginBottom: 2, fontFamily: 'Orbitron' },
-  subtitle: { ...type.body, color: color.textSecondary, fontSize: 13 },
+  title: { ...type.title, color: color.text, marginBottom: 4, fontFamily: 'Orbitron', fontSize: 24, letterSpacing: 2 },
+  subtitle: { ...type.meta, color: color.textSecondary, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 10, letterSpacing: 1 },
   
   recordList: { flex: 1 },
-  recordListContent: { padding: space.xl, paddingTop: 140, gap: space.xl, paddingBottom: 260 },
+  recordListContent: { padding: space.xl, paddingTop: 160, gap: space.xl, paddingBottom: 300 },
   
   emptyState: { flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 80, paddingHorizontal: space.xl },
-  emptyIconCircle: { width: 64, height: 64, borderRadius: 32, backgroundColor: color.glass, borderWidth: 1, borderColor: color.lineStrong, alignItems: 'center', justifyContent: 'center', marginBottom: space.lg },
-  emptyTitle: { ...type.title, color: color.text, marginBottom: space.sm, fontFamily: 'Orbitron' },
-  emptyDesc: { ...type.body, color: color.textMuted, textAlign: 'center' },
+  emptyTitle: { ...type.title, color: color.textMuted, marginBottom: space.sm, fontFamily: 'Orbitron', fontSize: 32 },
+  emptyDesc: { ...type.body, color: color.textMuted, textAlign: 'center', fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 12 },
   
-  topicCard: { paddingLeft: space.lg, borderLeftWidth: 2, borderColor: color.lineStrong, marginBottom: space.md },
-  topicCardDisputed: { borderColor: color.risk },
+  topicCard: { paddingVertical: space.md, borderBottomWidth: 1, borderColor: 'rgba(255,255,255,0.05)' },
+  topicCardDisputed: { borderColor: 'transparent' },
   
-  topicHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: space.md },
-  topicTitle: { ...type.label, color: color.textSecondary, textTransform: 'uppercase', letterSpacing: 1 },
+  topicHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: space.lg },
+  topicTitle: { ...type.label, color: color.textMuted, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 12, letterSpacing: 2 },
   topicTitleDisputed: { color: color.risk },
-  disputedBadge: { ...type.meta, color: color.risk, borderWidth: 1, borderColor: color.risk, paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4 },
+  disputedBadge: { ...type.meta, color: color.risk, borderWidth: 1, borderColor: color.risk, paddingHorizontal: 6, paddingVertical: 2, borderRadius: 2, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 10 },
 
-  decisionRow: { marginBottom: space.md },
-  decisionInfo: { flexDirection: 'column' },
-  decisionChoice: { ...type.bodyStrong, color: color.text, marginBottom: 2, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace' },
+  decisionRow: { marginBottom: space.md, flexDirection: 'row', alignItems: 'flex-start' },
+  decisionActor: { ...type.meta, color: color.textSecondary, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 11, width: 80, marginTop: 2 },
+  decisionChoice: { ...type.bodyStrong, color: color.text, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 14, flex: 1 },
   decisionChoiceDisputed: { color: color.risk },
-  decisionActor: { ...type.meta, color: color.textMuted }
 });

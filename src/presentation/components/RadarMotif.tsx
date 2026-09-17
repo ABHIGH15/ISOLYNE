@@ -15,7 +15,12 @@ import Animated, {
 } from 'react-native-reanimated';
 import { color } from '../theme/tokens';
 
-export function RadarMotif({ status }: { status: 'clear' | 'alert' | 'resolving' }) {
+interface Props {
+  status: 'clear' | 'alert' | 'resolving';
+  size?: number;
+}
+
+export function RadarMotif({ status, size = 200 }: Props) {
   const AnimatedPath = Animated.createAnimatedComponent(Path);
 
   const rotation = useSharedValue(0);
@@ -31,8 +36,6 @@ export function RadarMotif({ status }: { status: 'clear' | 'alert' | 'resolving'
       cancelAnimation(pulseOpacity);
       
       faultOpacity.value = withTiming(0, { duration: 600 });
-      
-      // Smooth reset transition
       coreScale.value = withSpring(1);
       
       rotation.value = withRepeat(
@@ -40,8 +43,8 @@ export function RadarMotif({ status }: { status: 'clear' | 'alert' | 'resolving'
           duration: 3000,
           easing: Easing.linear,
         }),
-        -1, // infinite
-        false // no reverse
+        -1,
+        false
       );
     } else if (status === 'resolving') {
       cancelAnimation(pulseScale);
@@ -50,11 +53,9 @@ export function RadarMotif({ status }: { status: 'clear' | 'alert' | 'resolving'
 
       pulseOpacity.value = withTiming(0, { duration: 300 });
 
-      // Healing fault lines (reverse)
       faultProgress.value = withTiming(1, { duration: 600, easing: Easing.inOut(Easing.cubic) });
       faultOpacity.value = withTiming(0, { duration: 600 });
 
-      // Celebration bounce
       coreScale.value = withSequence(
         withTiming(1.8, { duration: 200 }),
         withSpring(1)
@@ -62,18 +63,15 @@ export function RadarMotif({ status }: { status: 'clear' | 'alert' | 'resolving'
     } else {
       cancelAnimation(rotation);
       
-      // Climax transition: pop the core
       coreScale.value = withSequence(
         withTiming(1.5, { duration: 150 }),
         withSpring(1)
       );
 
-      // Fault line rupture
       faultProgress.value = 1;
       faultOpacity.value = 1;
       faultProgress.value = withTiming(0, { duration: 300, easing: Easing.out(Easing.cubic) });
 
-      // Violent pulse loop
       pulseScale.value = 0.5;
       pulseOpacity.value = 0.8;
       
@@ -115,114 +113,63 @@ export function RadarMotif({ status }: { status: 'clear' | 'alert' | 'resolving'
 
   const animatedFaultProps = useAnimatedProps(() => {
     return {
-      strokeDashoffset: faultProgress.value * 250,
+      strokeDashoffset: faultProgress.value * (size * 1.25),
       strokeOpacity: faultOpacity.value
     };
   }); 
 
   return (
-    <View style={[s.container, { shadowColor: motifColor, shadowRadius: 30, shadowOpacity: 0.3, shadowOffset: { width: 0, height: 0 } }]}>
+    <View style={[s.container, { width: size, height: size, shadowColor: motifColor, shadowRadius: size * 0.15, shadowOpacity: 0.3, shadowOffset: { width: 0, height: 0 } }]}>
       {/* Concentric rings */}
-      <View style={[s.ring, s.ring1, { borderColor: motifSoft }]} />
-      <View style={[s.ring, s.ring2, { borderColor: motifSoft }]} />
-      <View style={[s.ring, s.ring3, { borderColor: motifSoft }]} />
+      <View style={[{ position: 'absolute', borderWidth: 1.5, borderRadius: 999, borderColor: motifSoft, width: size * 0.4, height: size * 0.4 }]} />
+      <View style={[{ position: 'absolute', borderWidth: 1.5, borderRadius: 999, borderColor: motifSoft, width: size * 0.7, height: size * 0.7 }]} />
+      <View style={[{ position: 'absolute', borderWidth: 1.5, borderRadius: 999, borderColor: motifSoft, width: size, height: size }]} />
 
       {status === 'clear' && (
-        <Animated.View style={[s.sweepContainer, animatedSweepStyle]}>
+        <Animated.View style={[{ position: 'absolute', width: size, height: size, justifyContent: 'center', alignItems: 'center' }, animatedSweepStyle]}>
           <LinearGradient
             colors={[`${motifColor}80`, 'transparent']}
             start={{ x: 1, y: 1 }}
             end={{ x: 0, y: 0 }}
-            style={s.sweepGradient}
+            style={{ position: 'absolute', width: size * 0.5, height: size * 0.5, top: 0, right: size * 0.5, borderTopLeftRadius: size * 0.5 }}
           />
-          <View style={[s.sweepLine, { 
-            backgroundColor: motifColor, 
-            shadowColor: motifColor, 
-            shadowRadius: 15, 
-            shadowOpacity: 1, 
-            shadowOffset: { width: -5, height: 0 } 
-          }]} />
+          <View style={[{ position: 'absolute', width: 2, height: size * 0.5, top: 0, backgroundColor: motifColor, opacity: 0.9, shadowColor: motifColor, shadowRadius: 15, shadowOpacity: 1, shadowOffset: { width: -5, height: 0 } }]} />
         </Animated.View>
       )}
 
       {status === 'alert' && (
-        <Animated.View style={[s.pulse, { backgroundColor: motifColor }, animatedPulseStyle]} />
+        <Animated.View style={[{ position: 'absolute', width: size * 0.4, height: size * 0.4, borderRadius: size * 0.2, backgroundColor: motifColor }, animatedPulseStyle]} />
       )}
 
-      {/* Topographical Fault Line */}
-      <Svg height="200" width="200" style={StyleSheet.absoluteFill}>
+      <Svg height={size} width={size} style={StyleSheet.absoluteFill}>
         <AnimatedPath
-          d="M 100 100 L 125 115 L 120 145 L 155 160 L 150 185 L 195 200"
+          d={`M ${size/2} ${size/2} L ${size*0.625} ${size*0.575} L ${size*0.6} ${size*0.725} L ${size*0.775} ${size*0.8} L ${size*0.75} ${size*0.925} L ${size*0.975} ${size}`}
           stroke={color.risk}
           strokeWidth="3"
           fill="none"
-          strokeDasharray="250"
+          strokeDasharray={size * 1.25}
           animatedProps={animatedFaultProps}
         />
         <AnimatedPath
-          d="M 100 100 L 85 70 L 60 75 L 50 40 L 25 35 L 5 0"
+          d={`M ${size/2} ${size/2} L ${size*0.425} ${size*0.35} L ${size*0.3} ${size*0.375} L ${size*0.25} ${size*0.2} L ${size*0.125} ${size*0.175} L ${size*0.025} 0`}
           stroke={color.risk}
           strokeWidth="3"
           fill="none"
-          strokeDasharray="250"
+          strokeDasharray={size * 1.25}
           animatedProps={animatedFaultProps}
         />
       </Svg>
 
-      <Animated.View style={[s.core, { backgroundColor: motifColor }, animatedCoreStyle]} />
+      <Animated.View style={[{ width: size * 0.07, height: size * 0.07, borderRadius: size * 0.035, position: 'absolute', backgroundColor: motifColor }, animatedCoreStyle]} />
     </View>
   );
 }
 
 const s = StyleSheet.create({
   container: {
-    width: 200,
-    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
     marginVertical: 40,
-  },
-  ring: {
-    position: 'absolute',
-    borderWidth: 1.5,
-    borderRadius: 999,
-  },
-  ring1: { width: 80, height: 80 },
-  ring2: { width: 140, height: 140 },
-  ring3: { width: 200, height: 200 },
-  core: {
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    position: 'absolute',
-  },
-  pulse: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    position: 'absolute',
-  },
-  sweepContainer: {
-    position: 'absolute',
-    width: 200,
-    height: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  sweepGradient: {
-    position: 'absolute',
-    width: 100,
-    height: 100,
-    top: 0,
-    right: 100,
-    borderTopLeftRadius: 100,
-  },
-  sweepLine: {
-    position: 'absolute',
-    width: 2,
-    height: 100,
-    top: 0,
-    opacity: 0.9,
   }
 });
