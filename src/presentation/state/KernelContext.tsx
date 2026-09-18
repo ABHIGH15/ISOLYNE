@@ -54,7 +54,7 @@ export const KernelContext = createContext<KernelContextType | null>(null);
 
 export function KernelProvider({ children }: { children: ReactNode }) {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [activeProjectId, setActiveProjectId] = useState<string>(DEFAULT_PROJECT_ID);
+  const [activeProjectId, setActiveProjectId] = useState<string>('shipaton-live');
 
   const [radarState, setRadarState] = useState<RadarState>({ status: 'clear' });
   const [decisions, setDecisions] = useState<DecisionRecordView[]>([]);

@@ -6,7 +6,7 @@ import { Signal } from '../kernel/domain/Signal';
 export const PROJECTS_KEY = 'isolyne_projects_v1';
 export const ACTIVE_PROJECT_KEY = 'isolyne_active_project_v1';
 export const ROSTER_PREFIX = 'isolyne_roster_';
-export const DEFAULT_PROJECT_ID = 'shipaton-2026';
+export const DEFAULT_PROJECT_ID = 'shipaton-live';
 export const DEFAULT_PROJECT_NAME = 'Shipaton 2026';
 export const SIGNALS_KEY = 'isolyne-signals';
 

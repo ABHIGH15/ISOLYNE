@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let Purchases: any = null;
 let LOG_LEVEL: any = {};
@@ -88,6 +89,11 @@ function apiKey(): string | undefined {
  */
 export async function initPurchases(): Promise<void> {
   if (state.ready) return;
+
+  try {
+    const cachedDemo = await AsyncStorage.getItem('isolyne_pro_demo');
+    if (cachedDemo === 'true') state.demoUnlocked = true;
+  } catch {}
 
   const key = apiKey();
   if (!key || !Purchases) {
@@ -271,7 +277,12 @@ export async function purchasePackage(pkg: PurchasesPackage): Promise<{ ok: bool
   if (!state.ready) await initPurchases();
 
   if (state.previewMode || !Purchases) {
-    if (pkg.packageType === 'LIFETIME') state.exportUnlocked = true; else state.demoUnlocked = true;
+    if (pkg.packageType === 'LIFETIME') {
+      state.exportUnlocked = true;
+    } else {
+      state.demoUnlocked = true;
+      AsyncStorage.setItem('isolyne_pro_demo', 'true').catch(() => {});
+    }
     return { ok: true, preview: true };
   }
 
@@ -302,6 +313,9 @@ export async function restoreIsolynePro(): Promise<{ ok: boolean; preview: boole
   if (!state.ready) await initPurchases();
 
   if (state.previewMode || !Purchases) {
+    if (state.demoUnlocked) {
+      AsyncStorage.setItem('isolyne_pro_demo', 'true').catch(() => {});
+    }
     return {
       ok: state.demoUnlocked,
       preview: true,
