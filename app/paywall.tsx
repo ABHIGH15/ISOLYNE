@@ -49,7 +49,8 @@ export default function PaywallScreen() {
   const handlePurchase = async () => {
     const pkg = selectedType === 'annual' ? (packages.annual ?? packages.monthly) : (packages.monthly ?? packages.annual);
     if (!pkg) {
-      Alert.alert('Notice', 'No package selected.');
+      if (Platform.OS === 'web') window.alert('No package selected.');
+      else Alert.alert('Notice', 'No package selected.');
       return;
     }
 
@@ -60,11 +61,17 @@ export default function PaywallScreen() {
       const res = await purchasePackage(pkg);
       if (res.ok) {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        Alert.alert('Welcome to Isolyne Pro', 'Your collaboration timeline and export capabilities are unlocked.', [
-          { text: 'Continue', onPress: () => router.canGoBack() ? router.back() : router.replace('/') }
-        ]);
+        if (Platform.OS === 'web') {
+          window.alert('Welcome to Isolyne Pro!\nYour collaboration timeline and export capabilities are unlocked.');
+          router.canGoBack() ? router.back() : router.replace('/');
+        } else {
+          Alert.alert('Welcome to Isolyne Pro', 'Your collaboration timeline and export capabilities are unlocked.', [
+            { text: 'Continue', onPress: () => router.canGoBack() ? router.back() : router.replace('/') }
+          ]);
+        }
       } else if (res.message) {
-        Alert.alert('Purchase Notice', res.message);
+        if (Platform.OS === 'web') window.alert(res.message);
+        else Alert.alert('Purchase Notice', res.message);
       }
     } catch (err: any) {
       Alert.alert('Purchase Error', err.message || 'Something went wrong.');
@@ -142,7 +149,7 @@ export default function PaywallScreen() {
           )}
           <Text style={s.title}>{isMomentOfDoubt ? 'The Moment of Alignment' : 'Isolyne Pro'}</Text>
           <Text style={s.subtitle}>
-            Isolyne Pro isn't sold in a settings menu — it's offered the moment your team's Radar goes red, when the value of alignment is undeniable. Free forever: detection. Pro: the resolution history and evidence trail that prevents the next drift.
+            In the Free tier, you can only see the last 3 events in your timeline history, and exports are disabled. Upgrading to Pro un-blurs your entire cryptographic history and allows exporting proof-of-alignment reports.
           </Text>
         </View>
 
