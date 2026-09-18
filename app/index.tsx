@@ -65,13 +65,20 @@ export default function HomeScreen() {
       <ScrollView style={s.scroll} contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
         
         <Animated.View entering={FadeInDown.duration(800).delay(100)} style={s.header}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: space.md }}>
-             <View style={[s.liveIndicator, { backgroundColor: statusColor, shadowColor: statusColor }]} />
-             <Text style={{ fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', color: statusColor, fontSize: 12, letterSpacing: 1 }}>
-               SYS.OP.NORMAL
-             </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: space.md }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+               <View style={[s.liveIndicator, { backgroundColor: statusColor, shadowColor: statusColor }]} />
+               <Text style={{ fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', color: statusColor, fontSize: 12, letterSpacing: 1 }}>
+                 SYS.OP.NORMAL
+               </Text>
+            </View>
+            {isPro && (
+              <View style={{ backgroundColor: color.join, paddingHorizontal: 6, paddingVertical: 2, borderRadius: 2 }}>
+                <Text style={{ fontFamily: 'Orbitron', color: '#000', fontSize: 10, letterSpacing: 1 }}>PRO ACTIVE</Text>
+              </View>
+            )}
           </View>
-          <Text style={s.title} numberOfLines={1} adjustsFontSizeToFit>ISOLYNE{isPro ? ' // PRO' : ''}</Text>
+          <Text style={s.title} numberOfLines={1} adjustsFontSizeToFit>ISOLYNE</Text>
           
           <View style={s.metricsGrid}>
              <View style={s.metricBox}>
