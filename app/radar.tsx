@@ -22,14 +22,21 @@ export default function RadarScreen() {
   const handleResolve = (choice: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (radarState.proposal && radarState.gap) {
-      respondToProposal(userName, 'agree', radarState.proposal.id, radarState.gap.id, choice);
+      respondToProposal(userName, 'agree', radarState.proposal.id, radarState.gap.id, {
+        type: radarState.gap.type.replace('_gap', ''),
+        topic: radarState.gap.topic,
+        choice
+      });
     }
   };
 
   const handleAssignOwner = (member: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (radarState.proposal && radarState.gap) {
-      respondToProposal(userName, 'agree', radarState.proposal.id, radarState.gap.id, member);
+      respondToProposal(userName, 'agree', radarState.proposal.id, radarState.gap.id, {
+        type: 'ownership',
+        ownerId: member
+      });
     }
   };
 
