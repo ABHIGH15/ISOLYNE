@@ -54,14 +54,14 @@ export const KernelContext = createContext<KernelContextType | null>(null);
 
 export function KernelProvider({ children }: { children: ReactNode }) {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [activeProjectId, setActiveProjectId] = useState<string>('shipaton-live');
+  const [activeProjectId, setActiveProjectId] = useState<string>('shipaton-demo-final');
 
   const [radarState, setRadarState] = useState<RadarState>({ status: 'clear' });
   const [decisions, setDecisions] = useState<DecisionRecordView[]>([]);
   const [timelineEvents, setTimelineEvents] = useState<TimelineEventView[]>([]);
-  const [userName, setUserNameState] = useState<string>('Alice');
-  const [roster, setRosterState] = useState<string[]>(['Alice', 'Bob']);
-  const [activeActor, setActiveActor] = useState<string>('Alice');
+  const [userName, setUserNameState] = useState<string>('abhi');
+  const [roster, setRosterState] = useState<string[]>(['abhi', 'anu']);
+  const [activeActor, setActiveActor] = useState<string>('abhi');
   const [isReady, setIsReady] = useState(false);
   const [isReceiving, setIsReceiving] = useState(false);
 
@@ -111,11 +111,9 @@ export function KernelProvider({ children }: { children: ReactNode }) {
 
       // 1. Load user name
       const storedName = await AsyncStorage.getItem('isolyne_user_name');
-      const resolvedName = storedName || 'Alice';
-      if (storedName) {
-        setUserNameState(resolvedName);
-        setActiveActor(resolvedName);
-      }
+      const resolvedName = storedName || 'abhi';
+      setUserNameState(resolvedName);
+      setActiveActor(resolvedName);
 
       // 2. Load or seed projects via projectService
       const { projects: loadedProjects, activeId } = await loadOrCreateProjects();
@@ -244,8 +242,8 @@ export function KernelProvider({ children }: { children: ReactNode }) {
     if (isReceiving) return;
     setIsReceiving(true);
     
-    // Choose teammate name (not the active user) or default to Bob
-    const teammate = roster.find(m => m !== userName) || 'Bob';
+    // Choose teammate name (not the active user) or default to anu
+    const teammate = roster.find(m => m !== userName) || 'anu';
 
     setTimeout(async () => {
       await processSignal({

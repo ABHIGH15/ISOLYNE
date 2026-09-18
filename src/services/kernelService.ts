@@ -55,9 +55,23 @@ export async function initializeKernelStorage(): Promise<void> {
   }
 }
 
-// Removed mock seed data to ensure a completely blank slate for live demos.
+// Seed debug data to ensure demo is instantly usable with Abhi and Anu
 export async function seedDemoDataIfNeeded(): Promise<void> {
-  // No-op
+  const current = await signalRepo.getBySquad('shipaton-demo-final');
+  if (current.length === 0) {
+    const now = Date.now();
+    const demoSignals: Signal[] = [
+      { id: 'sig-1', squadId: 'shipaton-demo-final', actorId: 'System', timestamp: new Date(now - 3600000).toISOString(), type: 'member_joined' },
+      { id: 'sig-2', squadId: 'shipaton-demo-final', actorId: 'abhi', timestamp: new Date(now - 3500000).toISOString(), type: 'decision_stated', payload: { topic: 'frontend', choice: 'React Native', verbatim: 'Going with React Native for mobile.' } },
+      { id: 'sig-3', squadId: 'shipaton-demo-final', actorId: 'anu', timestamp: new Date(now - 3000000).toISOString(), type: 'decision_stated', payload: { topic: 'backend', choice: 'Supabase', verbatim: 'Setting up Supabase for data.' } },
+      // Create a gap by conflicting on architecture
+      { id: 'sig-4', squadId: 'shipaton-demo-final', actorId: 'abhi', timestamp: new Date(now - 2000000).toISOString(), type: 'decision_stated', payload: { topic: 'database', choice: 'PostgreSQL', verbatim: 'Postgres is locked in.' } },
+      { id: 'sig-5', squadId: 'shipaton-demo-final', actorId: 'anu', timestamp: new Date(now - 1000000).toISOString(), type: 'decision_stated', payload: { topic: 'database', choice: 'Firebase', verbatim: 'Using Firebase for rapid prototyping.' } },
+    ];
+    for (const sig of demoSignals) {
+      await signalRepo.save(sig);
+    }
+  }
 }
 
 // Singleton kernel + adapter

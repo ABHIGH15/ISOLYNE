@@ -91,7 +91,7 @@ export async function initPurchases(): Promise<void> {
   if (state.ready) return;
 
   try {
-    const cachedDemo = await AsyncStorage.getItem('isolyne_pro_demo');
+    const cachedDemo = await AsyncStorage.getItem('isolyne_pro_demo_final');
     if (cachedDemo === 'true') state.demoUnlocked = true;
   } catch {}
 
@@ -281,7 +281,7 @@ export async function purchasePackage(pkg: PurchasesPackage): Promise<{ ok: bool
       state.exportUnlocked = true;
     } else {
       state.demoUnlocked = true;
-      AsyncStorage.setItem('isolyne_pro_demo', 'true').catch(() => {});
+      AsyncStorage.setItem('isolyne_pro_demo_final', 'true').catch(() => {});
     }
     return { ok: true, preview: true };
   }
@@ -314,7 +314,7 @@ export async function restoreIsolynePro(): Promise<{ ok: boolean; preview: boole
 
   if (state.previewMode || !Purchases) {
     if (state.demoUnlocked) {
-      AsyncStorage.setItem('isolyne_pro_demo', 'true').catch(() => {});
+      AsyncStorage.setItem('isolyne_pro_demo_final', 'true').catch(() => {});
     }
     return {
       ok: state.demoUnlocked,
