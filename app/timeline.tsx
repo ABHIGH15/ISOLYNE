@@ -2,8 +2,8 @@ import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, Platform 
 import { useKernel } from '../src/presentation/state/KernelContext';
 import { color, space, type, radius } from '../src/presentation/theme/tokens';
 import { Feather } from '@expo/vector-icons';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'expo-router';
+import { useState, useCallback } from 'react';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { hasIsolynePro, getIsolyneProPackages, purchasePackage } from '../src/services/purchases';
 import { Share } from 'react-native';
 import Animated, { FadeInUp, FadeIn } from 'react-native-reanimated';
@@ -19,11 +19,14 @@ export default function TimelineScreen() {
   const [exporting, setExporting] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    hasIsolynePro().then(status => {
-      setIsPro(status);
-    });
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      hasIsolynePro().then(status => {
+        setIsPro(status);
+        setCanExport(status);
+      });
+    }, [])
+  );
 
   const handleExport = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);

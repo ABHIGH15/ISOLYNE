@@ -32,11 +32,22 @@ function MenuRow({ index, title, desc, route, accentColor = color.textMuted }: {
   );
 }
 
+import { useState, useCallback } from 'react';
+import { useFocusEffect } from 'expo-router';
+import { hasIsolynePro } from '../src/services/purchases';
+
 export default function HomeScreen() {
   const router = useRouter();
   const { radarState, roster, userName, decisions, timelineEvents } = useKernel();
   const isClear = radarState.status === 'clear';
   const statusColor = isClear ? color.join : color.risk;
+  const [isPro, setIsPro] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      hasIsolynePro().then(status => setIsPro(status));
+    }, [])
+  );
   
   return (
     <View style={s.root}>
@@ -60,7 +71,7 @@ export default function HomeScreen() {
                SYS.OP.NORMAL
              </Text>
           </View>
-          <Text style={s.title} numberOfLines={1} adjustsFontSizeToFit>ISOLYNE</Text>
+          <Text style={s.title} numberOfLines={1} adjustsFontSizeToFit>ISOLYNE{isPro ? ' // PRO' : ''}</Text>
           
           <View style={s.metricsGrid}>
              <View style={s.metricBox}>
@@ -97,7 +108,7 @@ export default function HomeScreen() {
           <MenuRow index="01" title="DECISION LOG" desc="View natural language constraints" route="/decisions" />
           <MenuRow index="02" title="TIMELINE" desc="Cryptographic alignment history" route="/timeline" />
           <MenuRow index="03" title="ROSTER" desc="Manage network agents" route="/team" />
-          <MenuRow index="04" title="ISOLYNE PRO" desc="Unlock enterprise features" route="/paywall" accentColor={color.caution} />
+          <MenuRow index="04" title="ISOLYNE PRO" desc={isPro ? "Enterprise features active" : "Unlock enterprise features"} route="/paywall" accentColor={isPro ? color.join : color.caution} />
         </Animated.View>
 
         <View style={{ height: 120 }} />
