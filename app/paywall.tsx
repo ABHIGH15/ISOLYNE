@@ -61,7 +61,7 @@ export default function PaywallScreen() {
       if (res.ok) {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         Alert.alert('Welcome to Isolyne Pro', 'Your collaboration timeline and export capabilities are unlocked.', [
-          { text: 'Continue', onPress: () => router.back() }
+          { text: 'Continue', onPress: () => router.canGoBack() ? router.back() : router.replace('/') }
         ]);
       } else if (res.message) {
         Alert.alert('Purchase Notice', res.message);
@@ -81,7 +81,7 @@ export default function PaywallScreen() {
       if (res.ok) {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         Alert.alert('Purchases Restored', 'Welcome back to Isolyne Pro!', [
-          { text: 'Continue', onPress: () => router.back() }
+          { text: 'Continue', onPress: () => router.canGoBack() ? router.back() : router.replace('/') }
         ]);
       } else {
         Alert.alert('Notice', res.message || 'No active Isolyne Pro subscription found.');
@@ -123,7 +123,7 @@ export default function PaywallScreen() {
           <Feather name="shield" size={14} color={color.accent} />
           <Text style={s.brandText}>ISOLYNE PRO</Text>
         </View>
-        <Pressable onPress={() => router.back()} hitSlop={12} style={s.closeBtn}>
+        <Pressable onPress={() => router.canGoBack() ? router.back() : router.replace('/')} hitSlop={12} style={s.closeBtn}>
           <Feather name="x" size={20} color={color.textSecondary} />
         </Pressable>
       </View>

@@ -57,7 +57,7 @@ export default function CustomerCenterScreen() {
     Alert.alert(
       'Demo Retention Offer Applied',
       'Simulation: 50% discount registered for next renewal period. Your Isolyne Pro access remains active.',
-      [{ text: 'Continue', onPress: () => router.back() }]
+      [{ text: 'Continue', onPress: () => router.canGoBack() ? router.back() : router.replace('/') }]
     );
   };
 
@@ -73,7 +73,7 @@ export default function CustomerCenterScreen() {
         <StatusBar style="light" />
         <RevenueCatUI.CustomerCenterView
           style={{ flex: 1 }}
-          onDismiss={() => router.back()}
+          onDismiss={() => router.canGoBack() ? router.back() : router.replace('/')}
           onFeedbackSurveyCompleted={({ feedbackSurveyOptionId }: { feedbackSurveyOptionId: string }) => {
             console.log('Customer Center survey completed:', feedbackSurveyOptionId);
           }}
@@ -96,7 +96,7 @@ export default function CustomerCenterScreen() {
           <Feather name="user-check" size={14} color={color.join} />
           <Text style={s.brandText}>CUSTOMER CENTER</Text>
         </View>
-        <Pressable onPress={() => router.back()} hitSlop={12} style={s.closeBtn}>
+        <Pressable onPress={() => router.canGoBack() ? router.back() : router.replace('/')} hitSlop={12} style={s.closeBtn}>
           <Feather name="x" size={20} color={color.textSecondary} />
         </Pressable>
       </View>
