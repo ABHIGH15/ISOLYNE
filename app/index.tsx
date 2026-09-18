@@ -32,7 +32,7 @@ function MenuRow({ index, title, desc, route, accentColor = color.textMuted }: {
   );
 }
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useFocusEffect } from 'expo-router';
 import { hasIsolynePro } from '../src/services/purchases';
 
@@ -48,6 +48,22 @@ export default function HomeScreen() {
       hasIsolynePro().then(status => setIsPro(status));
     }, [])
   );
+
+  // Haptic Triage: Feel the gap type before looking at the screen
+  useEffect(() => {
+    if (radarState.status === 'divergence_detected' && radarState.activeGaps?.length) {
+      const gapType = radarState.activeGaps[0].type;
+      if (gapType === 'ownership') {
+        // 3 fast light taps for ownership missing
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        setTimeout(() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light), 150);
+        setTimeout(() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light), 300);
+      } else if (gapType === 'consensus') {
+        // 1 heavy thud for semantic contradiction
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      }
+    }
+  }, [radarState.status]);
   
   return (
     <View style={s.root}>
