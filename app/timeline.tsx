@@ -55,23 +55,37 @@ export default function TimelineScreen() {
         return;
       }
       
-      Alert.alert(
-        "Share Alignment Report",
-        `Unlock unlimited timeline exports for ${lifetime.product.priceString}.`,
-        [
-          { text: "Cancel", style: "cancel", onPress: () => setExporting(false) },
-          { text: `Purchase ${lifetime.product.priceString}`, onPress: async () => {
-            const res = await purchasePackage(lifetime);
-            if (res.ok) {
-              setCanExport(true);
-              Alert.alert("Success", "Export unlocked! Tap again to share.");
-            } else if (res.message) {
-              Alert.alert("Purchase Failed", res.message);
-            }
-            setExporting(false);
-          }}
-        ]
-      );
+      if (Platform.OS === 'web') {
+        const confirm = window.confirm(`Unlock unlimited timeline exports for ${lifetime.product.priceString}?`);
+        if (confirm) {
+          const res = await purchasePackage(lifetime);
+          if (res.ok) {
+            setCanExport(true);
+            window.alert("Export unlocked! Tap again to share.");
+          } else if (res.message) {
+            window.alert(res.message);
+          }
+        }
+        setExporting(false);
+      } else {
+        Alert.alert(
+          "Share Alignment Report",
+          `Unlock unlimited timeline exports for ${lifetime.product.priceString}.`,
+          [
+            { text: "Cancel", style: "cancel", onPress: () => setExporting(false) },
+            { text: `Purchase ${lifetime.product.priceString}`, onPress: async () => {
+              const res = await purchasePackage(lifetime);
+              if (res.ok) {
+                setCanExport(true);
+                Alert.alert("Success", "Export unlocked! Tap again to share.");
+              } else if (res.message) {
+                Alert.alert("Purchase Failed", res.message);
+              }
+              setExporting(false);
+            }}
+          ]
+        );
+      }
     } catch (e) {
       setExporting(false);
     }
