@@ -30,7 +30,7 @@ export default function DecisionsScreen() {
       {/* Brutalist Header */}
       <BlurView intensity={90} tint="dark" style={s.header}>
         <Animated.View entering={FadeIn.duration(500)} style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 50 : 30 }}>
-          <Text style={s.title}>[01] DECISION LOG</Text>
+          <Text style={s.title}>[01] SPRINT LOG</Text>
           <Text style={s.subtitle}>// WHAT DOES THE TEAM BELIEVE?</Text>
         </Animated.View>
       </BlurView>

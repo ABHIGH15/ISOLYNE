@@ -149,7 +149,7 @@ export default function PaywallScreen() {
           )}
           <Text style={s.title}>{isMomentOfDoubt ? 'The Moment of Alignment' : 'Isolyne Pro'}</Text>
           <Text style={s.subtitle}>
-            In the Free tier, you can only see the last 3 events in your timeline history, and exports are disabled. Upgrading to Pro un-blurs your entire cryptographic history and allows exporting proof-of-alignment reports.
+            In the Free tier, you can only see the last 3 events in your timeline history. Upgrading to Pro un-blurs your entire hackathon timeline and lets you export a one-click Technical Post-Mortem for your Devpost submission.
           </Text>
         </View>
 
@@ -158,24 +158,24 @@ export default function PaywallScreen() {
           <View style={s.featureRow}>
             <Feather name="check-circle" size={18} color={color.accent} style={s.featureIcon} />
             <View style={{ flex: 1 }}>
-              <Text style={s.featureTitle}>Full Collaboration Timeline</Text>
-              <Text style={s.featureDesc}>Complete chronological ledger of team statements, divergences, and commitments.</Text>
+              <Text style={s.featureTitle}>Full Hackathon Timeline</Text>
+              <Text style={s.featureDesc}>Complete chronological ledger of team statements, divergences, and sprint resolutions.</Text>
             </View>
           </View>
 
           <View style={s.featureRow}>
             <Feather name="check-circle" size={18} color={color.accent} style={s.featureIcon} />
             <View style={{ flex: 1 }}>
-              <Text style={s.featureTitle}>Cross-Project Memory</Text>
-              <Text style={s.featureDesc}>Preserve working agreements, authority patterns, and team lessons across projects.</Text>
+              <Text style={s.featureTitle}>Cross-Sprint Memory</Text>
+              <Text style={s.featureDesc}>Preserve working agreements, authority patterns, and team lessons across multiple hackathons.</Text>
             </View>
           </View>
 
           <View style={s.featureRow}>
             <Feather name="check-circle" size={18} color={color.accent} style={s.featureIcon} />
             <View style={{ flex: 1 }}>
-              <Text style={s.featureTitle}>Team Retrospective Exports</Text>
-              <Text style={s.featureDesc}>One-click export of verified team decisions and alignment timelines for reviews and reports.</Text>
+              <Text style={s.featureTitle}>Devpost Export Engine</Text>
+              <Text style={s.featureDesc}>1-tap export of your team's entire technical journey to copy-paste into your final submission.</Text>
             </View>
           </View>
         </View>

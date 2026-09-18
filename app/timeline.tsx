@@ -69,7 +69,7 @@ export default function TimelineScreen() {
         setExporting(false);
       } else {
         Alert.alert(
-          "Share Alignment Report",
+          "Export Devpost Post-Mortem",
           `Unlock unlimited timeline exports for ${lifetime.product.priceString}.`,
           [
             { text: "Cancel", style: "cancel", onPress: () => setExporting(false) },

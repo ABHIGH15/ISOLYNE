@@ -128,10 +128,10 @@ export default function HomeScreen() {
         </Animated.View>
 
         <Animated.View entering={FadeInUp.duration(800).delay(300)}>
-          <MenuRow index="01" title="DECISION LOG" desc="View natural language constraints" route="/decisions" />
+          <MenuRow index="01" title="SPRINT LOG" desc="Voice-to-text sprint assumptions" route="/decisions" />
           <MenuRow index="02" title="TIMELINE" desc="Cryptographic alignment history" route="/timeline" />
           <MenuRow index="03" title="ROSTER" desc="Manage network agents" route="/team" />
-          <MenuRow index="04" title="ISOLYNE PRO" desc={isPro ? "Enterprise features active" : "Unlock enterprise features"} route="/paywall" accentColor={isPro ? color.join : color.caution} />
+          <MenuRow index="04" title="ISOLYNE PRO" desc={isPro ? "Devpost exports active" : "Unlock Devpost exports"} route="/paywall" accentColor={isPro ? color.join : color.caution} />
         </Animated.View>
 
         <View style={{ height: 120 }} />
