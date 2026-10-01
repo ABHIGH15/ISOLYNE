@@ -46,7 +46,7 @@ type KernelContextType = {
   setActiveActor: (actor: string) => void;
   isReady: boolean;
   isReceiving: boolean;
-  simulateIncomingBob: (topic?: string, choice?: string, statement?: string) => void;
+  simulateIncomingTeammate: (topic?: string, choice?: string, statement?: string) => void;
   refreshActiveSquad: () => Promise<void>;
 };
 
@@ -107,7 +107,6 @@ export function KernelProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const boot = async () => {
       await initializeKernelStorage();
-      await seedDemoDataIfNeeded();
 
       // 1. Load user name
       const storedName = await AsyncStorage.getItem('isolyne_user_name');
@@ -119,6 +118,9 @@ export function KernelProvider({ children }: { children: ReactNode }) {
       const { projects: loadedProjects, activeId } = await loadOrCreateProjects();
       setProjects(loadedProjects);
       setActiveProjectId(activeId);
+
+      // Seed realistic demo data into the actively viewed project
+      await seedDemoDataIfNeeded(activeId);
 
       // 3. Load active project data
       await loadSquadData(activeId, resolvedName);
@@ -134,7 +136,7 @@ export function KernelProvider({ children }: { children: ReactNode }) {
     await loadSquadData(projectId, userName);
   };
 
-  const createProject = async (name: string, teammates: string[] = ['Bob']): Promise<Project> => {
+  const createProject = async (name: string, teammates: string[] = ['anu']): Promise<Project> => {
     const newProject = await createProjectRecord(name, userName, teammates);
     setProjects(prev => [...prev, newProject]);
     setActiveProjectId(newProject.id);
@@ -152,7 +154,7 @@ export function KernelProvider({ children }: { children: ReactNode }) {
   };
 
   const saveUserAndRoster = async (name: string, teammates: string[]) => {
-    const cleanName = name.trim() || 'Alice';
+    const cleanName = name.trim() || 'abhi';
     const cleanTeammates = teammates.map(t => t.trim()).filter(Boolean);
     const fullRoster = Array.from(new Set([cleanName, ...cleanTeammates]));
     
@@ -177,7 +179,7 @@ export function KernelProvider({ children }: { children: ReactNode }) {
   };
 
   const setUserName = async (name: string) => {
-    const clean = name.trim() || 'Alice';
+    const clean = name.trim() || 'abhi';
     setUserNameState(clean);
     setActiveActor(clean);
     await AsyncStorage.setItem('isolyne_user_name', clean);
@@ -238,7 +240,7 @@ export function KernelProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const simulateIncomingBob = (topic = 'Architecture', choice = 'Microservices Auth', statement = `Let's spin up microservices auth for the sprint.`) => {
+  const simulateIncomingTeammate = (topic = 'Architecture', choice = 'Microservices Auth', statement = `Let's spin up microservices auth for the sprint.`) => {
     if (isReceiving) return;
     setIsReceiving(true);
     
@@ -286,7 +288,7 @@ export function KernelProvider({ children }: { children: ReactNode }) {
       setActiveActor, 
       isReady, 
       isReceiving, 
-      simulateIncomingBob,
+      simulateIncomingTeammate,
       refreshActiveSquad 
     }}>
       {isReady ? children : null}

@@ -1,3 +1,4 @@
+import { test, expect } from 'vitest';
 import assert from 'node:assert';
 import { interpretStatement } from '../../src/services/llmParser';
 function getChoiceString(choice: string | { raw_text: string } | any): string {
@@ -28,7 +29,7 @@ interface InMemDecision {
   timestamp: number;
 }
 
-async function testDeduplicationEngine() {
+test('Deduplication Engine Test', async () => {
   console.log('--- RUNNING DEDUPLICATION ENGINE TEST ---');
 
   const channelId = 'channel-test-101';
@@ -142,9 +143,4 @@ async function testDeduplicationEngine() {
   );
 
   console.log('--- ALL DEDUPLICATION ASSERTIONS PASSED (5/5) ---');
-}
-
-testDeduplicationEngine().catch((err) => {
-  console.error('Test failed:', err);
-  process.exit(1);
 });

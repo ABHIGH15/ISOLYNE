@@ -2,8 +2,7 @@
 
 **The disagreement detector for teams that move too fast to argue.**
 
-<!-- TODO: Insert Hero Image/Screenshot showing the Postgres vs Firebase conflict -->
-![Isolyne Hero Placeholder](docs/assets/placeholder-devpost-hero.png)
+![Isolyne Hero - Radar Active Divergence](docs/screenshots/radar-active-divergence.png)
 
 ## Inspiration: The Silent Drift
 Hackathon teams don't fail from bad code. They fail from the illusion of agreement. 

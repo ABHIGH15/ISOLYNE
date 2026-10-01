@@ -17,7 +17,11 @@ export class KernelPresentationAdapter {
       title: gap.type === 'consensus_gap' ? 'DRIFT DETECTED' : gap.type.replace('_', ' ').toUpperCase(),
       description: gap.hiddenReality,
       severity: gap.type === 'consensus_gap' ? 'high' : 'medium',
-      evidence: gap.evidence || [],
+      evidence: (gap.evidence || []).map((e: any) => ({
+        actorId: e.actorId,
+        choice: typeof e.choice === 'object' && e.choice !== null && 'raw_text' in e.choice ? e.choice.raw_text : String(e.choice ?? ''),
+        verbatim: e.verbatim,
+      })),
       topic: gap.topic
     };
 

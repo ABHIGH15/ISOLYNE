@@ -56,18 +56,40 @@ export async function initializeKernelStorage(): Promise<void> {
 }
 
 // Seed debug data to ensure demo is instantly usable with Abhi and Anu
-export async function seedDemoDataIfNeeded(): Promise<void> {
-  const current = await signalRepo.getBySquad('shipaton-demo-final');
-  if (current.length === 0) {
+export async function seedDemoDataIfNeeded(activeId: string = 'shipaton-demo-final'): Promise<void> {
+  const current = await signalRepo.getBySquad(activeId);
+  // ALWAYS WIPE for video recording to guarantee fresh state
+  const needsWipe = true;
+  
+  if (needsWipe) {
+    // FORCE WIPE all local data to eradicate Alice and Bob from cache
+    await AsyncStorage.removeItem(SIGNALS_KEY);
+    inMemorySignalRepo['signals'] = [];
+    realityRepo['states'] = new Map();
+    gapRepo['gaps'] = [];
+    proposalRepo['proposals'] = [];
+    commitmentRepo['commitments'] = [];
+    memoryRepo['memories'] = [];
+
     const now = Date.now();
     const demoSignals: Signal[] = [
-      { id: 'sig-1', squadId: 'shipaton-demo-final', actorId: 'System', timestamp: new Date(now - 3600000).toISOString(), type: 'member_joined' },
-      { id: 'sig-2', squadId: 'shipaton-demo-final', actorId: 'abhi', timestamp: new Date(now - 3500000).toISOString(), type: 'decision_stated', payload: { topic: 'frontend', choice: 'React Native', verbatim: 'Going with React Native for mobile.' } },
-      { id: 'sig-3', squadId: 'shipaton-demo-final', actorId: 'anu', timestamp: new Date(now - 3000000).toISOString(), type: 'decision_stated', payload: { topic: 'backend', choice: 'Supabase', verbatim: 'Setting up Supabase for data.' } },
-      // Create a gap by conflicting on architecture
-      { id: 'sig-4', squadId: 'shipaton-demo-final', actorId: 'abhi', timestamp: new Date(now - 2000000).toISOString(), type: 'decision_stated', payload: { topic: 'database', choice: 'PostgreSQL', verbatim: 'Postgres is locked in.' } },
-      { id: 'sig-5', squadId: 'shipaton-demo-final', actorId: 'anu', timestamp: new Date(now - 1000000).toISOString(), type: 'decision_stated', payload: { topic: 'database', choice: 'Firebase', verbatim: 'Using Firebase for rapid prototyping.' } },
+      { id: 'sig-1', squadId: activeId, actorId: 'System', timestamp: new Date(now - 12000000).toISOString(), type: 'member_joined' },
+      
+      // Aligned Decisions (Building up the log)
+      { id: 'sig-2', squadId: activeId, actorId: 'abhi', timestamp: new Date(now - 11000000).toISOString(), type: 'decision_stated', payload: { topic: 'framework', choice: 'Expo v57', verbatim: 'Initializing the monorepo with Expo v57 so we can ship to iOS instantly.' } },
+      { id: 'sig-3', squadId: activeId, actorId: 'anu', timestamp: new Date(now - 10000000).toISOString(), type: 'decision_stated', payload: { topic: 'styling', choice: 'StyleSheet', verbatim: 'Using standard React Native StyleSheet instead of NativeWind to avoid jitter.' } },
+      { id: 'sig-4', squadId: activeId, actorId: 'abhi', timestamp: new Date(now - 9000000).toISOString(), type: 'decision_stated', payload: { topic: 'design system', choice: 'Brutalist Dark Mode', verbatim: 'I will design a custom brutalist dark mode theme with heavy glassmorphism.' } },
+      { id: 'sig-5', squadId: activeId, actorId: 'anu', timestamp: new Date(now - 8000000).toISOString(), type: 'decision_stated', payload: { topic: 'state management', choice: 'Zustand', verbatim: 'Setting up Zustand for global state, Redux is too much boilerplate for a 48h hackathon.' } },
+      { id: 'sig-6', squadId: activeId, actorId: 'abhi', timestamp: new Date(now - 7000000).toISOString(), type: 'decision_stated', payload: { topic: 'animations', choice: 'Reanimated', verbatim: 'Wiring up React Native Reanimated for the physics-based transitions.' } },
+      { id: 'sig-7', squadId: activeId, actorId: 'anu', timestamp: new Date(now - 6000000).toISOString(), type: 'decision_stated', payload: { topic: 'monetization', choice: 'RevenueCat', verbatim: 'RevenueCat Purchases SDK is configured and ready for the Paywall.' } },
+      { id: 'sig-8', squadId: activeId, actorId: 'abhi', timestamp: new Date(now - 5000000).toISOString(), type: 'decision_stated', payload: { topic: 'analytics', choice: 'PostHog', verbatim: 'Added PostHog tracking to the dashboard.' } },
+      { id: 'sig-9', squadId: activeId, actorId: 'anu', timestamp: new Date(now - 4000000).toISOString(), type: 'decision_stated', payload: { topic: 'hardware feedback', choice: 'Expo Haptics', verbatim: 'Hooked up expo-haptics to the conflict detection triggers.' } },
+
+      // The silent drift begins here: Abhi assumes Firebase, Anu assumes Postgres
+      { id: 'sig-10', squadId: activeId, actorId: 'abhi', timestamp: new Date(now - 2000000).toISOString(), type: 'decision_stated', payload: { topic: 'database', choice: 'Firebase', verbatim: 'I will wire up Firebase Auth and Firestore for the backend tonight.' } },
+      { id: 'sig-11', squadId: activeId, actorId: 'anu', timestamp: new Date(now - 100000).toISOString(), type: 'decision_stated', payload: { topic: 'database', choice: 'PostgreSQL', verbatim: 'I just defined the user and squad schemas in Postgres.' } },
     ];
+    
     for (const sig of demoSignals) {
       await signalRepo.save(sig);
     }

@@ -39,7 +39,7 @@ export default function DecisionsScreen() {
         {topics.length === 0 ? (
           <Animated.View entering={FadeInUp.duration(600).delay(200)} style={s.emptyState}>
             <Text style={s.emptyTitle}>NO DATA</Text>
-            <Text style={s.emptyDesc}>Use the terminal below to log assumptions.</Text>
+            <Text style={s.emptyDesc}>Use the input below to log assumptions.</Text>
           </Animated.View>
         ) : (
           topics.map((topic, index) => {

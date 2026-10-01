@@ -159,8 +159,8 @@ describe('Runtime Parity Observation Test', () => {
 
 
 
-    expect(projects).toEqual([{ id: 'shipaton-2026', name: 'Shipaton 2026', createdAt: expect.any(String) }]);
-    expect(activeId).toBe('shipaton-2026');
+    expect(projects).toEqual([{ id: 'shipaton-demo-final', name: 'Shipaton 2026', createdAt: expect.any(String) }]);
+    expect(activeId).toBe('shipaton-demo-final');
     expect(roster).toEqual(['Alice', 'Bob']);
     expect(radarState.status).toBe('attention');
     expect(radarState.gap?.topic).toBe('database');
@@ -185,7 +185,7 @@ describe('Multi-Project Isolation & Dashboard Workflow Integration', () => {
     // 1. Initial State: Project A (Shipaton 2026) with seeded consensus gap on database
     await seedDemoDataIfNeeded();
     const { projects: initialProjects, activeId: projA_Id } = await loadOrCreateProjects();
-    expect(projA_Id).toBe('shipaton-2026');
+    expect(projA_Id).toBe('shipaton-demo-final');
 
     const evA1 = await kernel.evaluateSquad(projA_Id);
     const radarA1 = KernelPresentationAdapter.toRadarState(evA1);

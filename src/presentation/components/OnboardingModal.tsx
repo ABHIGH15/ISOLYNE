@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable, Animated, Platform, ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Pressable, Animated, Platform, ScrollView, KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Haptics from 'expo-haptics';
 import { Feather } from '@expo/vector-icons';
@@ -64,6 +64,7 @@ export function OnboardingModal() {
 
   return (
     <Animated.View style={[s.overlay, { opacity: fadeAnim }]}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <View style={s.card}>
         {step === 0 && (
           <>
@@ -164,6 +165,7 @@ export function OnboardingModal() {
           </ScrollView>
         )}
       </View>
+      </KeyboardAvoidingView>
     </Animated.View>
   );
 }

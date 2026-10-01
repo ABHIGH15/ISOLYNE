@@ -13,7 +13,7 @@ import { InteractiveCard } from '../src/presentation/components/InteractiveCard'
 import * as Haptics from 'expo-haptics';
 
 export default function TimelineScreen() {
-  const { timelineEvents, radarState } = useKernel();
+  const { timelineEvents, radarState, activeProjectId, activeProject } = useKernel();
   const [isPro, setIsPro] = useState<boolean | null>(null);
   const [canExport, setCanExport] = useState(false);
   const [exporting, setExporting] = useState(false);
@@ -31,11 +31,10 @@ export default function TimelineScreen() {
   const handleExport = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     if (canExport || isPro) {
-      const fullReport = `[ISOLYNE_SYS REPORT]\n` +
-        `STATUS: ${radarState.status.toUpperCase()}\n\n` + 
-        timelineEvents.map(e => `[${new Date(e.timestamp).toISOString()}] ${e.type.toUpperCase()}: ${e.description}`).join('\n');
-      
       try {
+        const { generateAlignmentReport } = require('../src/services/reportExporter');
+        const fullReport = await generateAlignmentReport(activeProjectId, activeProject?.name);
+        
         await Share.share({
           message: fullReport,
           title: 'Isolyne Alignment Report'
@@ -132,42 +131,54 @@ export default function TimelineScreen() {
       <ScrollView style={s.timelineList} contentContainerStyle={s.timelineContent} showsVerticalScrollIndicator={false}>
         {isPro === null ? null : timelineEvents.length === 0 ? (
           <Animated.View entering={FadeInUp.duration(600).delay(200)} style={s.emptyState}>
+            <Feather name="git-commit" size={32} color={color.textMuted} style={{ marginBottom: space.md }} />
             <Text style={s.emptyTitle}>NO DATA</Text>
             <Text style={s.emptyDesc}>System will record logic branches here.</Text>
           </Animated.View>
         ) : (
-          visibleEvents.map((ev, index) => (
-            <Animated.View 
-              entering={FadeInUp.duration(400).delay(100 + index * 100).springify()} 
-              key={ev.id} 
-              style={s.eventRow}
-            >
-              <Text style={s.timestamp}>{formatTime(ev.timestamp)}</Text>
+          <View style={s.timelineSpineContainer}>
+            <View style={s.spineLine} />
+            {visibleEvents.map((ev, index) => {
+              const isDivergence = ev.type === 'divergence';
+              const isResolution = ev.type === 'resolution';
+              const dotColor = isDivergence ? color.risk : isResolution ? color.join : color.textMuted;
               
-              <View style={[
-                s.eventContent, 
-                ev.type === 'divergence' && s.eventContentDivergence,
-                ev.type === 'resolution' && s.eventContentResolution
-              ]}>
-                <View style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 12 }}>
-                  {ev.type === 'divergence' && <Text style={{ color: color.risk, fontFamily: 'Menlo', fontSize: 12, marginTop: 2 }}>[!]</Text>}
-                  {ev.type === 'resolution' && <Text style={{ color: color.join, fontFamily: 'Menlo', fontSize: 12, marginTop: 2 }}>[✓]</Text>}
+              return (
+                <Animated.View 
+                  entering={FadeInUp.duration(400).delay(100 + index * 100).springify()} 
+                  key={ev.id} 
+                  style={s.eventRow}
+                >
+                  <View style={s.timestampCol}>
+                    <Text style={s.timestamp}>{formatTime(ev.timestamp)}</Text>
+                  </View>
+
+                  <View style={s.nodeCol}>
+                     <View style={[s.nodeDot, { backgroundColor: dotColor, shadowColor: dotColor }]} />
+                  </View>
                   
-                  <Text style={[
-                    s.eventText,
-                    ev.type === 'divergence' && s.eventTextDivergence,
-                    ev.type === 'resolution' && s.eventTextResolution,
+                  <View style={[
+                    s.eventContent, 
+                    isDivergence && s.eventContentDivergence,
+                    isResolution && s.eventContentResolution
                   ]}>
-                    {ev.description}
-                  </Text>
-                </View>
-              </View>
-            </Animated.View>
-          ))
+                      <Text style={[
+                        s.eventText,
+                        isDivergence && s.eventTextDivergence,
+                        isResolution && s.eventTextResolution,
+                      ]}>
+                        {ev.description}
+                      </Text>
+                  </View>
+                </Animated.View>
+              );
+            })}
+          </View>
         )}
         {isGated && (
           <Animated.View entering={FadeInUp.duration(600).delay(visibleEvents.length * 100 + 200)} style={s.gateContainer}>
             <InteractiveCard style={s.gateBanner} onPress={() => router.push('/paywall')}>
+              <LinearGradient colors={['rgba(255,255,255,0.05)', 'transparent']} style={StyleSheet.absoluteFill} />
               <Feather name="lock" size={14} color={color.textSecondary} />
               <Text style={s.gateText}>UNLOCK FULL HISTORY</Text>
             </InteractiveCard>
@@ -179,9 +190,9 @@ export default function TimelineScreen() {
 }
 
 const s = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#050505' },
-  header: { padding: space.xl, paddingBottom: space.md, borderBottomWidth: 1, borderColor: 'rgba(255,255,255,0.05)', position: 'absolute', top: 0, left: 0, right: 0, zIndex: 100 },
-  exportBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: 'rgba(255,255,255,0.1)', paddingHorizontal: space.md, paddingVertical: 8, borderRadius: 2, borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' },
+  root: { flex: 1, backgroundColor: color.bg },
+  header: { padding: space.xl, paddingBottom: space.md, borderBottomWidth: 1, borderColor: color.lineStrong, position: 'absolute', top: 0, left: 0, right: 0, zIndex: 100 },
+  exportBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: 'rgba(255,255,255,0.05)', paddingHorizontal: space.md, paddingVertical: 8, borderRadius: radius.md, borderWidth: 1, borderColor: color.lineStrong },
   exportBtnText: { ...type.label, color: color.text, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 10, letterSpacing: 1 },
   title: { ...type.display, color: color.text, marginBottom: 4, fontFamily: 'Orbitron', fontSize: 24, letterSpacing: 2 },
   subtitle: { ...type.body, color: color.textSecondary, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 10, letterSpacing: 1 },
@@ -190,22 +201,29 @@ const s = StyleSheet.create({
   timelineContent: { padding: space.xl, paddingTop: 160, paddingBottom: 120 },
   
   emptyState: { flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 80, paddingHorizontal: space.xl },
-  emptyTitle: { ...type.title, color: color.textMuted, marginBottom: space.sm, fontFamily: 'Orbitron', fontSize: 32 },
+  emptyTitle: { ...type.title, color: color.textMuted, marginBottom: space.sm, fontFamily: 'Orbitron', fontSize: 24, letterSpacing: 1 },
   emptyDesc: { ...type.body, color: color.textMuted, textAlign: 'center', fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 12 },
 
-  eventRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: space.lg, paddingVertical: space.md, borderBottomWidth: 1, borderColor: 'rgba(255,255,255,0.05)' },
-  
-  timestamp: { ...type.meta, color: color.textMuted, width: 60, paddingTop: 2, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 12 },
-  
-  eventContent: { flex: 1 },
-  eventContentDivergence: { },
-  eventContentResolution: { },
+  timelineSpineContainer: { position: 'relative', paddingLeft: 10 },
+  spineLine: { position: 'absolute', left: 71, top: 12, bottom: 0, width: 2, backgroundColor: color.lineStrong },
 
-  eventText: { ...type.body, color: color.textSecondary, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 13, lineHeight: 18, flex: 1 },
-  eventTextDivergence: { color: color.risk },
-  eventTextResolution: { color: color.join },
+  eventRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: space.xxl, position: 'relative' },
+  
+  timestampCol: { width: 50, alignItems: 'flex-end', paddingTop: 2 },
+  timestamp: { ...type.meta, color: color.textMuted, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 11 },
+  
+  nodeCol: { width: 44, alignItems: 'center', paddingTop: 4 },
+  nodeDot: { width: 10, height: 10, borderRadius: 5, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.8, shadowRadius: 8, borderWidth: 2, borderColor: color.bg },
+
+  eventContent: { flex: 1, backgroundColor: 'rgba(255,255,255,0.02)', padding: space.md, borderRadius: radius.md, borderWidth: 1, borderColor: color.line },
+  eventContentDivergence: { backgroundColor: 'rgba(249, 115, 22, 0.05)', borderColor: color.riskLine },
+  eventContentResolution: { backgroundColor: 'rgba(15, 118, 110, 0.05)', borderColor: color.joinLine },
+
+  eventText: { ...type.body, color: color.textSecondary, fontSize: 14, lineHeight: 22 },
+  eventTextDivergence: { color: color.risk, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 13 },
+  eventTextResolution: { color: color.join, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 13 },
 
   gateContainer: { alignItems: 'center', marginTop: space.xl },
-  gateBanner: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.05)', paddingHorizontal: space.lg, paddingVertical: space.md, borderRadius: 2, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)', gap: 8 },
-  gateText: { ...type.body, color: color.textSecondary, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 12, letterSpacing: 1 },
+  gateBanner: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.03)', paddingHorizontal: space.xl, paddingVertical: space.md, borderRadius: radius.lg, borderWidth: 1, borderColor: color.line, gap: 10, overflow: 'hidden' },
+  gateText: { ...type.button, color: color.textSecondary, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 12, letterSpacing: 1 },
 });

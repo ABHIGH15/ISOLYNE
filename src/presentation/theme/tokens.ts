@@ -4,19 +4,19 @@
  */
 
 export const color = {
-  bg: '#04050A',
-  bgElevated: '#0C0E16',
-  bgQuiet: '#080A10',
-  glass: 'rgba(12, 14, 22, 0.65)',
-  glassStrong: 'rgba(12, 14, 22, 0.85)',
-  line: 'rgba(255, 255, 255, 0.04)',
-  lineStrong: 'rgba(255, 255, 255, 0.08)',
-  lineHighlight: 'rgba(255, 255, 255, 0.15)',
+  bg: '#07080F', // Richer deep dark
+  bgElevated: '#11131A',
+  bgQuiet: '#0A0C14',
+  glass: 'rgba(17, 19, 26, 0.65)',
+  glassStrong: 'rgba(17, 19, 26, 0.85)',
+  line: 'rgba(255, 255, 255, 0.06)',
+  lineStrong: 'rgba(255, 255, 255, 0.12)',
+  lineHighlight: 'rgba(255, 255, 255, 0.20)',
 
-  text: '#F4F2FB',
-  textSecondary: '#9A95AB',
-  textMuted: '#6F6A80',
-  textOnAccent: '#1A1630',
+  text: '#FFFFFF',
+  textSecondary: '#A1A4B5',
+  textMuted: '#6B6E80',
+  textOnAccent: '#07080F',
 
   accent: '#8B83FF',
   accentSoft: '#E4E0FF',

@@ -1,6 +1,5 @@
 <div align="center">
-  <!-- TODO: Insert Hero GIF/Screenshot here showing the Radar resolving an Alice/Bob conflict -->
-  <!-- <img src="docs/assets/placeholder-hero.gif" alt="Isolyne Demo" width="600" /> -->
+  <img src="docs/screenshots/radar-active-divergence.png" alt="Isolyne Demo" width="300" />
 
   <h1>Isolyne</h1>
   <p><b>The disagreement detector for teams that move too fast to argue.</b></p>

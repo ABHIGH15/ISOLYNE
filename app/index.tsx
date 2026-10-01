@@ -1,40 +1,53 @@
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { View, Text, StyleSheet, ScrollView, Pressable, Platform, Dimensions } from 'react-native';
+import { useState, useCallback, useEffect } from 'react';
 import { useKernel } from '../src/presentation/state/KernelContext';
 import { color, space, type, radius } from '../src/presentation/theme/tokens';
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import Animated, { FadeInRight, FadeInLeft, FadeInDown, FadeInUp } from 'react-native-reanimated';
+import Animated, { FadeInRight, FadeInLeft, FadeInDown, FadeInUp, withTiming, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { RadarMotif } from '../src/presentation/components/RadarMotif';
+import { hasIsolynePro } from '../src/services/purchases';
+import { BlurView } from 'expo-blur';
 import * as Haptics from 'expo-haptics';
 
 const { width } = Dimensions.get('window');
 
 function MenuRow({ index, title, desc, route, accentColor = color.textMuted }: { index: string, title: string, desc: string, route: string, accentColor?: string }) {
   const router = useRouter();
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+    opacity: scale.value === 1 ? 1 : 0.8
+  }));
+
   return (
     <Pressable 
+      onPressIn={() => { scale.value = withTiming(0.98, { duration: 100 }); }}
+      onPressOut={() => { scale.value = withTiming(1, { duration: 150 }); }}
       onPress={() => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         router.push(route as any);
       }}
-      style={({ pressed }) => [
-        { paddingVertical: space.xl, borderBottomWidth: 1, borderColor: 'rgba(255,255,255,0.05)', flexDirection: 'row', alignItems: 'center', opacity: pressed ? 0.5 : 1 }
-      ]}
+      accessibilityRole="button"
+      accessibilityLabel={`${title}: ${desc}`}
     >
-      <Text style={{ fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', color: accentColor, fontSize: 12, marginRight: space.lg }}>[{index}]</Text>
-      <View style={{ flex: 1 }}>
-        <Text style={{ ...type.title, fontFamily: 'Orbitron', color: color.text, fontSize: 18, letterSpacing: 2, marginBottom: 4 }}>{title}</Text>
-        <Text style={{ ...type.meta, color: color.textSecondary, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 10 }}>{desc.toUpperCase()}</Text>
-      </View>
-      <Feather name="arrow-up-right" size={20} color={accentColor} />
+      <Animated.View style={[s.menuRow, animatedStyle]}>
+        <View style={s.menuIconWrapper}>
+          <Text style={[s.menuIndex, { color: accentColor }]}>{index}</Text>
+        </View>
+        <View style={s.menuTextContent}>
+          <Text style={s.menuTitle}>{title}</Text>
+          <Text style={s.menuDesc}>{desc}</Text>
+        </View>
+        <View style={[s.menuArrow, { backgroundColor: accentColor + '15' }]}>
+          <Feather name="arrow-right" size={16} color={accentColor} />
+        </View>
+      </Animated.View>
     </Pressable>
   );
 }
-
-import { useState, useCallback, useEffect } from 'react';
-import { useFocusEffect } from 'expo-router';
-import { hasIsolynePro } from '../src/services/purchases';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -49,17 +62,14 @@ export default function HomeScreen() {
     }, [])
   );
 
-  // Haptic Triage: Feel the gap type before looking at the screen
   useEffect(() => {
-    if (radarState.status === 'divergence_detected' && radarState.activeGaps?.length) {
-      const gapType = radarState.activeGaps[0].type;
+    if (radarState.status === 'attention' && radarState.gap) {
+      const gapType = radarState.gap.type;
       if (gapType === 'ownership') {
-        // 3 fast light taps for ownership missing
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         setTimeout(() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light), 150);
         setTimeout(() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light), 300);
       } else if (gapType === 'consensus') {
-        // 1 heavy thud for semantic contradiction
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       }
     }
@@ -67,70 +77,77 @@ export default function HomeScreen() {
   
   return (
     <View style={s.root}>
-      {/* Immersive Radar Background */}
-      <View style={{ position: 'absolute', top: -150, right: -150, opacity: 0.15, transform: [{ scale: 1.2 }] }}>
+      {/* Immersive Radar Background with Glow */}
+      <View style={s.radarBgWrapper}>
+         <View style={[s.radarGlow, { backgroundColor: statusColor }]} />
          <RadarMotif size={800} status={radarState.status as any} />
       </View>
       
       <LinearGradient
         colors={['transparent', color.bg, color.bg]}
         style={StyleSheet.absoluteFill}
-        locations={[0, 0.4, 1]}
+        locations={[0, 0.45, 1]}
       />
       
       <ScrollView style={s.scroll} contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
         
         <Animated.View entering={FadeInDown.duration(800).delay(100)} style={s.header}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: space.md }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+          <View style={s.headerTop}>
+            <View style={s.liveBadge}>
                <View style={[s.liveIndicator, { backgroundColor: statusColor, shadowColor: statusColor }]} />
-               <Text style={{ fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', color: statusColor, fontSize: 12, letterSpacing: 1 }}>
-                 SYS.OP.NORMAL
-               </Text>
+               <Text style={[s.liveText, { color: statusColor }]}>SYS.OP.NORMAL</Text>
             </View>
             {isPro && (
-              <View style={{ backgroundColor: color.join, paddingHorizontal: 6, paddingVertical: 2, borderRadius: 2 }}>
-                <Text style={{ fontFamily: 'Orbitron', color: '#000', fontSize: 10, letterSpacing: 1 }}>PRO ACTIVE</Text>
+              <View style={s.proBadge}>
+                <Text style={s.proText}>PRO ACTIVE</Text>
               </View>
             )}
           </View>
           <Text style={s.title} numberOfLines={1} adjustsFontSizeToFit>ISOLYNE</Text>
           
           <View style={s.metricsGrid}>
-             <View style={s.metricBox}>
+             <BlurView intensity={20} tint="dark" style={s.metricBox}>
                 <Text style={s.metricValue}>{decisions.length}</Text>
                 <Text style={s.metricLabel}>ASSUMPTIONS</Text>
-             </View>
-             <View style={s.metricBox}>
+             </BlurView>
+             <BlurView intensity={20} tint="dark" style={s.metricBox}>
                 <Text style={s.metricValue}>{timelineEvents.filter(e => e.type === 'resolution').length}</Text>
                 <Text style={s.metricLabel}>RESOLUTIONS</Text>
-             </View>
-             <View style={s.metricBox}>
+             </BlurView>
+             <BlurView intensity={20} tint="dark" style={s.metricBox}>
                 <Text style={s.metricValue}>{roster.length}</Text>
                 <Text style={s.metricLabel}>AGENTS</Text>
-             </View>
+             </BlurView>
           </View>
         </Animated.View>
 
-        <Animated.View entering={FadeInUp.duration(800).delay(200)} style={s.statusBanner}>
-           <Text style={s.statusBannerLabel}>CURRENT DRIFT STATUS</Text>
-           <Text style={[s.statusBannerTitle, { color: statusColor }]}>
-             {isClear ? 'ALIGNMENT: 100%' : 'DIVERGENCE DETECTED'}
-           </Text>
-           <Text style={s.statusBannerDesc}>
-             {isClear ? 'All reality branches are merged. No contradictions found in the current logic tree.' : radarState.gap?.description}
-           </Text>
-           {!isClear && (
-             <Pressable style={[s.actionBtn, { borderColor: statusColor }]} onPress={() => router.push('/radar' as any)}>
-               <Text style={[s.actionBtnText, { color: statusColor }]}>INITIALIZE RADAR</Text>
-             </Pressable>
-           )}
+        <Animated.View entering={FadeInUp.duration(800).delay(200)} style={s.statusBannerWrapper}>
+           <BlurView intensity={30} tint="dark" style={[s.statusBanner, { borderColor: statusColor + '40' }]}>
+             <LinearGradient colors={[statusColor + '10', 'transparent']} style={StyleSheet.absoluteFill} />
+             <View style={s.statusHeaderRow}>
+               <Feather name={isClear ? "check-circle" : "alert-triangle"} size={16} color={statusColor} />
+               <Text style={s.statusBannerLabel}>CURRENT DRIFT STATUS</Text>
+             </View>
+             <Text style={[s.statusBannerTitle, { color: statusColor }]}>
+               {isClear ? 'ALIGNMENT: 100%' : 'DIVERGENCE DETECTED'}
+             </Text>
+             <Text style={s.statusBannerDesc}>
+               {isClear ? 'All reality branches are merged. No contradictions found in the current logic tree.' : radarState.gap?.description}
+             </Text>
+             {!isClear && (
+               <Pressable style={s.actionBtn} onPress={() => router.push('/radar' as any)}>
+                 <LinearGradient colors={[statusColor, statusColor + '90']} style={s.actionBtnGradient} start={{x:0, y:0}} end={{x:1, y:0}}>
+                    <Text style={s.actionBtnText}>INITIALIZE RADAR</Text>
+                 </LinearGradient>
+               </Pressable>
+             )}
+           </BlurView>
         </Animated.View>
 
-        <Animated.View entering={FadeInUp.duration(800).delay(300)}>
-          <MenuRow index="01" title="SPRINT LOG" desc="Voice-to-text sprint assumptions" route="/decisions" />
-          <MenuRow index="02" title="TIMELINE" desc="Cryptographic alignment history" route="/timeline" />
-          <MenuRow index="03" title="ROSTER" desc="Manage network agents" route="/team" />
+        <Animated.View entering={FadeInUp.duration(800).delay(300)} style={s.menuList}>
+          <MenuRow index="01" title="SPRINT LOG" desc="Voice-to-text sprint assumptions" route="/decisions" accentColor={color.textSecondary} />
+          <MenuRow index="02" title="TIMELINE" desc="Cryptographic alignment history" route="/timeline" accentColor={color.textSecondary} />
+          <MenuRow index="03" title="ROSTER" desc="Manage network agents" route="/team" accentColor={color.textSecondary} />
           <MenuRow index="04" title="ISOLYNE PRO" desc={isPro ? "Devpost exports active" : "Unlock Devpost exports"} route="/paywall" accentColor={isPro ? color.join : color.caution} />
         </Animated.View>
 
@@ -142,23 +159,44 @@ export default function HomeScreen() {
 }
 
 const s = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#050505' },
+  root: { flex: 1, backgroundColor: color.bg },
+  radarBgWrapper: { position: 'absolute', top: -150, right: -150, opacity: 0.25, transform: [{ scale: 1.2 }] },
+  radarGlow: { position: 'absolute', top: 300, left: 300, width: 200, height: 200, borderRadius: 100, filter: 'blur(80px)', opacity: 0.3 },
   scroll: { flex: 1 },
   content: { padding: space.xl, paddingTop: Platform.OS === 'ios' ? 80 : 60, paddingBottom: 100 },
   
   header: { marginBottom: space.xl },
-  liveIndicator: { width: 8, height: 8, borderRadius: 4, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 1, shadowRadius: 10 },
+  headerTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: space.md },
+  liveBadge: { flexDirection: 'row', alignItems: 'center', gap: space.sm, backgroundColor: 'rgba(255,255,255,0.03)', paddingHorizontal: 10, paddingVertical: 6, borderRadius: radius.pill, borderWidth: 1, borderColor: color.line },
+  liveIndicator: { width: 6, height: 6, borderRadius: 3, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 1, shadowRadius: 8 },
+  liveText: { fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 11, letterSpacing: 1, fontWeight: '700' },
+  
+  proBadge: { backgroundColor: color.join + '20', borderWidth: 1, borderColor: color.join + '50', paddingHorizontal: 8, paddingVertical: 4, borderRadius: radius.sm },
+  proText: { fontFamily: 'Orbitron', color: color.join, fontSize: 10, letterSpacing: 1, fontWeight: '800' },
+  
   title: { color: color.text, fontFamily: 'Orbitron', fontSize: 64, letterSpacing: -2, includeFontPadding: false, marginLeft: -4 },
   
   metricsGrid: { flexDirection: 'row', gap: space.md, marginTop: space.xl },
-  metricBox: { flex: 1, borderTopWidth: 1, borderColor: 'rgba(255,255,255,0.2)', paddingTop: space.sm },
-  metricValue: { ...type.display, color: color.text, fontSize: 32, fontFamily: 'Orbitron' },
-  metricLabel: { ...type.meta, color: color.textSecondary, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 10, letterSpacing: 1 },
+  metricBox: { flex: 1, padding: space.lg, borderRadius: radius.md, borderWidth: 1, borderColor: color.line, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.02)' },
+  metricValue: { ...type.display, color: color.text, fontSize: 28, fontFamily: 'Orbitron', marginBottom: 4 },
+  metricLabel: { ...type.meta, color: color.textMuted, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 10, letterSpacing: 1 },
 
-  statusBanner: { backgroundColor: 'rgba(255,255,255,0.02)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.05)', padding: space.xl, borderRadius: radius.md, marginBottom: space.xl },
-  statusBannerLabel: { ...type.meta, color: color.textMuted, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 10, letterSpacing: 1, marginBottom: space.sm },
+  statusBannerWrapper: { marginBottom: space.xxl, borderRadius: radius.lg, overflow: 'hidden' },
+  statusBanner: { padding: space.xl, borderWidth: 1, backgroundColor: 'rgba(255,255,255,0.02)' },
+  statusHeaderRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginBottom: space.sm },
+  statusBannerLabel: { ...type.meta, color: color.textSecondary, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 11, letterSpacing: 1 },
   statusBannerTitle: { ...type.title, fontFamily: 'Orbitron', fontSize: 24, letterSpacing: 1, marginBottom: space.sm },
-  statusBannerDesc: { ...type.body, color: color.textSecondary, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 12, lineHeight: 18 },
-  actionBtn: { marginTop: space.lg, borderWidth: 1, paddingVertical: space.md, alignItems: 'center', borderRadius: 4 },
-  actionBtnText: { ...type.button, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 12, letterSpacing: 1 },
+  statusBannerDesc: { ...type.body, color: color.textSecondary, fontSize: 14, lineHeight: 22 },
+  actionBtn: { marginTop: space.lg, borderRadius: radius.md, overflow: 'hidden' },
+  actionBtnGradient: { paddingVertical: space.md, alignItems: 'center' },
+  actionBtnText: { ...type.button, color: '#000', fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 13, letterSpacing: 1.5, fontWeight: '800' },
+  
+  menuList: { gap: space.md },
+  menuRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.02)', borderWidth: 1, borderColor: color.line, borderRadius: radius.lg, padding: space.lg },
+  menuIconWrapper: { width: 32, height: 32, borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.04)', alignItems: 'center', justifyContent: 'center', marginRight: space.md },
+  menuIndex: { fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 10, fontWeight: '800' },
+  menuTextContent: { flex: 1 },
+  menuTitle: { ...type.title, fontFamily: 'Orbitron', color: color.text, fontSize: 16, letterSpacing: 1, marginBottom: 2 },
+  menuDesc: { ...type.body, color: color.textMuted, fontSize: 13 },
+  menuArrow: { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
 });

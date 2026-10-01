@@ -4,6 +4,9 @@
   "description": "Isolyne — The disagreement detector for teams that move too fast to argue.",
   "main": "expo-router/entry",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "license": "MIT",
   "author": "Abhi Kumar",
   "dependencies": {

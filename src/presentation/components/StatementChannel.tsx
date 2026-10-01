@@ -25,14 +25,14 @@ export function StatementChannel() {
     }
   }, [roster, activeActor, setActiveActor]);
 
-  const effectiveActor = roster.includes(activeActor) ? activeActor : (roster[0] || 'Alice');
+  const effectiveActor = roster.includes(activeActor) ? activeActor : (roster[0] || 'abhi');
 
   const [input, setInput] = useState('');
   const [inferencePhase, setInferencePhase] = useState<'idle' | 'extracting'>('idle');
   const [candidate, setCandidate] = useState<CandidateSignal | null>(null);
   const [parseError, setParseError] = useState<string | null>(null);
 
-  const teammate = roster.find(m => m !== effectiveActor) || 'Bob';
+  const teammate = roster.find(m => m !== effectiveActor) || 'anu';
 
   const handleInterpret = async () => {
     if (!input.trim() || inferencePhase !== 'idle') return;

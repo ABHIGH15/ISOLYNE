@@ -34,6 +34,9 @@ function GlassNav() {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                 router.replace(item.path as any);
               }}
+              accessibilityRole="tab"
+              accessibilityLabel={item.name}
+              accessibilityState={{ selected: isActive }}
               style={[s.navItem, isActive && s.navItemActive]}
             >
               <Text style={[s.navText, isActive && s.navTextActive]}>{item.name}</Text>
@@ -73,7 +76,7 @@ export default function RootLayout() {
 }
 
 const s = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#050505' },
+  root: { flex: 1, backgroundColor: '#050505', width: '100%', maxWidth: Platform.OS === 'web' ? 480 : '100%', marginHorizontal: 'auto', overflow: 'hidden' },
   navContainer: {
     position: 'absolute',
     bottom: Platform.OS === 'ios' ? 40 : 20,

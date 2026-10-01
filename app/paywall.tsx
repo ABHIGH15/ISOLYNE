@@ -13,7 +13,9 @@ import {
   ISOLYNE_PRO_ENTITLEMENT 
 } from '../src/services/purchases';
 import { calculateDriftImpact } from '../src/services/impactCalculator';
-
+import { BlurView } from 'expo-blur';
+import { LinearGradient } from 'expo-linear-gradient';
+import Animated, { FadeInUp, FadeInDown } from 'react-native-reanimated';
 export default function PaywallScreen() {
   const router = useRouter();
   const params = useLocalSearchParams<{ source?: string; topic?: string }>();
@@ -28,6 +30,7 @@ export default function PaywallScreen() {
   const [selectedType, setSelectedType] = useState<'annual' | 'monthly'>('annual');
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState(false);
+  const [purchaseSuccess, setPurchaseSuccess] = useState(false);
   const [showCalculator, setShowCalculator] = useState(true);
   const [teamSize, setTeamSize] = useState(3);
   const [hoursPerWeek, setHoursPerWeek] = useState(20);
@@ -61,20 +64,16 @@ export default function PaywallScreen() {
       const res = await purchasePackage(pkg);
       if (res.ok) {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        if (Platform.OS === 'web') {
-          window.alert('Welcome to Isolyne Pro!\nYour collaboration timeline and export capabilities are unlocked.');
+        setPurchaseSuccess(true);
+        setTimeout(() => {
           router.canGoBack() ? router.back() : router.replace('/');
-        } else {
-          Alert.alert('Welcome to Isolyne Pro', 'Your collaboration timeline and export capabilities are unlocked.', [
-            { text: 'Continue', onPress: () => router.canGoBack() ? router.back() : router.replace('/') }
-          ]);
-        }
+        }, 1500);
       } else if (res.message) {
         if (Platform.OS === 'web') window.alert(res.message);
         else Alert.alert('Purchase Notice', res.message);
       }
     } catch (err: any) {
-      Alert.alert('Purchase Error', err.message || 'Something went wrong.');
+      if (Platform.OS !== 'web') Alert.alert('Purchase Error', err.message || 'Something went wrong.');
     } finally {
       setPurchasing(false);
     }
@@ -140,14 +139,14 @@ export default function PaywallScreen() {
         {/* Header with Moment of Doubt framing */}
         <View style={s.header}>
           {isMomentOfDoubt && (
-            <View style={s.momentBadge}>
-              <Feather name="alert-triangle" size={13} color={color.risk} />
+            <Animated.View entering={FadeInUp.duration(400)} style={s.momentBadge}>
+              <Feather name="alert-triangle" size={12} color={color.risk} />
               <Text style={s.momentBadgeText}>
                 CAUGHT SILENT DRIFT{driftTopic ? `: ${driftTopic.toUpperCase()}` : ''}
               </Text>
-            </View>
+            </Animated.View>
           )}
-          <Text style={s.title}>{isMomentOfDoubt ? 'The Moment of Alignment' : 'Isolyne Pro'}</Text>
+          <Text style={s.title}>{isMomentOfDoubt ? 'The Moment of\nAlignment' : 'Isolyne Pro'}</Text>
           <Text style={s.subtitle}>
             In the Free tier, you can only see the last 3 events in your timeline history. Upgrading to Pro un-blurs your entire hackathon timeline and lets you export a one-click Technical Post-Mortem for your Devpost submission.
           </Text>
@@ -156,7 +155,9 @@ export default function PaywallScreen() {
         {/* Feature List */}
         <View style={s.featureList}>
           <View style={s.featureRow}>
-            <Feather name="check-circle" size={18} color={color.accent} style={s.featureIcon} />
+            <View style={s.featureIconWrapper}>
+              <Feather name="check" size={14} color={color.bg} />
+            </View>
             <View style={{ flex: 1 }}>
               <Text style={s.featureTitle}>Full Hackathon Timeline</Text>
               <Text style={s.featureDesc}>Complete chronological ledger of team statements, divergences, and sprint resolutions.</Text>
@@ -164,7 +165,9 @@ export default function PaywallScreen() {
           </View>
 
           <View style={s.featureRow}>
-            <Feather name="check-circle" size={18} color={color.accent} style={s.featureIcon} />
+            <View style={s.featureIconWrapper}>
+              <Feather name="check" size={14} color={color.bg} />
+            </View>
             <View style={{ flex: 1 }}>
               <Text style={s.featureTitle}>Cross-Sprint Memory</Text>
               <Text style={s.featureDesc}>Preserve working agreements, authority patterns, and team lessons across multiple hackathons.</Text>
@@ -172,7 +175,9 @@ export default function PaywallScreen() {
           </View>
 
           <View style={s.featureRow}>
-            <Feather name="check-circle" size={18} color={color.accent} style={s.featureIcon} />
+            <View style={s.featureIconWrapper}>
+              <Feather name="check" size={14} color={color.bg} />
+            </View>
             <View style={{ flex: 1 }}>
               <Text style={s.featureTitle}>Devpost Export Engine</Text>
               <Text style={s.featureDesc}>1-tap export of your team's entire technical journey to copy-paste into your final submission.</Text>
@@ -189,63 +194,85 @@ export default function PaywallScreen() {
             {/* Annual Package Card */}
             {annualPkg && (
               <Pressable 
-                style={[s.packageCard, selectedType === 'annual' && s.packageCardSelected]}
                 onPress={() => {
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                   setSelectedType('annual');
                 }}
               >
-                {/* Intro Offer Badge if available */}
-                {annualPkg.product.introPrice ? (
-                  <View style={s.introBadge}>
-                    <Text style={s.introBadgeText}>
-                      INTRO OFFER: {annualPkg.product.introPrice.priceString} FIRST YEAR
-                    </Text>
-                  </View>
-                ) : (
-                  <View style={s.bestValueBadge}>
-                    <Text style={s.bestValueText}>BEST VALUE · SAVE 33%</Text>
-                  </View>
-                )}
+                <BlurView 
+                  intensity={selectedType === 'annual' ? 60 : 30} 
+                  tint="dark" 
+                  style={[s.packageCard, selectedType === 'annual' && s.packageCardSelected]}
+                >
+                  {selectedType === 'annual' && (
+                     <LinearGradient colors={['rgba(139, 131, 255, 0.15)', 'transparent']} style={StyleSheet.absoluteFill} />
+                  )}
+                  {/* Intro Offer Badge if available */}
+                  {annualPkg.product.introPrice ? (
+                    <View style={s.introBadge}>
+                      <Text style={s.introBadgeText}>
+                        INTRO OFFER: {annualPkg.product.introPrice.priceString} FIRST YEAR
+                      </Text>
+                    </View>
+                  ) : (
+                    <View style={s.bestValueBadge}>
+                      <Text style={s.bestValueText}>BEST VALUE · SAVE 33%</Text>
+                    </View>
+                  )}
 
-                <View style={s.packageHeaderRow}>
-                  <View style={{ flex: 1 }}>
-                    <Text style={s.packageTitle}>Annual Plan</Text>
-                    <Text style={s.packageDesc}>
-                      {annualPkg.product.introPrice 
-                        ? `Renews at ${annualPkg.product.priceString}/year after first period` 
-                        : 'Billed annually'}
-                    </Text>
+                  <View style={s.packageHeaderRow}>
+                    <View style={s.packageRadio}>
+                      {selectedType === 'annual' && <View style={s.packageRadioInner} />}
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={s.packageTitle}>Annual Plan</Text>
+                      <Text style={s.packageDesc}>
+                        {annualPkg.product.introPrice 
+                          ? `Renews at ${annualPkg.product.priceString}/year after first period` 
+                          : 'Billed annually'}
+                      </Text>
+                    </View>
+                    <View style={s.priceBox}>
+                      <Text style={s.packagePrice}>
+                        {annualPkg.product.introPrice ? annualPkg.product.introPrice.priceString : annualPkg.product.priceString}
+                      </Text>
+                      <Text style={s.packagePeriod}>/ year</Text>
+                    </View>
                   </View>
-                  <View style={s.priceBox}>
-                    <Text style={s.packagePrice}>
-                      {annualPkg.product.introPrice ? annualPkg.product.introPrice.priceString : annualPkg.product.priceString}
-                    </Text>
-                    <Text style={s.packagePeriod}>/ year</Text>
-                  </View>
-                </View>
+                </BlurView>
               </Pressable>
             )}
 
             {/* Monthly Package Card */}
             {monthlyPkg && (
               <Pressable 
-                style={[s.packageCard, selectedType === 'monthly' && s.packageCardSelected]}
                 onPress={() => {
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                   setSelectedType('monthly');
                 }}
               >
-                <View style={s.packageHeaderRow}>
-                  <View style={{ flex: 1 }}>
-                    <Text style={s.packageTitle}>Monthly Plan</Text>
-                    <Text style={s.packageDesc}>Flexible month-to-month subscription</Text>
+                <BlurView 
+                  intensity={selectedType === 'monthly' ? 60 : 30} 
+                  tint="dark" 
+                  style={[s.packageCard, selectedType === 'monthly' && s.packageCardSelected]}
+                >
+                  {selectedType === 'monthly' && (
+                     <LinearGradient colors={['rgba(139, 131, 255, 0.15)', 'transparent']} style={StyleSheet.absoluteFill} />
+                  )}
+                  <View style={s.packageHeaderRow}>
+                    <View style={s.packageRadio}>
+                      {selectedType === 'monthly' && <View style={s.packageRadioInner} />}
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={s.packageTitle}>Monthly Plan</Text>
+                      <Text style={s.packageDesc}>Flexible month-to-month subscription</Text>
+                    </View>
+                    <View style={s.priceBox}>
+                      <Text style={s.packagePrice}>{monthlyPkg.product.priceString}</Text>
+                      <Text style={s.packagePeriod}>/ month</Text>
+                    </View>
                   </View>
-                  <View style={s.priceBox}>
-                    <Text style={s.packagePrice}>{monthlyPkg.product.priceString}</Text>
-                    <Text style={s.packagePeriod}>/ month</Text>
-                  </View>
-                </View>
+                </BlurView>
               </Pressable>
             )}
           </View>
@@ -444,6 +471,19 @@ export default function PaywallScreen() {
         </View>
 
       </ScrollView>
+
+      {/* Custom Web-Friendly Success Toast */}
+      {purchaseSuccess && (
+        <Animated.View entering={FadeInDown.duration(400)} style={s.successOverlay}>
+          <BlurView intensity={80} tint="dark" style={s.successCard}>
+            <View style={s.successIconWrap}>
+              <Feather name="check" size={24} color={color.join} />
+            </View>
+            <Text style={s.successTitle}>Welcome to Isolyne Pro!</Text>
+            <Text style={s.successDesc}>Your collaboration timeline and export capabilities are unlocked.</Text>
+          </BlurView>
+        </Animated.View>
+      )}
     </SafeAreaView>
   );
 }
@@ -631,5 +671,11 @@ const s = StyleSheet.create({
   footer: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: space.sm },
   footerLink: { ...type.meta, color: color.accent, textDecorationLine: 'underline', fontSize: 12 },
   footerDot: { color: color.textMuted },
-  footerMeta: { ...type.meta, color: color.textMuted, fontSize: 12 }
+  footerMeta: { ...type.meta, color: color.textMuted, fontSize: 12 },
+
+  successOverlay: { position: 'absolute', bottom: 40, left: 20, right: 20, alignItems: 'center' },
+  successCard: { padding: 24, borderRadius: 24, overflow: 'hidden', alignItems: 'center', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1 },
+  successIconWrap: { width: 50, height: 50, borderRadius: 25, backgroundColor: 'rgba(64, 255, 128, 0.1)', alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
+  successTitle: { ...type.h2, color: color.text, fontSize: 18, marginBottom: 8 },
+  successDesc: { ...type.body, color: color.textSecondary, fontSize: 14, textAlign: 'center' }
 });
